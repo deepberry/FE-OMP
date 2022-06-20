@@ -1,11 +1,15 @@
 <!--
  * @Author: iRuxu
  * @Date: 2022-06-20 18:07:51
- * @LastEditTime: 2022-06-20 18:13:44
- * @Description:
+ * @LastEditTime: 2022-06-20 18:59:41
+ * @Description:客户管理
 -->
 <template>
-    <div class="v-customer"></div>
+    <div class="v-customer">
+        <header class="m-customer-header">筛选2</header>
+        <section class="m-customer-content">列表2</section>
+        <footer class="m-customer-footer">翻页2</footer>
+    </div>
 </template>
 
 <script>

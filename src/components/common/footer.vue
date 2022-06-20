@@ -1,7 +1,7 @@
 <!--
  * @Author: iRuxu
  * @Date: 2022-06-20 18:15:00
- * @LastEditTime: 2022-06-20 18:16:16
+ * @LastEditTime: 2022-06-20 18:54:21
  * @Description: 公共底
 -->
 <template>
@@ -24,6 +24,6 @@ export default {
 };
 </script>
 
-<style scoped lang="less">
+<style lang="less">
 @import "@/assets/css/footer.less";
 </style>

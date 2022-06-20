@@ -1,7 +1,7 @@
 /*
  * @Author: iRuxu
  * @Date: 2022-06-20 17:26:26
- * @LastEditTime: 2022-06-20 18:21:57
+ * @LastEditTime: 2022-06-20 19:01:07
  * @Description:
  */
 // 1.Dependency
@@ -20,9 +20,30 @@ const Equipment = () => import("../views/Equipment.vue");
 // 3.Routes
 const routes = [
     { name: "home", path: "/", component: Home, redirect: { name: "company" } },
-    { name: "company", path: "/company", component: Company },
-    { name: "customer", path: "/customer", component: Customer },
-    { name: "equipment", path: "/equipment", component: Equipment },
+    {
+        name: "company",
+        path: "/company",
+        component: Company,
+        meta: {
+            title: "企业管理",
+        },
+    },
+    {
+        name: "customer",
+        path: "/customer",
+        component: Customer,
+        meta: {
+            title: "用户管理",
+        },
+    },
+    {
+        name: "equipment",
+        path: "/equipment",
+        component: Equipment,
+        meta: {
+            title: "设备管理",
+        },
+    },
 ];
 
 // 4.Build An Instance
