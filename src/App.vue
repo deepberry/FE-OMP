@@ -1,15 +1,27 @@
+<!--
+ * @Author: iRuxu
+ * @Date: 2022-06-20 17:26:26
+ * @LastEditTime: 2022-06-20 18:21:26
+ * @Description: 企业微信运营平台
+-->
 <template>
-    <!-- <img alt="Vue logo" src="@/assets/img/logo.png" /> -->
-    <!-- <HelloWorld msg="Hello World" /> -->
-    APP
+    <CommonHeader />
+
     <router-view />
+
+    <CommonFooter />
 </template>
 
 <script>
+import CommonHeader from "@/components/common/header.vue";
+import CommonFooter from "@/components/common/footer.vue";
 export default {
     name: "App",
+    components: {
+        CommonHeader,
+        CommonFooter,
+    },
     props: [],
-    components: {},
     data: function () {
         return {};
     },
