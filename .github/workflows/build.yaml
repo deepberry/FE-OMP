@@ -1,6 +1,6 @@
 name: Github Pages
 on:
-    release:
+    push:
         branches:
             - master
 jobs:
