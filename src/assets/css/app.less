@@ -1,1 +1,38 @@
 // project less root
+#app {
+    .color(@black);
+    min-height: 100vh;
+    background-color: @bg-color;
+}
+
+.m-aside {
+    .pf;
+    .w(240px);
+    .pt(84px);
+    .lt(0);
+    min-height: 100vh;
+    box-sizing: border-box;
+    border-right: @line;
+}
+
+.m-container {
+    min-height: 100vh;
+    padding: 84px 0 0 240px;
+    box-sizing: border-box;
+    .flex;
+    .m-main {
+        background-color: #fff;
+        flex: 1;
+        padding: 20px;
+        .m-title {
+            .db;
+            .flex;
+            .size(100%,50px);
+            .fz(18px,50px);
+            .color(#454559);
+            gap: 10px;
+            align-items: center;
+            border-bottom: @line;
+        }
+    }
+}

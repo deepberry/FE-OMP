@@ -6,21 +6,37 @@
 -->
 <template>
     <header class="m-navigation">
-        <ul>
-            <li><router-link :to="{ name: 'company' }">企业管理</router-link></li>
-            <li><router-link :to="{ name: 'customer' }">用户管理</router-link></li>
-            <li><router-link :to="{ name: 'equipment' }">设备管理</router-link></li>
+        <ul class="u-navigation">
+            <li class="u-item" v-for="item in router" :key="item.value">
+                <router-link :to="{ name: item.value }">
+                    {{ item.name }}
+                </router-link>
+            </li>
         </ul>
     </header>
 </template>
-
 <script>
 export default {
     name: "CommonNav",
     props: [],
     components: {},
     data: function () {
-        return {};
+        return {
+            router: [
+                {
+                    name: "企业管理",
+                    value: "company",
+                },
+                {
+                    name: "用户管理",
+                    value: "customer",
+                },
+                {
+                    name: "设备管理",
+                    value: "equipment",
+                },
+            ],
+        };
     },
     computed: {},
     watch: {},
@@ -31,5 +47,5 @@ export default {
 </script>
 
 <style lang="less">
-@import "@/assets/css/navigation.less";
+@import "@/assets/css/common/navigation.less";
 </style>
