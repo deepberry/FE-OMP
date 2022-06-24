@@ -1,14 +1,14 @@
 /*
  * @Author: iRuxu
  * @Date: 2022-06-20 17:26:26
- * @LastEditTime: 2022-06-24 19:17:02
+ * @LastEditTime: 2022-06-24 19:39:34
  * @Description:
  */
 // 1.Dependency
 import {
     createRouter,
-    createWebHistory,
-    // createWebHashHistory,
+    // createWebHistory,
+    createWebHashHistory,
 } from "vue-router";
 
 // 2.Components
@@ -48,9 +48,9 @@ const routes = [
 
 // 4.Build An Instance
 const router = createRouter({
-    // history: createWebHashHistory(), //hash
-    history: createWebHistory(), //history api
-    base: "/omp",
+    history: createWebHashHistory(), //hash
+    // history: createWebHistory(), //history api
+    // base: "/omp",
     routes,
 });
 
