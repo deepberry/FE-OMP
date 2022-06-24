@@ -1,7 +1,7 @@
 /*
  * @Author: iRuxu
  * @Date: 2022-06-20 17:26:26
- * @LastEditTime: 2022-06-24 19:39:34
+ * @LastEditTime: 2022-06-24 19:50:21
  * @Description:
  */
 // 1.Dependency
@@ -24,25 +24,19 @@ const routes = [
         name: "company",
         path: "/company",
         component: Company,
-        meta: {
-            title: "企业管理",
-        },
+        meta: {},
     },
     {
         name: "customer",
         path: "/customer",
         component: Customer,
-        meta: {
-            title: "用户管理",
-        },
+        meta: {},
     },
     {
         name: "equipment",
         path: "/equipment",
         component: Equipment,
-        meta: {
-            title: "设备管理",
-        },
+        meta: {},
     },
 ];
 

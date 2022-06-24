@@ -1,5 +1,24 @@
 {
     "title": "深莓运营管理平台",
     "keys": "",
-    "desc": ""
+    "desc": "",
+
+    "pages": {
+        "home": {
+            "title": "运营平台",
+            "tabname": "首页"
+        },
+        "company": {
+            "title": "企业管理",
+            "tabname": "企业管理"
+        },
+        "customer": {
+            "title": "用户管理",
+            "tabname": "用户管理"
+        },
+        "equipment": {
+            "title": "设备管理",
+            "tabname": "设备管理"
+        }
+    }
 }
