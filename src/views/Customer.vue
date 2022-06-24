@@ -29,5 +29,5 @@ export default {
 </script>
 
 <style lang="less">
-@import "@/assets/css/customer.less";
+@import "@/assets/css/views/customer.less";
 </style>
