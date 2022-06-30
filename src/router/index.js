@@ -16,6 +16,7 @@ const Home = () => import("../views/Home.vue");
 const Company = () => import("../views/Company.vue");
 const Customer = () => import("../views/Customer.vue");
 const Equipment = () => import("../views/Equipment.vue");
+const DetailsPage = () => import("../views/DetailsPage.vue");
 
 // 3.Routes
 const routes = [
@@ -36,6 +37,12 @@ const routes = [
         name: "equipment",
         path: "/equipment",
         component: Equipment,
+        meta: {},
+    },
+    {
+        name: "details",
+        path: "/:type/details/:id",
+        component: DetailsPage,
         meta: {},
     },
 ];

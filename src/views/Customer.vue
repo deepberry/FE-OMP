@@ -6,23 +6,42 @@
 -->
 <template>
     <div class="v-customer">
-        <header class="m-customer-header">筛选2</header>
-        <section class="m-customer-content">列表2</section>
-        <footer class="m-customer-footer">翻页2</footer>
+        <h2 class="m-title">{{ title }}</h2>
+        <search-bar @toSearch="toSearch" />
+        <customerTable :table="table" />
+        <common-pagination :pagination="pagination" />
     </div>
 </template>
 
 <script>
+import customerTable from "@/components/table/customerTable.vue";
 export default {
     name: "CustomerManage",
     props: [],
-    components: {},
+    components: { customerTable },
     data: function () {
-        return {};
+        return {
+            page: 1,
+            per: 1,
+            total: 0,
+            table: [{ id: 1 }],
+        };
     },
-    computed: {},
+    computed: {
+        title() {
+            let deepBerry = this.$store.state.deepBerry;
+            return deepBerry[this.$route.name].title;
+        },
+        pagination() {
+            return {
+                page: this.page,
+                per: this.per,
+                total: this.total,
+            };
+        },
+    },
     watch: {},
-    methods: {},
+    methods: { toSearch() {} },
     created: function () {},
     mounted: function () {},
 };
