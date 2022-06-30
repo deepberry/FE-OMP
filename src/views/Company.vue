@@ -6,23 +6,42 @@
 -->
 <template>
     <div class="v-company">
-        <header class="m-company-header">筛选1</header>
-        <section class="m-company-content">列表1</section>
-        <footer class="m-company-footer">翻页1</footer>
+        <h2 class="m-title">{{ title }}</h2>
+        <search-bar @toSearch="toSearch" />
+        <companyTable :table="table" />
+        <common-pagination :pagination="pagination" />
     </div>
 </template>
 
 <script>
+import companyTable from "@/components/table/companyTable";
 export default {
     name: "CompanyManage",
     props: [],
-    components: {},
+    components: { companyTable },
     data: function () {
-        return {};
+        return {
+            page: 1,
+            per: 1,
+            total: 0,
+            table: [{ id: 1 }],
+        };
     },
-    computed: {},
+    computed: {
+        title() {
+            let deepBerry = this.$store.state.deepBerry;
+            return deepBerry[this.$route.name]?.title;
+        },
+        pagination() {
+            return {
+                page: this.page,
+                per: this.per,
+                total: this.total,
+            };
+        },
+    },
     watch: {},
-    methods: {},
+    methods: { toSearch() {} },
     created: function () {},
     mounted: function () {},
 };

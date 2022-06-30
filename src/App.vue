@@ -12,7 +12,6 @@
             <Navigation />
         </aside>
         <main class="m-main">
-            <h2 class="m-title">{{ title }}</h2>
             <router-view />
         </main>
     </div>
@@ -32,18 +31,22 @@ export default {
         CommonFooter,
         Navigation,
     },
-    props: [],
     data: function () {
         return {};
     },
     computed: {
-        title: function () {
-            return pages?.[this.$route.name]?.title;
+        type() {
+            return this.$route.name;
         },
     },
-    methods: {},
-    created: function () {},
-    mounted: function () {},
+    watch: {
+        type(val) {
+            this.$store.commit("CHANGETYPE", val);
+        },
+    },
+    mounted: function () {
+        this.$store.commit("SETDEEPBERRY", pages);
+    },
 };
 </script>
 

@@ -6,23 +6,42 @@
 -->
 <template>
     <div class="v-equipment">
-        <header class="m-equipment-header">筛选3</header>
-        <section class="m-equipment-content">列表3</section>
-        <footer class="m-equipment-footer">翻页3</footer>
+        <h2 class="m-title">{{ title }}</h2>
+        <search-bar @toSearch="toSearch" />
+        <equipmentTable :table="table" />
+        <common-pagination :pagination="pagination" />
     </div>
 </template>
 
 <script>
+import equipmentTable from "@/components/table/equipmentTable";
 export default {
     name: "EquipmentManage",
     props: [],
-    components: {},
+    components: { equipmentTable },
     data: function () {
-        return {};
+        return {
+            page: 1,
+            per: 1,
+            total: 0,
+            table: [{ id: 1 }],
+        };
     },
-    computed: {},
+    computed: {
+        title() {
+            let deepBerry = this.$store.state.deepBerry;
+            return deepBerry[this.$route.name]?.title;
+        },
+        pagination() {
+            return {
+                page: this.page,
+                per: this.per,
+                total: this.total,
+            };
+        },
+    },
     watch: {},
-    methods: {},
+    methods: { toSearch() {} },
     created: function () {},
     mounted: function () {},
 };

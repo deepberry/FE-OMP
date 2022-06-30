@@ -3,8 +3,18 @@ import { createStore } from "vuex";
 
 // 2.Store
 const store = {
-    state: {},
-    mutations: {},
+    state: {
+        deepBerry: {},
+        type: "company",
+    },
+    mutations: {
+        SETDEEPBERRY(state, obj) {
+            state.deepBerry = obj;
+        },
+        CHANGETYPE(state, val) {
+            state.type = val;
+        },
+    },
     getters: {},
     actions: {},
 };

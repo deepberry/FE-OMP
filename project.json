@@ -6,19 +6,22 @@
     "pages": {
         "home": {
             "title": "运营平台",
-            "tabname": "首页"
+            "tab_name": "首页"
         },
         "company": {
-            "title": "企业管理",
-            "tabname": "企业管理"
+            "title": "企业信息管理",
+            "key_name": "企业",
+            "tab_name": "企业管理"
         },
         "customer": {
-            "title": "用户管理",
-            "tabname": "用户管理"
+            "title": "用户信息管理",
+            "key_name": "用户",
+            "tab_name": "用户管理"
         },
         "equipment": {
-            "title": "设备管理",
-            "tabname": "设备管理"
+            "title": "设备信息管理",
+            "key_name": "设备",
+            "tab_name": "设备管理"
         }
     }
 }
