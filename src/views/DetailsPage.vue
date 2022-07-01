@@ -7,22 +7,28 @@
         <!-- tab切换 -->
         <el-tabs v-model="activeName" class="m-tabs">
             <el-tab-pane :label="`${title}信息`" name="info"></el-tab-pane>
-            <el-tab-pane :label="`${title}操作日志`" name="logs"></el-tab-pane>
+            <el-tab-pane :label="`${title}操作日志`" name="logs" v-if="type !== 'company'"></el-tab-pane>
         </el-tabs>
         <component :is="myComponent"></component>
+        <common-pagination v-if="hasPage" :pagination="pagination" />
     </div>
 </template>
 <script>
 import companyDetail from "@/components/detail/companyDetail.vue";
 import customerDetail from "@/components/detail/customerDetail.vue";
 import equipmentDetail from "@/components/detail/equipmentDetail.vue";
+import commonLogs from "@/components/detail/commonLogs.vue";
 export default {
     name: "DetailsPage",
-    components: { companyDetail, customerDetail, equipmentDetail },
+    components: { companyDetail, customerDetail, equipmentDetail, commonLogs },
     data: function () {
         return {
             loading: false,
             activeName: "info",
+
+            page: 1,
+            per: 1,
+            total: 0,
         };
     },
     computed: {
@@ -34,7 +40,19 @@ export default {
             return this.$route.params.type;
         },
         myComponent() {
+            if (this.activeName == "logs") return "commonLogs";
             return this.type + "Detail";
+        },
+        pagination() {
+            return {
+                page: this.page,
+                per: this.per,
+                total: this.total,
+            };
+        },
+        hasPage() {
+            if (this.activeName == "logs" && this.type !== "company") return true;
+            return false;
         },
     },
     watch: {},
