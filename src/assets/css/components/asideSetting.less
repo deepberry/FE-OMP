@@ -1,0 +1,34 @@
+.m-setting {
+    .flex;
+    .pa;
+    .lb(0,40px);
+    .w(100%);
+    min-height: 46px;
+    justify-content: center;
+    .u-setting {
+        .size(46px);
+        .pointer;
+        &:hover {
+            .color(#275f8d);
+        }
+    }
+}
+
+.el-popover.m-popper-setting {
+    padding: 0 !important;
+    .m-list {
+        .flex;
+        flex-direction: column;
+        align-items: center;
+        .u-item {
+            .size(100%,60px);
+            .x;
+            .fz(18px,60px);
+            .color(#232323,#fff);
+            text-decoration: none;
+            &:hover {
+                background-color: #275f8d;
+            }
+        }
+    }
+}

@@ -10,7 +10,7 @@
         </div>
         <div class="m-info m-table">
             <h4>用户所在组织信息</h4>
-            <el-table :data="tableData" border show-summary style="width: 100%">
+            <el-table border show-summary style="width: 100%">
                 <el-table-column prop="id" label="所在企业ID" width="180" />
                 <el-table-column prop="name" label="所在企业名称" />
                 <el-table-column prop="amount1" label="姓名" />
@@ -19,22 +19,4 @@
         </div>
     </div>
 </template>
-<script>
-export default {
-    name: "customerDetail",
-    props: [],
-    components: {
-        //demo
-    },
-    data: function () {
-        return {
-            loading: false,
-        };
-    },
-    computed: {},
-    watch: {},
-    methods: {},
-    created: function () {},
-    mounted: function () {},
-};
-</script>
+<script setup></script>

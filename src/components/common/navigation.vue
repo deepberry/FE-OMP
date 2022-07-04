@@ -5,15 +5,13 @@
  * @Description: 公共侧边
 -->
 <template>
-    <header class="m-navigation">
-        <ul class="u-navigation">
-            <li class="u-item" v-for="item in router" :key="item.value">
-                <router-link :to="{ name: item.value }">
-                    {{ item.name }}
-                </router-link>
-            </li>
-        </ul>
-    </header>
+    <ul class="m-navigation">
+        <li class="u-item" v-for="item in router" :key="item.value">
+            <router-link :to="{ name: item.value }">
+                {{ item.name }}
+            </router-link>
+        </li>
+    </ul>
 </template>
 <script>
 export default {

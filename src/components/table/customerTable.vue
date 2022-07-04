@@ -7,36 +7,24 @@
         <el-table-column prop="address" label="最近登录" />
         <el-table-column prop="address" label="操作">
             <template #default="scope">
-                <el-button link type="primary" size="small">停用</el-button>
-                <el-button link type="primary" size="small" @click="toDetail(scope.row.id)">查看详情</el-button>
+                <div class="m-button">
+                    <el-button link type="primary" size="small">停用</el-button>
+                    <router-link :to="{ path: `/${label}/details/${scope.row.id}` }" class="u-more"
+                        >查看详情
+                    </router-link>
+                </div>
             </template>
         </el-table-column>
     </el-table>
 </template>
-<script>
-export default {
-    name: "customerTable",
-    props: ["table"],
-    data: function () {
-        return {
-            loading: false,
-        };
-    },
-    computed: {
-        type() {
-            return this.$store.state.type;
-        },
-    },
-    watch: {},
-    methods: {
-        toDetail(id) {
-            this.$router.push(`/${this.type}/details/${id}`);
-        },
-    },
-    created: function () {},
-    mounted: function () {},
-};
+<script setup>
+import { defineProps } from "vue";
+const props = defineProps({
+    table: Array,
+    label: String,
+});
+props;
 </script>
-<style lang="less">
-//@import '@/assets/css/demo.less';
+<style lang="less" scoped>
+@import "@/assets/css/components/table.less";
 </style>

@@ -10,6 +10,7 @@
     <div class="m-container">
         <aside class="m-aside">
             <Navigation />
+            <asideSetting />
         </aside>
         <main class="m-main">
             <router-view />
@@ -19,35 +20,23 @@
     <CommonFooter />
 </template>
 
-<script>
+<script setup>
 import CommonHeader from "@/components/common/header.vue";
 import CommonFooter from "@/components/common/footer.vue";
-import Navigation from "./components/common/navigation.vue";
-import { pages } from "../project.json";
-export default {
-    name: "App",
-    components: {
-        CommonHeader,
-        CommonFooter,
-        Navigation,
-    },
-    data: function () {
-        return {};
-    },
-    computed: {
-        type() {
-            return this.$route.name;
-        },
-    },
-    watch: {
-        type(val) {
-            this.$store.commit("CHANGETYPE", val);
-        },
-    },
-    mounted: function () {
-        this.$store.commit("SETDEEPBERRY", pages);
-    },
-};
+import Navigation from "@/components/common/navigation.vue";
+import asideSetting from "@/components/asideSetting.vue";
+import project from "../project.json";
+import { storeToRefs } from "pinia";
+import { toRaw } from "vue";
+import { useRoute } from "vue-router";
+import { deepBerryStore } from "@/store/index";
+const store = deepBerryStore();
+const route = useRoute();
+let { label, deepBerry } = storeToRefs(store);
+label = toRaw(route).name;
+deepBerry = project.pages;
+store.label = label;
+store.deepBerry = deepBerry;
 </script>
 
 <style lang="less">

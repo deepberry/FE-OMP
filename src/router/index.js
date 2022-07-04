@@ -13,10 +13,12 @@ import {
 
 // 2.Components
 const Home = () => import("../views/Home.vue");
-const Company = () => import("../views/Company.vue");
-const Customer = () => import("../views/Customer.vue");
-const Equipment = () => import("../views/Equipment.vue");
+const CompanyList = () => import("../views/CompanyList.vue");
+const CustomerList = () => import("../views/CustomerList.vue");
+const EquipmentList = () => import("../views/EquipmentList.vue");
 const DetailsPage = () => import("../views/DetailsPage.vue");
+const RolePermission = () => import("../views/RolePermission.vue");
+const MemberList = () => import("../views/MemberList.vue");
 
 // 3.Routes
 const routes = [
@@ -24,25 +26,37 @@ const routes = [
     {
         name: "company",
         path: "/company",
-        component: Company,
+        component: CompanyList,
         meta: {},
     },
     {
         name: "customer",
         path: "/customer",
-        component: Customer,
+        component: CustomerList,
         meta: {},
     },
     {
         name: "equipment",
         path: "/equipment",
-        component: Equipment,
+        component: EquipmentList,
         meta: {},
     },
     {
         name: "details",
         path: "/:type/details/:id",
         component: DetailsPage,
+        meta: {},
+    },
+    {
+        name: "role",
+        path: "/role",
+        component: RolePermission,
+        meta: {},
+    },
+    {
+        name: "member",
+        path: "/member",
+        component: MemberList,
         meta: {},
     },
 ];
