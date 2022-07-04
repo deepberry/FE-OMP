@@ -8,16 +8,16 @@
     <div class="v-equipment">
         <h2 class="m-title">{{ title }}</h2>
         <div class="m-search-box">
-            <search-bar :data="company_data" @toQuery="toSearch" />
+            <search-bar :data="equipment_data" @toQuery="toSearch" />
             <el-button class="u-add" type="primary">添加设备</el-button>
         </div>
         <equipmentTable :table="table" :label="label" />
-        <common-pagination :page="page" :per="per" :total="total" />
+        <common-pagination :pagination="{ page: state.page, per: state.per, total: state.total }" />
     </div>
 </template>
 
 <script setup>
-import { ref } from "vue";
+import { reactive } from "vue";
 import { deepBerryStore } from "@/store/index";
 import equipmentTable from "@/components/table/equipmentTable";
 const store = deepBerryStore();
@@ -25,7 +25,7 @@ const { label, deepBerry } = store;
 const { title } = deepBerry[label];
 
 // 搜索
-const company_data = {
+const equipment_data = {
     uid: "",
     placeholder: `请输入设备ID/硬件名称/ICCID/归属客户`,
     bind_title: "-- 绑定状态 --",
@@ -55,9 +55,11 @@ const company_data = {
 // 表格
 const table = [{ id: 1 }];
 // 翻页
-const page = ref(1);
-const per = ref(1);
-const total = ref(0);
+const state = reactive({
+    page: 1,
+    per: 1,
+    total: 0,
+});
 
 // 搜索查询
 function toSearch() {}

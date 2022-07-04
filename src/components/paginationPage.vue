@@ -1,23 +1,19 @@
 <template>
     <div class="m-pagination" v-if="pageTotal !== 0">
         <el-pagination
-            v-model:currentPage="pageIndex"
-            v-model:page-size="pageLimit"
+            v-model:currentPage="page"
+            v-model:page-size="per"
             :background="background"
             layout="prev, pager, next, jumper"
-            :total="pageTotal"
+            :total="total"
         />
     </div>
 </template>
 <script setup>
 import { defineProps, computed, ref } from "vue";
 const props = defineProps({
-    page: Number,
-    per: Number,
-    total: Number,
+    pagination: Object,
 });
-const pageIndex = computed(() => props.page || 1);
-const pageLimit = computed(() => props.per || 10);
-const pageTotal = computed(() => props.total || 0);
+const { page, per, total } = computed(() => props.pagination);
 const background = ref(true);
 </script>

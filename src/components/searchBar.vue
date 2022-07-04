@@ -1,6 +1,10 @@
 <template>
     <div class="m-searchBar">
-        <el-input v-model="uid" class="u-input" :placeholder="data.placeholder" />
+        <el-input v-model="uid" class="u-input" :placeholder="data.placeholder">
+            <template #prepend v-if="data.role">
+                <Search class="u-icon" />
+            </template>
+        </el-input>
 
         <!-- 账户状态 -->
         <template v-if="data.status">

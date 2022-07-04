@@ -12,12 +12,12 @@
             <el-button class="u-add" type="primary">企业开户</el-button>
         </div>
         <companyTable :table="table" :label="label" />
-        <common-pagination :page="page" :per="per" :total="total" />
+        <common-pagination :pagination="{ page: state.page, per: state.per, total: state.total }" />
     </div>
 </template>
 
 <script setup>
-import { ref } from "vue";
+import { reactive } from "vue";
 import { deepBerryStore } from "@/store/index";
 import companyTable from "@/components/table/companyTable";
 const store = deepBerryStore();
@@ -44,9 +44,11 @@ const company_data = {
 // 表格
 const table = [{ id: 1 }];
 // 翻页
-const page = ref(1);
-const per = ref(1);
-const total = ref(0);
+const state = reactive({
+    page: 1,
+    per: 1,
+    total: 0,
+});
 
 // 搜索查询
 function toSearch() {}

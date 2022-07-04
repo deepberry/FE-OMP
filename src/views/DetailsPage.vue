@@ -10,7 +10,7 @@
             <el-tab-pane :label="`${key_name}操作日志`" name="logs" v-if="hasLogs"></el-tab-pane>
         </el-tabs>
         <component :is="state.component" :data="state.data"></component>
-        <common-pagination v-if="hasLogs" :page="state.page" :per="state.per" :total="state.total" />
+        <common-pagination v-if="hasLogs" :pagination="{ page: state.page, per: state.per, total: state.total }" />
     </div>
 </template>
 <script setup>

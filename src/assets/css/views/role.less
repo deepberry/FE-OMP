@@ -1,0 +1,46 @@
+.m-role {
+    .full;
+    box-sizing: border-box;
+    .clip;
+    .m-content {
+        .pt(20px);
+        .flex;
+        .full;
+        box-sizing: border-box;
+        .u-roles {
+            .flex;
+            .size(240px,100%);
+            .pr(20px);
+            flex-direction: column;
+            gap: 40px;
+            border-right: 1px solid #ddd;
+            .u-row {
+                .fz(18px);
+                .flex;
+                align-items: center;
+                justify-content: space-between;
+                .u-button {
+                    .none;
+
+                    align-items: center;
+                    .u-icon {
+                        .pointer;
+                        .size(24px);
+                        .ml(10px);
+                        &.u-edit {
+                            .color(#67c23a,#329401);
+                        }
+                        &.u-del {
+                            .color(#f56c6c,#cf0a0a);
+                        }
+                    }
+                }
+                &:hover {
+                    .u-button {
+                        .flex;
+                    }
+                }
+            }
+        }
+    }
+}
