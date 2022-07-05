@@ -1,6 +1,6 @@
 <template>
     <div class="m-details">
-        <h2 class="m-title" v-if="type !== 'my'">
+        <h2 class="m-title" v-if="routeType !== 'my'">
             <el-page-header title="返回" @back="goBack" />
             {{ key_name }}详情
         </h2>
@@ -10,11 +10,11 @@
             <el-tab-pane :label="`${key_name}操作日志`" name="logs" v-if="hasLogs"></el-tab-pane>
         </el-tabs>
         <component :is="state.component" :data="state.data"></component>
-        <common-pagination v-if="hasLogs" :pagination="{ page: state.page, per: state.per, total: state.total }" />
+        <commonPagination v-if="hasLogs" :pagination="{ page: state.page, per: state.per, total: state.total }" />
     </div>
 </template>
 <script setup>
-import { reactive, markRaw, toRaw, computed, ref, watch } from "vue";
+import { reactive, markRaw, toRaw, ref, watch } from "vue";
 import { deepBerryStore } from "@/store/index";
 import { useRoute, useRouter } from "vue-router";
 import companyDetail from "@/components/detail/companyDetail.vue";
@@ -24,14 +24,15 @@ import myDetail from "@/components/detail/myDetail.vue";
 import commonLogs from "@/components/detail/commonLogs.vue";
 const store = deepBerryStore();
 const route = useRoute();
-const router = useRouter();
+const router = reactive(useRouter());
 const { type, id } = toRaw(route).params.value;
 const { deepBerry } = store;
-const key_name = deepBerry[type]?.key_name || "用户";
+const key_name = ref(deepBerry[type]?.key_name);
 id;
 
 // tabs切换name
 const activeName = ref("info");
+const routeType = ref(type);
 
 // 自定义数据
 const state = reactive({
@@ -56,16 +57,30 @@ const myComponent = reactive({
 });
 
 // 是否有记录日志
-const hasLogs = computed(() => {
-    if (type == "company" || type == "my") return false;
-    return true;
-});
+const hasLogs = ref(true);
 
 // 监控tab切换组件
 watch(
     activeName,
     (val) => {
-        state.component_name = val == "logs" ? ref("commonLogs") : ref(`${type}Detail`);
+        state.component_name = val == "logs" ? ref("commonLogs") : ref(`${routeType.value}Detail`);
+        state.component = myComponent[state.component_name];
+    },
+    { deep: true, immediate: true }
+);
+watch(
+    router,
+    (val) => {
+        hasLogs.value = true;
+        activeName.value = "info";
+
+        const _type = val.currentRoute.params.type;
+        routeType.value = _type;
+
+        if (_type == "company" || _type == "my") hasLogs.value = false;
+        if (_type == "my") key_name.value = "帐号";
+
+        state.component_name = ref(`${_type}Detail`);
         state.component = myComponent[state.component_name];
     },
     { deep: true, immediate: true }

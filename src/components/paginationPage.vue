@@ -15,5 +15,4 @@ const props = defineProps({
     pagination: Object,
 });
 const { page, per, total } = reactive(props.pagination);
-console.log(page, per, total, props.pagination);
 </script>

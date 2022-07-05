@@ -49,7 +49,7 @@ const routes = [
     },
     {
         name: "role",
-        path: "/role",
+        path: "/role/:id?",
         component: RolePermission,
         meta: {},
     },

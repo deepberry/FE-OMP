@@ -6,13 +6,24 @@
 -->
 <template>
     <div class="v-equipment">
+        <!-- 标题 -->
         <h2 class="m-title">{{ title }}</h2>
+        <!-- 搜索 -->
         <div class="m-search-box">
             <search-bar :data="equipment_data" @toQuery="toSearch" />
-            <el-button class="u-add" type="primary">添加设备</el-button>
+            <el-button class="u-add" type="primary" @click="addEquipment">添加设备</el-button>
         </div>
-        <equipmentTable :table="table" :label="label" />
-        <common-pagination :pagination="{ page: state.page, per: state.per, total: state.total }" />
+        <!-- 表单 -->
+        <equipmentTable :table="table" :label="label" @toDialog="onToDialog" />
+        <!-- 分页 -->
+        <commonPagination :pagination="pagination" />
+        <!-- 创建/编辑 弹窗 -->
+        <equipmentFormDialog
+            class="m-form"
+            :dialog-object="dialogObject"
+            @dialogClose="onDialogClose"
+            @dialogSuccess="onDialogSuccess"
+        />
     </div>
 </template>
 
@@ -20,6 +31,7 @@
 import { reactive } from "vue";
 import { deepBerryStore } from "@/store/index";
 import equipmentTable from "@/components/table/equipmentTable";
+import equipmentFormDialog from "@/components/dialog/equipmentFormDialog";
 const store = deepBerryStore();
 const { label, deepBerry } = store;
 const { title } = deepBerry[label];
@@ -55,7 +67,7 @@ const equipment_data = {
 // 表格
 const table = [{ id: 1 }];
 // 翻页
-const state = reactive({
+const pagination = reactive({
     page: 1,
     per: 1,
     total: 0,
@@ -63,4 +75,26 @@ const state = reactive({
 
 // 搜索查询
 function toSearch() {}
+
+// 打开弹窗
+function onToDialog({ id }) {
+    dialogObject.dialogVisible = true;
+    id;
+}
+
+const dialogObject = reactive({
+    dialogVisible: false,
+});
+// 关闭弹窗
+const onDialogClose = () => {
+    dialogObject.dialogVisible = false;
+};
+// 确定
+const onDialogSuccess = () => {
+    dialogObject.dialogVisible = false;
+};
+
+function addEquipment() {
+    dialogObject.dialogVisible = true;
+}
 </script>

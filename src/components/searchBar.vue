@@ -48,6 +48,7 @@ const uid = ref("");
 const status_id = ref("");
 const bind_id = ref("");
 const connect_id = ref("");
+const role_id = ref("");
 
 function toQuery() {}
 </script>

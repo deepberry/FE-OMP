@@ -8,24 +8,28 @@
         <el-table-column prop="address" label="状态" />
         <el-table-column prop="address" label="操作">
             <template #default="scope">
-                <div class="m-button">
-                    <el-button link type="primary" size="small">停用</el-button>
-                    <el-button link type="primary" size="small">编辑</el-button>
-                    <router-link :to="{ path: `/${label}/details/${scope.row.id}` }" class="u-more"
-                        >查看详情
-                    </router-link>
+                <div class="u-table-button">
+                    <el-button link type="primary" size="small" @click="handelClick(scope.row.id, 'close')"
+                        >停用</el-button
+                    >
+                    <el-button link type="primary" size="small" @click="handelClick(scope.row.id, 'role')"
+                        >授权角色权限
+                    </el-button>
                 </div>
             </template>
         </el-table-column>
     </el-table>
 </template>
 <script setup>
-import { defineProps } from "vue";
+import { defineProps, defineEmits } from "vue";
 const props = defineProps({
     table: Array,
-    label: String,
 });
+const emit = defineEmits(["toDialog"]);
 props;
+function handelClick(id, type) {
+    emit("toDialog", { id, type });
+}
 </script>
 <style lang="less" scoped>
 @import "@/assets/css/components/table.less";

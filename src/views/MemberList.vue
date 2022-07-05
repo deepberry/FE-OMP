@@ -1,17 +1,46 @@
 <template>
     <div class="m-member">
+        <!-- 标题 -->
         <h2 class="m-title">成员列表</h2>
+        <!-- 搜索 -->
         <div class="m-search-box">
             <search-bar :data="member_data" @toQuery="toSearch" />
         </div>
-        <memberTable :table="table" :label="label" />
-        <common-pagination :pagination="{ page: state.page, per: state.per, total: state.total }" />
+        <!-- 表格 -->
+        <memberTable :table="table" @toDialog="onToDialog" />
+        <!-- 分页 -->
+        <common-pagination :pagination="pagination" />
+        <!-- 提示弹窗 -->
+        <tipsDialog
+            class="m-tips"
+            :dialog-object="dialogObject"
+            @dialogClose="onDialogClose"
+            @dialogSuccess="onDialogSuccess"
+            v-if="dialogType == 'tips'"
+        >
+            <div class="m-tips-content">
+                <span class="u-title">是否启用/停用成员帐号</span>
+                <span>张三</span>
+                <span>管理员</span>
+                <span>13875984562</span>
+            </div>
+        </tipsDialog>
+        <!-- 授权 弹窗 -->
+        <userRoleFormDialog
+            class="m-form"
+            :dialog-object="dialogObject"
+            @dialogClose="onDialogClose"
+            @dialogSuccess="onDialogSuccess"
+            v-if="dialogType == 'role'"
+        />
     </div>
 </template>
 <script setup>
-import { reactive } from "vue";
+import { reactive, ref } from "vue";
 import memberTable from "@/components/table/memberTable";
+import userRoleFormDialog from "@/components/dialog/userRoleFormDialog";
 
+const table = [{ id: 1 }];
 // 搜索
 const member_data = {
     uid: "",
@@ -44,7 +73,7 @@ const member_data = {
     ],
 };
 // 翻页
-const state = reactive({
+const pagination = reactive({
     page: 1,
     per: 1,
     total: 0,
@@ -52,4 +81,25 @@ const state = reactive({
 
 // 搜索查询
 function toSearch() {}
+
+let dialogType = ref("tips");
+
+// 打开弹窗
+function onToDialog({ id, type }) {
+    dialogObject.dialogVisible = true;
+    dialogType.value = type == "role" ? "role" : "tips";
+    id;
+}
+
+const dialogObject = reactive({
+    dialogVisible: false,
+});
+// 关闭弹窗
+const onDialogClose = () => {
+    dialogObject.dialogVisible = false;
+};
+// 确定
+const onDialogSuccess = () => {
+    dialogObject.dialogVisible = false;
+};
 </script>

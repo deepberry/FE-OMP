@@ -6,12 +6,29 @@
 -->
 <template>
     <div class="v-customer">
+        <!-- 标题 -->
         <h2 class="m-title">{{ title }}</h2>
+        <!-- 搜索 -->
         <div class="m-search-box">
             <search-bar :data="customer_data" @toQuery="toSearch" />
         </div>
-        <customerTable :table="table" :label="label" />
-        <common-pagination :pagination="{ page: state.page, per: state.per, total: state.total }" />
+        <!-- 表单 -->
+        <customerTable :table="table" :label="label" @toDialog="onToDialog" />
+        <!-- 分页 -->
+        <commonPagination :pagination="pagination" />
+        <!-- 提示弹窗 -->
+        <tipsDialog
+            class="m-tips"
+            :dialog-object="dialogObject"
+            @dialogClose="onDialogClose"
+            @dialogSuccess="onDialogSuccess"
+        >
+            <div class="m-content">
+                <span class="u-title">是否启用/停用用户帐号</span>
+                <span class="u-label">13666222212</span>
+                <span class="u-value">(vfnjkehgnjkedhbngjk)</span>
+            </div>
+        </tipsDialog>
     </div>
 </template>
 
@@ -43,7 +60,7 @@ const customer_data = {
 // 表格
 const table = [{ id: 1 }];
 // 翻页
-const state = reactive({
+const pagination = reactive({
     page: 1,
     per: 1,
     total: 0,
@@ -51,4 +68,22 @@ const state = reactive({
 
 // 搜索查询
 function toSearch() {}
+
+// 打开弹窗
+function onToDialog({ id }) {
+    dialogObject.dialogVisible = true;
+    id;
+}
+
+const dialogObject = reactive({
+    dialogVisible: false,
+});
+// 关闭弹窗
+const onDialogClose = () => {
+    dialogObject.dialogVisible = false;
+};
+// 确定
+const onDialogSuccess = () => {
+    dialogObject.dialogVisible = false;
+};
 </script>

@@ -1,19 +1,22 @@
 <template>
     <div class="m-roles">
+        <!-- 标题 -->
         <h2 class="m-title">角色权限</h2>
+        <!-- 内容 -->
         <div class="m-content">
+            <!-- 左侧角色 -->
             <div class="m-role" :style="`height: ${roleHeight}px`">
-                <el-button class="u-add" type="success"> + 新建角色 </el-button>
+                <el-button class="u-add" type="success" @click="showDialog('form')"> + 新建角色 </el-button>
                 <!-- 角色 -->
                 <div class="u-row" v-for="(item, i) in roles" :key="i">
                     <span class="u-label">{{ item.name }}</span>
                     <div class="u-button">
-                        <Edit class="u-icon u-edit" />
-                        <CloseBold class="u-icon u-del" />
+                        <Edit class="u-icon u-edit" @click="showDialog('form')" />
+                        <CloseBold class="u-icon u-del" @click="showDialog('tips')" />
                     </div>
                 </div>
             </div>
-
+            <!-- 右侧权限 -->
             <div class="m-user-role" :style="`height: ${roleHeight}px`">
                 <h4>
                     <span>功能权限</span>
@@ -38,10 +41,32 @@
                 </div>
             </div>
         </div>
+        <!-- 提示弹窗 -->
+        <tipsDialog
+            class="m-tips"
+            :dialog-object="dialogObject"
+            @dialogClose="onDialogClose"
+            @dialogSuccess="onDialogSuccess"
+            v-if="dialogType == 'tips'"
+        >
+            <div class="m-tips-content">
+                <span class="u-title">角色还存在授权成员</span>
+                <span class="u-title">请转移成员后再删除角色</span>
+            </div>
+        </tipsDialog>
+        <!-- 新建/编辑角色 弹窗 -->
+        <roleFormDialog
+            class="m-form"
+            :dialog-object="dialogObject"
+            @dialogClose="onDialogClose"
+            @dialogSuccess="onDialogSuccess"
+            v-if="dialogType == 'form'"
+        />
     </div>
 </template>
 <script setup>
-import { ref, onMounted } from "vue";
+import roleFormDialog from "@/components/dialog/roleFormDialog";
+import { ref, onMounted, reactive } from "vue";
 let clientHeight = ref("");
 let roleHeight = ref("");
 
@@ -59,15 +84,19 @@ onMounted(() => {
 const roles = [
     {
         name: "管理员",
+        role: "admin",
     },
     {
         name: "普通用户",
+        role: "user",
     },
     {
         name: "技术人员",
+        role: "programmer",
     },
     {
         name: "市场人员",
+        role: "marketing",
     },
 ];
 //
@@ -202,6 +231,26 @@ const remove = (node, data) => {
     const index = children.findIndex((d) => d.id === data.id);
     children.splice(index, 1);
     dataSource.value = [...dataSource.value];
+};
+
+//
+
+const dialogType = ref("tips");
+function showDialog(val) {
+    dialogObject.dialogVisible = true;
+    dialogType.value = val;
+}
+const dialogObject = reactive({
+    dialogVisible: false,
+});
+
+// 关闭弹窗
+const onDialogClose = () => {
+    dialogObject.dialogVisible = false;
+};
+// 确定
+const onDialogSuccess = () => {
+    dialogObject.dialogVisible = false;
 };
 </script>
 <style lang="less">
