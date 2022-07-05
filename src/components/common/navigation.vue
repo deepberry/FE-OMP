@@ -7,7 +7,8 @@
 <template>
     <ul class="m-navigation">
         <li class="u-item" v-for="item in router" :key="item.value">
-            <router-link :to="{ name: item.value }">
+            <router-link class="u-txt" :to="{ name: item.value }">
+                <component class="u-icon" :is="item.icon" />
                 {{ item.name }}
             </router-link>
         </li>
@@ -24,14 +25,17 @@ export default {
                 {
                     name: "企业管理",
                     value: "company",
+                    icon: "Postcard",
                 },
                 {
                     name: "用户管理",
                     value: "customer",
+                    icon: "User",
                 },
                 {
                     name: "设备管理",
                     value: "equipment",
+                    icon: "SetUp",
                 },
             ],
         };
