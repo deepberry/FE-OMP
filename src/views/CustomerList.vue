@@ -7,7 +7,7 @@
 <template>
     <div class="v-customer">
         <!-- 标题 -->
-        <h2 class="m-title">{{ title }}</h2>
+        <h2 class="m-title"><component class="u-title-icon" :is="icon" />{{ title }}</h2>
         <!-- 搜索 -->
         <div class="m-search-box">
             <search-bar :data="customer_data" @toQuery="toSearch" />
@@ -38,7 +38,7 @@ import { deepBerryStore } from "@/store/index";
 import customerTable from "@/components/table/customerTable";
 const store = deepBerryStore();
 const { label, deepBerry } = store;
-const { title } = deepBerry[label];
+const { title, icon } = deepBerry[label];
 
 // 搜索
 const customer_data = {

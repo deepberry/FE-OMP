@@ -7,7 +7,7 @@
 <template>
     <div class="v-equipment">
         <!-- 标题 -->
-        <h2 class="m-title">{{ title }}</h2>
+        <h2 class="m-title"><component class="u-title-icon" :is="icon" />{{ title }}</h2>
         <!-- 搜索 -->
         <div class="m-search-box">
             <search-bar :data="equipment_data" @toQuery="toSearch" />
@@ -34,7 +34,7 @@ import equipmentTable from "@/components/table/equipmentTable";
 import equipmentFormDialog from "@/components/dialog/equipmentFormDialog";
 const store = deepBerryStore();
 const { label, deepBerry } = store;
-const { title } = deepBerry[label];
+const { title, icon } = deepBerry[label];
 
 // 搜索
 const equipment_data = {

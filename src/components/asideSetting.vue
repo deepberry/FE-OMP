@@ -5,9 +5,9 @@
                 <Setting class="u-setting" />
             </template>
             <div class="m-list">
-                <router-link :to="item.path" class="u-item" v-for="(item, i) in list" :key="i">{{
-                    item.label
-                }}</router-link>
+                <router-link :to="item.path" class="u-item" v-for="(item, i) in list" :key="i">
+                    {{ item.label }}
+                </router-link>
             </div>
         </el-popover>
     </div>
