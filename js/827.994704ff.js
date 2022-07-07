@@ -1,0 +1,2 @@
+"use strict";(self["webpackChunkomp"]=self["webpackChunkomp"]||[]).push([[827],{9827:function(e,n,t){t.r(n),t.d(n,{default:function(){return a}});var o=t(6252);const s={class:"v-home"},c={name:"HomeView",props:[],data:function(){return{}},computed:{},methods:{},created:function(){},components:{}};var u=Object.assign(c,{setup(e){return(e,n)=>((0,o.wg)(),(0,o.iD)("div",s,"HOME"))}});const r=u;var a=r}}]);
+//# sourceMappingURL=827.994704ff.js.map
