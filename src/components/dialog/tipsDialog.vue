@@ -19,10 +19,14 @@
 </template>
 <script setup>
 import { defineProps, defineEmits, computed } from "vue";
+//====== 数据 ======
+// props
 const props = defineProps({
     dialogObject: Object,
 });
+const emit = defineEmits();
 
+// 弹窗显示
 const dialogShow = computed({
     get() {
         return props.dialogObject.dialogVisible;
@@ -31,20 +35,26 @@ const dialogShow = computed({
         return val;
     },
 });
-const emit = defineEmits();
+
+// 弹窗默认样式
 const obj = {
     dialogTitle: props.dialogObject.title || "Tips",
     dialogWidth: props.dialogObject.width || "760px",
     dialogCloseBtnText: props.dialogObject.closeBtnText || "取消",
-    dialogSuccessBtnText: props.dialogObject.successBtnText || "成功",
+    dialogSuccessBtnText: props.dialogObject.successBtnText || "确定",
     dialogIsFooter: props.dialogObject.isFooter || true,
     dialogContent: props.dialogObject.content || "是否停用",
 };
+
+//====== 交互 ======
+
+// 关闭
 const close = () => {
-    emit("dialogClose", false, "close");
+    emit("dialogClose");
 };
+// 成功
 const success = () => {
-    emit("dialogSuccess", false, "success");
+    emit("dialogSuccess");
 };
 </script>
 <script>

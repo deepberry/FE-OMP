@@ -10,25 +10,25 @@
         <h2 class="m-title"><component class="u-title-icon" :is="icon" />{{ title }}</h2>
         <!-- 搜索 -->
         <div class="m-search-box">
-            <search-bar :data="company_data" @toQuery="toSearch" />
-            <el-button class="u-add" type="primary" @click="createCompany">企业开户</el-button>
+            <search-bar :data="company_data" @toSearch="onToSearch" />
+            <el-button class="u-add" type="primary" @click="onToDialog">企业开户</el-button>
         </div>
         <!-- 表格 -->
-        <companyTable :table="table" :label="label" @toDialog="onToDialog" />
+        <companyTable :table="state.table" :label="label" @toDialog="onToDialog" />
         <!-- 分页 -->
-        <commonPagination :pagination="pagination" />
+        <commonPagination :pagination="state.pagination" @toParams="onToParams" />
         <!-- 提示弹窗 -->
         <tipsDialog
             class="m-tips"
             :dialog-object="dialogObject"
             @dialogClose="onDialogClose"
-            @dialogSuccess="onDialogSuccess"
+            @dialogSuccess="onTipsSuccess"
             v-if="dialogType == 'tips'"
         >
             <div class="m-tips-content">
                 <span class="u-title">是否启用/停用企业账户</span>
-                <span>湖南XXXXXXXXXX公司</span>
-                <span>(vfnjkehgnjkedhbngjk)</span>
+                <span>{{ dialogObject.company.orgzName }}</span>
+                <span>企业ID: {{ dialogObject.company.organizationId }}</span>
             </div>
         </tipsDialog>
         <!-- 创建/编辑 弹窗 -->
@@ -36,73 +36,166 @@
             class="m-form"
             :dialog-object="dialogObject"
             @dialogClose="onDialogClose"
-            @dialogSuccess="onDialogSuccess"
+            @dialogSuccess="onFormSuccess"
             v-if="dialogType == 'form'"
         />
     </div>
 </template>
 
 <script setup>
-import { reactive, ref } from "vue";
+import { reactive, ref, onMounted, computed } from "vue";
 import { deepBerryStore } from "@/store/index";
 import companyTable from "@/components/table/companyTable";
 import companyFormDialog from "@/components/dialog/companyFormDialog";
+import { getCompanyList, addCompany, editCompany, enabledCompany } from "@/service/company";
+import { ElNotification } from "element-plus";
+// import { getCompanyList } from "@/service/company";
+
+//====== 数据 ======
+
+// 获取公共数据
 const store = deepBerryStore();
 const { label, deepBerry } = store;
 const { title, icon } = deepBerry[label];
 
-// 搜索
+// 搜索 默认选项数据
 const company_data = {
-    uid: "",
     placeholder: `请输入企业ID/企业名称/联系人/联系电话`,
     status_title: "-- 企业账户状态 --",
     status: [
         {
+            label: "全部",
+            value: -1,
+        },
+        {
             label: "正常",
-            value: 1,
+            value: 0,
         },
         {
             label: "已停用",
-            value: 0,
+            value: 1,
         },
     ],
 };
 
-// 表格
-const table = [{ id: 1 }];
-// 翻页
-const pagination = reactive({
-    page: 1,
-    per: 1,
-    total: 0,
+// 表格 翻页 企业id 企业名称 弹窗表格
+let state = reactive({
+    table: [],
+    pagination: {
+        page: 1,
+        per: 20,
+        total: 0,
+    },
+    search: {
+        input: null,
+        status: null,
+    },
+    form: {},
 });
+
+// axios查询数据
+const params = computed(() => {
+    return {
+        pageIndex: state.pagination.page - 1,
+        pageSize: state.pagination.per,
+        Condition: state.search.input,
+        Status: state.search.status,
+    };
+});
+
+// 默认表单
+const company = {
+    organizationId: "",
+    orgzLogo: "",
+    orgzName: "",
+    phoneNum: "",
+    userId: "",
+    userName: "",
+};
+
+// 弹窗
+let dialogType = ref("form");
+let dialogObject = reactive({
+    dialogVisible: false,
+    company: company,
+});
+
+//====== 交互 ======
 
 // 搜索查询
-function toSearch() {}
-
-let dialogType = ref("tips");
-
-// 打开弹窗
-function onToDialog({ id, type }) {
-    dialogObject.dialogVisible = true;
-    dialogType.value = type == "edit" ? "form" : "tips";
-    id;
+function onToSearch({ input_txt, status_id }) {
+    state.search.input = input_txt;
+    state.search.status = status_id == -1 ? null : status_id;
+    state.pagination.page = 1;
+    loadCompanyList();
 }
 
-const dialogObject = reactive({
-    dialogVisible: false,
-});
+// 翻页页码并搜索新的列表
+function onToParams(e) {
+    state.pagination.page = e;
+    loadCompanyList();
+}
+
+// 打开弹窗
+function onToDialog({ row, type }) {
+    dialogObject.dialogVisible = true;
+    dialogObject.company = row ? row : company;
+    dialogType.value = type == "close" ? "tips" : "form";
+}
+
 // 关闭弹窗
 const onDialogClose = () => {
     dialogObject.dialogVisible = false;
 };
-// 确定
-const onDialogSuccess = () => {
+// 确定 tips弹窗 - 企业停用或启用
+const onTipsSuccess = () => {
+    const { organizationId, status } = dialogObject.company;
+    const enabled = status == "正常" ? 1 : 0;
+    const msg = enabled == 0 ? "启用" : "停用";
+    enabledCompany(organizationId, enabled).then(() => {
+        dialogObject.dialogVisible = false;
+        loadCompanyList();
+        ElNotification({
+            title: "成功",
+            message: `${msg}企业成功`,
+            type: "success",
+        });
+    });
+};
+// 确定 form弹窗
+const onFormSuccess = (form) => {
     dialogObject.dialogVisible = false;
+    form.logo = form.orgzLogo;
+    !form.organizationId
+        ? addCompany(form).then(() => {
+              ElNotification({
+                  title: "成功",
+                  message: "添加企业成功",
+                  type: "success",
+              });
+          })
+        : editCompany(form).then(() => {
+              ElNotification({
+                  title: "成功",
+                  message: "修改企业信息成功",
+                  type: "success",
+              });
+          });
 };
 
-function createCompany() {
-    dialogObject.dialogVisible = true;
-    dialogType.value = "form";
+//====== axios数据 ======
+
+// 初始加载
+onMounted(() => loadCompanyList());
+
+// 获取企业列表
+function loadCompanyList() {
+    getCompanyList(params.value).then((res) => {
+        if (res.status == "200") {
+            const data = res.data.data;
+            state.table = data.datas;
+            state.pagination.total = data.totalCount;
+        }
+    });
 }
 </script>

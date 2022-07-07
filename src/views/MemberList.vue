@@ -4,7 +4,7 @@
         <h2 class="m-title">成员列表</h2>
         <!-- 搜索 -->
         <div class="m-search-box">
-            <search-bar :data="member_data" @toQuery="toSearch" />
+            <search-bar :data="member_data" @toSearch="toSearch" />
         </div>
         <!-- 表格 -->
         <memberTable :table="table" @toDialog="onToDialog" />
@@ -80,7 +80,9 @@ const pagination = reactive({
 });
 
 // 搜索查询
-function toSearch() {}
+function toSearch(e) {
+    console.log(e, "成员");
+}
 
 let dialogType = ref("tips");
 

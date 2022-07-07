@@ -10,7 +10,7 @@
         <h2 class="m-title"><component class="u-title-icon" :is="icon" />{{ title }}</h2>
         <!-- 搜索 -->
         <div class="m-search-box">
-            <search-bar :data="customer_data" @toQuery="toSearch" />
+            <search-bar :data="customer_data" @toSearch="toSearch" />
         </div>
         <!-- 表单 -->
         <customerTable :table="table" :label="label" @toDialog="onToDialog" />
@@ -23,7 +23,7 @@
             @dialogClose="onDialogClose"
             @dialogSuccess="onDialogSuccess"
         >
-            <div class="m-content">
+            <div class="m-tips-content">
                 <span class="u-title">是否启用/停用用户帐号</span>
                 <span class="u-label">13666222212</span>
                 <span class="u-value">(vfnjkehgnjkedhbngjk)</span>
@@ -67,7 +67,9 @@ const pagination = reactive({
 });
 
 // 搜索查询
-function toSearch() {}
+function toSearch(e) {
+    console.log(e, "用户");
+}
 
 // 打开弹窗
 function onToDialog({ id }) {

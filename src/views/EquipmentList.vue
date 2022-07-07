@@ -10,7 +10,7 @@
         <h2 class="m-title"><component class="u-title-icon" :is="icon" />{{ title }}</h2>
         <!-- 搜索 -->
         <div class="m-search-box">
-            <search-bar :data="equipment_data" @toQuery="toSearch" />
+            <search-bar :data="equipment_data" @toSearch="toSearch" />
             <el-button class="u-add" type="primary" @click="addEquipment">添加设备</el-button>
         </div>
         <!-- 表单 -->
@@ -74,7 +74,9 @@ const pagination = reactive({
 });
 
 // 搜索查询
-function toSearch() {}
+function toSearch(e) {
+    console.log(e, "设备");
+}
 
 // 打开弹窗
 function onToDialog({ id }) {
