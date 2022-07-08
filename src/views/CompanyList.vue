@@ -14,7 +14,7 @@
             <el-button class="u-add" type="primary" @click="onToDialog">企业开户</el-button>
         </div>
         <!-- 表格 -->
-        <companyTable :table="state.table" :label="label" @toDialog="onToDialog" />
+        <companyTable :table="state.table" :label="label" @toDialog="onToDialog" v-loading="state.loading" />
         <!-- 分页 -->
         <commonPagination :pagination="state.pagination" @toParams="onToParams" />
         <!-- 提示弹窗 -->
@@ -80,6 +80,7 @@ const company_data = {
 
 // 表格 翻页 企业id 企业名称 弹窗表格
 let state = reactive({
+    loading: false,
     table: [],
     pagination: {
         page: 1,
@@ -190,12 +191,15 @@ onMounted(() => loadCompanyList());
 
 // 获取企业列表
 function loadCompanyList() {
-    getCompanyList(params.value).then((res) => {
-        if (res.status == "200") {
-            const data = res.data.data;
-            state.table = data.datas;
-            state.pagination.total = data.totalCount;
-        }
-    });
+    state.loading = true;
+    getCompanyList(params.value)
+        .then((res) => {
+            if (res.status == "200") {
+                const data = res.data.data;
+                state.table = data.datas;
+                state.pagination.total = data.totalCount;
+            }
+        })
+        .finally(() => (state.loading = false));
 }
 </script>
