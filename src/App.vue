@@ -1,7 +1,7 @@
 <!--
  * @Author: iRuxu
  * @Date: 2022-06-20 17:26:26
- * @LastEditTime: 2022-06-24 20:09:54
+ * @LastEditTime: 2022-07-08 19:11:43
  * @Description: 企业微信运营平台
 -->
 <template>
@@ -24,7 +24,7 @@
 import CommonHeader from "@/components/common/header.vue";
 import CommonFooter from "@/components/common/footer.vue";
 import Navigation from "./components/common/navigation.vue";
-import { pages } from "../project.json";
+import project from "../project.json";
 export default {
     name: "App",
     components: {
@@ -38,7 +38,7 @@ export default {
     },
     computed: {
         title: function () {
-            return pages?.[this.$route.name]?.title;
+            return project.pages?.[this.$route.name]?.title;
         },
     },
     methods: {},

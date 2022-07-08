@@ -1,12 +1,13 @@
 /*
  * @Author: iRuxu
- * @Date: 2022-06-20 17:26:26
- * @LastEditTime: 2022-06-22 14:21:14
- * @Description:
+ * @Date: 2022-07-04 10:42:02
+ * @LastEditTime: 2022-07-08 19:01:56
+ * @Description:config
  */
 const path = require("path");
 const pkg = require("./package.json");
 const project = require("./project.json");
+const { __cdn } = require("@deepberry/common/data/common.json");
 module.exports = {
     //❤️ Multiple pages ~
     // pages: {
@@ -41,6 +42,8 @@ module.exports = {
         (process.env.STATIC_PATH === "repo" && `/${pkg.name}/`) ||
         //BY root path or bind a domain
         (process.env.STATIC_PATH == "root" && "/") ||
+        //BY cdn path
+        (process.env.STATIC_PATH === "cdn" && `${__cdn}${pkg.name}/`) ||
         //for lost
         "/",
 
@@ -59,11 +62,11 @@ module.exports = {
         });
 
         //💝 in-line small imgs ~
-        config.module
-            .rule("images")
-            .use("url-loader")
-            .loader("url-loader")
-            .tap((options) => Object.assign(options || {}, { limit: 10240 }));
+        config.module.rule("images").set("parser", {
+            dataUrlCondition: {
+                maxSize: 4 * 1024, // 4KiB
+            },
+        });
 
         //💝 in-line svg imgs ~
         config.module.rule("vue").use("vue-svg-inline-loader").loader("vue-svg-inline-loader");
