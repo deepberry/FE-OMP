@@ -1,7 +1,7 @@
 /*
  * @Author: iRuxu
  * @Date: 2022-07-04 10:42:02
- * @LastEditTime: 2022-07-08 19:01:56
+ * @LastEditTime: 2022-07-08 19:14:02
  * @Description:config
  */
 const path = require("path");
@@ -28,6 +28,9 @@ module.exports = {
     //⚛️ Proxy ~
     devServer: {
         proxy: {
+            "/api/Orgz": {
+                target: process.env["DEV_SERVER"] == "true" ? "http://localhost:444" : "https://admin.deepberry.cn:444",
+            },
             // "/api/cms": {
             //     target: process.env["DEV_SERVER"] == "true" ? "http://localhost:5120" : "https://xxx.deepberry.cn",
             // },

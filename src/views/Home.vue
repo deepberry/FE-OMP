@@ -15,3 +15,16 @@ export default {
     components: {},
 };
 </script>
+
+<script setup>
+// import { onMounted } from "vue";
+// import { inject } from "vue";
+
+// const axios = inject("axios"); //注入一下不然不能用
+
+// function getList() {
+//     axios.get("http://x.xxx.xx.xxx:3000/getHottestArticle").then((res) => {
+//         console.log(res);
+//     });
+// }
+</script>

@@ -1,12 +1,13 @@
 // 1.Dependency
-import { createStore } from "vuex";
+import { defineStore } from "pinia";
 
-// 2.Store
-const store = {
-    state: {},
-    mutations: {},
+export const deepBerryStore = defineStore("deepBerry", {
+    state: () => {
+        return {
+            data: {},
+            label: "",
+        };
+    },
     getters: {},
     actions: {},
-};
-
-export default createStore(store);
+});

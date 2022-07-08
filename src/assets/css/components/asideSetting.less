@@ -1,0 +1,45 @@
+.m-setting {
+    .flex;
+    .pa;
+    .lb(0,40px);
+    .w(100%);
+    min-height: 46px;
+    justify-content: center;
+    .u-setting {
+        .size(38px);
+        .pointer;
+        &:hover {
+            .color(#275f8d);
+        }
+    }
+}
+
+.el-popover.m-popper-setting {
+    padding: 0 !important;
+    .r(6px);
+    overflow: hidden;
+    .m-list {
+        font-family: "SimHei";
+        .u-item {
+            .bold;
+            .db;
+            .size(100%,60px);
+            .x;
+            .fz(16px,60px);
+            .color(#656565,#fff);
+            text-decoration: none;
+            letter-spacing: 3px;
+            &:hover {
+                background-color: #3f5c74;
+            }
+            &::after {
+                content: " - ";
+                font-weight: 400;
+            }
+            &::before {
+                content: " - ";
+                font-weight: 400;
+            }
+        }
+    }
+}
