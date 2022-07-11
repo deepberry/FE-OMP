@@ -1,7 +1,5 @@
 <template>
-    <div class="m-roles">
-        <!-- 标题 -->
-        <h2 class="m-title">角色权限</h2>
+    <div class="m-roles v-page">
         <!-- 内容 -->
         <div class="m-content">
             <!-- 左侧角色 -->
@@ -73,11 +71,11 @@ let roleHeight = ref("");
 // role内容高度
 onMounted(() => {
     clientHeight.value = `${document.documentElement.clientHeight}`;
-    roleHeight.value = clientHeight.value - 84 - 120;
+    roleHeight.value = clientHeight.value - 130;
 
     window.onresize = function () {
         clientHeight.value = `${document.documentElement.clientHeight}`;
-        roleHeight.value = clientHeight.value - 84 - 120;
+        roleHeight.value = clientHeight.value - 130;
     };
 });
 

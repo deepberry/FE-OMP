@@ -26,6 +26,18 @@
             "key_name": "设备",
             "tab_name": "设备管理",
             "icon": "SetUp"
+        },
+        "role": {
+            "title": "角色权限",
+            "key_name": "角色",
+            "tab_name": "角色",
+            "icon": "Setting"
+        },
+        "details": {
+            "title": "详情",
+            "key_name": "详情",
+            "tab_name": "详情",
+            "icon": "Document"
         }
     }
 }

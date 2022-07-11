@@ -12,7 +12,7 @@
             </template>
         </el-table-column>
         <el-table-column prop="updateAt" label="最近登录" width="240" />
-        <el-table-column prop="address" label="操作" width="240">
+        <el-table-column prop="address" label="操作" width="180">
             <template #default="scope">
                 <div class="u-table-button">
                     <el-button link type="primary" size="small" @click="handelClick(scope.row)">{{

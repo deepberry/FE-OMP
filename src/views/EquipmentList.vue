@@ -5,9 +5,7 @@
  * @Description:设备管理
 -->
 <template>
-    <div class="v-equipment">
-        <!-- 标题 -->
-        <h2 class="m-title"><component class="u-title-icon" :is="icon" />{{ title }}</h2>
+    <div class="v-equipment v-page">
         <!-- 搜索 -->
         <div class="m-search-box">
             <search-bar :data="equipment_data" @toSearch="onToSearch" />
@@ -39,8 +37,7 @@ import { ElNotification } from "element-plus";
 
 // 获取公共数据
 const store = deepBerryStore();
-const { label, deepBerry } = store;
-const { title, icon } = deepBerry[label];
+const { label } = store;
 
 // 搜索 默认选项数据
 const equipment_data = {
@@ -164,7 +161,6 @@ function loadEquipmentList() {
         .then((res) => {
             if (res.status == "200") {
                 const data = res.data.data;
-                console.log(data);
                 state.table = data.datas;
                 state.pagination.total = data.totalCount;
             }

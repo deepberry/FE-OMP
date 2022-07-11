@@ -1,9 +1,5 @@
 <template>
-    <div class="m-details">
-        <h2 class="m-title" v-if="routeType !== 'my'">
-            <el-page-header title="返回" @back="goBack" />
-            {{ key_name }}详情
-        </h2>
+    <div class="m-details v-page">
         <!-- tab切换 -->
         <el-tabs v-model="activeName" class="m-tabs">
             <el-tab-pane :label="`${key_name}信息`" name="info"></el-tab-pane>
@@ -20,7 +16,7 @@ import { useRoute, useRouter } from "vue-router";
 import companyDetail from "@/components/detail/companyDetail.vue";
 import customerDetail from "@/components/detail/customerDetail.vue";
 import equipmentDetail from "@/components/detail/equipmentDetail.vue";
-import myDetail from "@/components/detail/myDetail.vue";
+import roleDetail from "@/components/detail/roleDetail.vue";
 import commonLogs from "@/components/detail/commonLogs.vue";
 const store = deepBerryStore();
 const route = useRoute();
@@ -54,7 +50,7 @@ const myComponent = reactive({
     companyDetail: markRaw(companyDetail),
     customerDetail: markRaw(customerDetail),
     equipmentDetail: markRaw(equipmentDetail),
-    myDetail: markRaw(myDetail),
+    roleDetail: markRaw(roleDetail),
     commonLogs: markRaw(commonLogs),
 });
 
@@ -79,19 +75,14 @@ watch(
         const _type = val.currentRoute.params.type;
         routeType.value = _type;
 
-        if (_type == "company" || _type == "my") hasLogs.value = false;
-        if (_type == "my") key_name.value = "帐号";
+        if (_type == "company" || _type == "role") hasLogs.value = false;
+        if (_type == "role") key_name.value = "帐号";
 
         state.component_name = ref(`${_type}Detail`);
         state.component = myComponent[state.component_name];
     },
     { deep: true, immediate: true }
 );
-
-// 返回列表
-function goBack() {
-    router.go(-1);
-}
 </script>
 <style lang="less">
 @import "@/assets/css/views/details.less";

@@ -6,7 +6,7 @@
         <el-table-column prop="hard_version" label="硬件版本" />
         <el-table-column prop="soft_version" label="固件版本" />
         <el-table-column prop="iccid" label="ICCID" />
-        <el-table-column prop="address" label="操作" width="240">
+        <el-table-column prop="address" label="操作" width="180">
             <template #default="scope">
                 <div class="u-table-button">
                     <el-button link type="primary" size="small" @click="handelClick(scope.row)">编辑</el-button>

@@ -5,9 +5,7 @@
  * @Description:客户管理
 -->
 <template>
-    <div class="v-customer">
-        <!-- 标题 -->
-        <h2 class="m-title"><component class="u-title-icon" :is="icon" />{{ title }}</h2>
+    <div class="v-customer v-page">
         <!-- 搜索 -->
         <div class="m-search-box">
             <search-bar :data="customer_data" @toSearch="onToSearch" />
@@ -43,8 +41,7 @@ import { ElNotification } from "element-plus";
 
 // 获取公共数据
 const store = deepBerryStore();
-const { label, deepBerry } = store;
-const { title, icon } = deepBerry[label];
+const { label } = store;
 
 // 搜索 默认选项数据
 const customer_data = {
@@ -118,7 +115,6 @@ function onToParams(e) {
 // 打开弹窗
 function onToDialog({ row, type }) {
     dialogObject.dialogVisible = true;
-    console.log(row);
     dialogObject.customer = row ? row : customer;
     dialogType.value = type == "close" ? "tips" : "form";
 }
@@ -157,7 +153,6 @@ function loadCustomerList() {
                 const data = res.data.data;
                 state.table = data.datas;
                 state.pagination.total = data.totalCount;
-                console.log(state.table);
             }
         })
         .finally(() => (state.loading = false));

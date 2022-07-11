@@ -19,11 +19,11 @@ export default {
         return {
             list: [
                 {
-                    path: "/my/details/1",
+                    path: "/role/details/1",
                     label: "当前账号",
                 },
                 {
-                    path: "/member",
+                    path: "/role/member",
                     label: "成员列表",
                 },
                 {

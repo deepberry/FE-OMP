@@ -56,7 +56,7 @@ const routes = [
     },
     {
         name: "member",
-        path: "/member",
+        path: "/role/member",
         component: MemberList,
         meta: {},
     },

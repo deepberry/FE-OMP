@@ -19,7 +19,7 @@
             </template>
         </el-table-column>
         <el-table-column prop="createAt" label="账户创建时间" width="240" />
-        <el-table-column label="操作" width="240">
+        <el-table-column label="操作" width="280">
             <template #default="scope">
                 <div class="u-table-button">
                     <el-button link type="primary" size="small" @click="handelClick(scope.row, 'close')">{{

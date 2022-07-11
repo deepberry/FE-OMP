@@ -47,23 +47,16 @@ function installCmsInterceptors(target, options) {
     );
 }
 function PopNextworkError(err) {
-    console.log(err.response);
     return Promise.reject(err);
 }
 
-const __admin = "https://admin.deepberry.cn:444";
-
 function $admin(options) {
-    let domain = (options && options.domain) || __admin;
     let config = {
-        // 同时发送cookie和basic auth
-        withCredentials: true,
-        auth: {
-            username: (localStorage && localStorage.getItem("token")) || "",
-            password: "cms common request",
+        headers: {
+            "Content-Type": "multipart/form-data",
+            Authorization: (localStorage && localStorage.getItem("token")) || "",
+            Accept: "text/pain",
         },
-        baseURL: process.env.NODE_ENV === "production" ? domain : "/",
-        headers: { "Content-Type": "multipart/form-data" },
     };
     config.data = qs.stringify(config.data);
     // 创建实例

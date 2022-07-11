@@ -12,5 +12,9 @@ function addEquipment(data) {
 function editEquipment(data) {
     return $admin().put(`/api/Device`, data);
 }
+// 获取设备详情
+function editEquipmentId(deviceId) {
+    return $admin().get(`/api/Device/${deviceId}`);
+}
 
-export { getEquipmentList, addEquipment, editEquipment };
+export { getEquipmentList, addEquipment, editEquipment, editEquipmentId };

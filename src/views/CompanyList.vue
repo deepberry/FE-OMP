@@ -5,13 +5,11 @@
  * @Description:企业管理
 -->
 <template>
-    <div class="v-company">
-        <!-- 标题 -->
-        <h2 class="m-title"><component class="u-title-icon" :is="icon" />{{ title }}</h2>
+    <div class="v-company v-page">
         <!-- 搜索 -->
         <div class="m-search-box">
             <search-bar :data="company_data" @toSearch="onToSearch" />
-            <el-button class="u-add" type="primary" @click="onToDialog">企业开户</el-button>
+            <el-button class="u-add" type="primary" @click="onToDialog({ type: 'add' })">企业开户</el-button>
         </div>
         <!-- 表格 -->
         <companyTable :table="state.table" :label="label" @toDialog="onToDialog" v-loading="state.loading" />
@@ -54,8 +52,7 @@ import { ElNotification } from "element-plus";
 
 // 获取公共数据
 const store = deepBerryStore();
-const { label, deepBerry } = store;
-const { title, icon } = deepBerry[label];
+const { label } = store;
 
 // 搜索 默认选项数据
 const company_data = {
@@ -139,7 +136,9 @@ function onToParams(e) {
 // 打开弹窗
 function onToDialog({ row, type }) {
     dialogObject.dialogVisible = true;
-    dialogObject.company = row ? row : company;
+    const _row = row ? row : company;
+    if (type == "add") _row.add = true;
+    dialogObject.company = _row;
     dialogType.value = type == "close" ? "tips" : "form";
 }
 

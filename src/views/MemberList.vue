@@ -1,7 +1,5 @@
 <template>
-    <div class="m-member">
-        <!-- 标题 -->
-        <h2 class="m-title">成员列表</h2>
+    <div class="m-member v-page">
         <!-- 搜索 -->
         <div class="m-search-box">
             <search-bar :data="member_data" @toSearch="toSearch" />
