@@ -10,7 +10,7 @@
             <el-tab-pane :label="`${key_name}操作日志`" name="logs" v-if="hasLogs"></el-tab-pane>
         </el-tabs>
         <component :is="state.component" :data="state.data"></component>
-        <commonPagination v-if="hasLogs" :pagination="{ page: state.page, per: state.per, total: state.total }" />
+        <commonPagination v-if="hasLogs" :pagination="state.pagination" />
     </div>
 </template>
 <script setup>
@@ -38,9 +38,11 @@ const routeType = ref(type);
 const state = reactive({
     loading: false,
 
-    page: 1,
-    per: 1,
-    total: 0,
+    pagination: {
+        page: 1,
+        per: 20,
+        total: 0,
+    },
 
     data: [],
     component_name: "commonLogs",

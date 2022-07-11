@@ -27,7 +27,7 @@ module.exports = {
     //⚛️ Proxy ~
     devServer: {
         proxy: {
-            "/api/Orgz": {
+            "/api": {
                 target: process.env["DEV_SERVER"] == "true" ? "http://localhost:444" : "https://admin.deepberry.cn:444",
             },
             // "/api/cms": {

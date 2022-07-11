@@ -100,7 +100,7 @@ watch(company, (obj) => (state.form = obj), { deep: true, immediate: true });
 
 // 关闭并重置校验
 const resetForm = (form) => {
-    emit("dialogClose", false, "close");
+    emit("dialogClose");
     form.resetFields();
 };
 // 校验并提交

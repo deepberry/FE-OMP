@@ -12,7 +12,7 @@ import {
 } from "vue-router";
 
 // 2.Components
-const Home = () => import("../views/Home.vue");
+const Home = () => import("../views/HomeView.vue");
 const CompanyList = () => import("../views/CompanyList.vue");
 const CustomerList = () => import("../views/CustomerList.vue");
 const EquipmentList = () => import("../views/EquipmentList.vue");
@@ -22,7 +22,8 @@ const MemberList = () => import("../views/MemberList.vue");
 
 // 3.Routes
 const routes = [
-    { name: "home", path: "/", component: Home, redirect: { name: "company" } },
+    // { name: "home", path: "/", component: Home, redirect: { name: "company" } },
+    { name: "home", path: "/", component: Home },
     {
         name: "company",
         path: "/company",

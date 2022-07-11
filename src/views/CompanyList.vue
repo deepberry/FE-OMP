@@ -49,7 +49,6 @@ import companyTable from "@/components/table/companyTable";
 import companyFormDialog from "@/components/dialog/companyFormDialog";
 import { getCompanyList, addCompany, editCompany, enabledCompany } from "@/service/company";
 import { ElNotification } from "element-plus";
-// import { getCompanyList } from "@/service/company";
 
 //====== 数据 ======
 
@@ -148,6 +147,7 @@ function onToDialog({ row, type }) {
 const onDialogClose = () => {
     dialogObject.dialogVisible = false;
 };
+
 // 确定 tips弹窗 - 企业停用或启用
 const onTipsSuccess = () => {
     const { organizationId, status } = dialogObject.company;
