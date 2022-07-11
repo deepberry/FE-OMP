@@ -1,12 +1,13 @@
 /*
  * @Author: iRuxu
- * @Date: 2022-06-20 17:26:26
- * @LastEditTime: 2022-06-22 14:21:14
- * @Description:
+ * @Date: 2022-07-04 10:42:02
+ * @LastEditTime: 2022-07-08 19:28:52
+ * @Description:config
  */
 const path = require("path");
 const pkg = require("./package.json");
 const project = require("./project.json");
+const { __cdn } = require("@deepberry/common/data/common.json");
 module.exports = {
     //❤️ Multiple pages ~
     // pages: {
@@ -44,6 +45,8 @@ module.exports = {
         (process.env.STATIC_PATH === "repo" && `/${pkg.name}/`) ||
         //BY root path or bind a domain
         (process.env.STATIC_PATH == "root" && "/") ||
+        //BY cdn path
+        (process.env.STATIC_PATH === "cdn" && `${__cdn}static/${pkg.name}/`) ||
         //for lost
         "/",
 
