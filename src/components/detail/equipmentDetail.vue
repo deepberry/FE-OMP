@@ -32,7 +32,6 @@ let state = reactive({
 onMounted(() => {
     editEquipmentId(id).then((res) => {
         state.data = res.data.data;
-        console.log(state.data);
     });
 });
 

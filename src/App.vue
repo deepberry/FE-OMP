@@ -5,12 +5,10 @@
  * @Description: 企业微信运营平台
 -->
 <template>
-    <!-- <CommonHeader /> -->
-
     <div class="m-container">
         <aside class="m-aside">
             <Navigation />
-            <AsideSetting />
+            <!-- <AsideSetting /> -->
         </aside>
         <main class="m-main">
             <!-- 标题 -->
@@ -33,10 +31,9 @@
 </template>
 
 <script setup>
-// import CommonHeader from "@/components/common/header.vue";
 import CommonFooter from "@/components/common/footer.vue";
 import Navigation from "@/components/common/commonNavigation.vue";
-import AsideSetting from "@/components/asideSetting.vue";
+// import AsideSetting from "@/components/asideSetting.vue";
 import project from "../project.json";
 import { storeToRefs } from "pinia";
 import { reactive, toRaw, watch, computed } from "vue";
