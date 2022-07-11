@@ -1,0 +1,2 @@
+"use strict";(self["webpackChunkomp"]=self["webpackChunkomp"]||[]).push([[827],{2827:function(e,n,s){s.r(n),s.d(n,{default:function(){return r}});var t=s(6252),u=s(2201);const a={class:"v-home"};var c={__name:"HomeView",setup(e){const n=(0,u.tv)();return(0,t.bv)((()=>n.push({name:"company"}))),(e,n)=>((0,t.wg)(),(0,t.iD)("div",a,"HOME"))}};const o=c;var r=o}}]);
+//# sourceMappingURL=827.07e86fb1.js.map
