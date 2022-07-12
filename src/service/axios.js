@@ -54,7 +54,7 @@ function $admin(options) {
     let config = {
         headers: {
             "Content-Type": "multipart/form-data",
-            Authorization: (localStorage && localStorage.getItem("token")) || "",
+            Authorization: "Bearer " + (localStorage && localStorage.getItem("token")) || "",
             Accept: "text/pain",
         },
     };

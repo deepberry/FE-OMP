@@ -29,10 +29,11 @@ module.exports = {
     devServer: {
         proxy: {
             "/api": {
-                target: process.env["DEV_SERVER"] == "true" ? "http://localhost:444" : "https://admin.deepberry.cn:444",
+                target:
+                    process.env["DEV_SERVER"] == "true" ? "http://localhost:5120" : "https://admin.deepberry.cn:444",
             },
             // "/api/cms": {
-            //     target: process.env["DEV_SERVER"] == "true" ? "http://localhost:5120" : "https://xxx.deepberry.cn",
+            //     target: process.env["DEV_SERVER"] == "true" ? "http://localhost:5120" : "https://admin.deepberry.cn:444",
             // },
         },
     },

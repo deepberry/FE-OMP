@@ -11,9 +11,12 @@
 import { watch, reactive, ref } from "vue";
 import { useRoute, useRouter } from "vue-router";
 import Logo from "@deepberry/common/img/logo.svg";
-import { getUserLogin } from "@/service/role.js";
+import { getUserLogin } from "@/service/index.js";
+//====== 数据 ======
 const route = useRoute();
 const router = useRouter();
+
+// 跳转链接数据
 const APPID = "ww5429d07e97752284";
 const REDIRECT_URI = encodeURI("https://admin.deepberry.cn:444/");
 const path = `https://open.weixin.qq.com/connect/oauth2/authorize?appid=${APPID}&redirect_uri=${REDIRECT_URI}&response_type=code&scope=snsapi_base&state=STATE#wechat_redirect`;
@@ -22,6 +25,11 @@ const code = ref("");
 const state = reactive({
     fail: false,
 });
+
+router.push({
+    name: "company",
+});
+// 监控路由，获取code
 watch(
     route,
     (res) => {
@@ -29,6 +37,8 @@ watch(
     },
     { deep: true, immediate: true }
 );
+
+// 监控code获取用户token并跳转
 watch(
     code,
     (code) => {

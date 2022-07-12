@@ -1,21 +1,36 @@
 <template>
     <div class="m-detail m-customer-detail">
         <div class="m-info">
-            <div class="m-row" v-for="(item, i) in user" :key="i">
-                <span class="u-label">{{ item.label }}</span>
-                <span class="u-value">{{ item.value }}</span>
+            <div class="m-row m-row-user">
+                <img class="u-info-avatar" :src="state.data.avatar" :alt="state.data.name" />{{ state.data.name }}
+            </div>
+            <div class="m-row">
+                <span class="u-label">userId</span>
+                <span class="u-value">{{ state.data.userId }}</span>
+            </div>
+            <div class="m-row">
+                <span class="u-label">手机</span>
+                <span class="u-value">{{ state.data.mobile }}</span>
+            </div>
+            <div class="m-row">
+                <span class="u-label">邮箱</span>
+                <span class="u-value">{{ state.data.email }}</span>
+            </div>
+            <div class="m-row">
+                <span class="u-label">创建时间</span>
+                <span class="u-value">{{ state.data.updatedAt }}</span>
+            </div>
+            <div class="m-row">
+                <span class="u-label">状态</span>
+                <span class="u-value">{{ state.data.disabled == "0" ? "正常" : "停用" }}</span>
             </div>
         </div>
     </div>
 </template>
 <script setup>
-import { getUserInfo } from "@/service/role";
-// import { useRoute } from "vue-router";
+import { getUserInfo } from "@/service/manage";
 import { onMounted, reactive } from "vue";
 //====== 数据 ======
-// 路由传值
-// const route = useRoute();
-// const { id } = toRaw(route).params.value;
 // 数据
 let state = reactive({
     data: {},
@@ -26,34 +41,6 @@ let state = reactive({
 onMounted(() => {
     getUserInfo().then((res) => {
         state.data = res.data.data;
-        console.log(res);
     });
 });
-
-const user = [
-    {
-        label: "姓名",
-        value: "张三",
-    },
-    {
-        label: "手机号码",
-        value: "18100000000",
-    },
-    {
-        label: "邮箱",
-        value: "1234556@qq.com",
-    },
-    {
-        label: "公司",
-        value: "苏州深莓智能科技有限公司",
-    },
-    {
-        label: "部门",
-        value: "技术部",
-    },
-    {
-        label: "角色",
-        value: "技术人员；生产人员",
-    },
-];
 </script>
