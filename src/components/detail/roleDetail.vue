@@ -9,6 +9,27 @@
     </div>
 </template>
 <script setup>
+import { getUserInfo } from "@/service/role";
+// import { useRoute } from "vue-router";
+import { onMounted, reactive } from "vue";
+//====== 数据 ======
+// 路由传值
+// const route = useRoute();
+// const { id } = toRaw(route).params.value;
+// 数据
+let state = reactive({
+    data: {},
+});
+
+//======  axios ======
+// 初始加载
+onMounted(() => {
+    getUserInfo().then((res) => {
+        state.data = res.data.data;
+        console.log(res);
+    });
+});
+
 const user = [
     {
         label: "姓名",

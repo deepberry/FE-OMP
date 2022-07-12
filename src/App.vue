@@ -5,10 +5,13 @@
  * @Description: 企业微信运营平台
 -->
 <template>
-    <div class="m-container">
+    <!-- 首页 -->
+    <router-view v-if="route.name == 'home'" />
+    <!-- 其它页面 -->
+    <div class="m-container" v-else>
         <aside class="m-aside">
             <Navigation />
-            <!-- <AsideSetting /> -->
+            <AsideSetting />
         </aside>
         <main class="m-main">
             <!-- 标题 -->
@@ -26,14 +29,14 @@
             <router-view />
         </main>
     </div>
-
+    <!-- 公共底部 -->
     <CommonFooter />
 </template>
 
 <script setup>
 import CommonFooter from "@/components/common/footer.vue";
 import Navigation from "@/components/common/commonNavigation.vue";
-// import AsideSetting from "@/components/asideSetting.vue";
+import AsideSetting from "@/components/asideSetting.vue";
 import project from "../project.json";
 import { storeToRefs } from "pinia";
 import { reactive, toRaw, watch, computed } from "vue";
@@ -66,6 +69,7 @@ watch(
         immediate: true,
     }
 );
+
 const detailName = computed(() => deepBerry[route.params.type].key_name);
 // 返回列表
 function goBack() {

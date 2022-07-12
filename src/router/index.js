@@ -23,7 +23,7 @@ const MemberList = () => import("../views/MemberList.vue");
 // 3.Routes
 const routes = [
     // { name: "home", path: "/", component: Home, redirect: { name: "company" } },
-    { name: "home", path: "/", component: Home },
+    { name: "home", path: "/:code?", component: Home },
     {
         name: "company",
         path: "/company",
