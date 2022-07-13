@@ -15,10 +15,10 @@
         <el-table-column label="操作">
             <template #default="scope">
                 <div class="u-table-button">
-                    <el-button link type="primary" size="small" @click="handelClick(scope.row.id, 'close')"
+                    <el-button link type="primary" size="small" @click="handelClick(scope.row, 'close')"
                         >停用</el-button
                     >
-                    <el-button link type="primary" size="small" @click="handelClick(scope.row.id, 'role')"
+                    <el-button link type="primary" size="small" @click="handelClick(scope.row, 'role')"
                         >授权角色权限
                     </el-button>
                 </div>

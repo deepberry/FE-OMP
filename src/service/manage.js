@@ -50,11 +50,6 @@ function setUserPermission(id) {
     return $admin().get(`/api/Manage/uer/${id}/role`);
 }
 
-// 设置用户停用、启用
-function setUserEnabled({ userId, enabled }) {
-    return $admin().put(`/api/Manage/uer/${userId}/enabled/${enabled}`);
-}
-
 export {
     getUserInfo,
     addRole,
@@ -66,5 +61,4 @@ export {
     getRolePermission,
     getRolePermissionId,
     setUserPermission,
-    setUserEnabled,
 };

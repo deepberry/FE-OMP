@@ -1,5 +1,5 @@
 <template>
-    <div class="m-roles v-page">
+    <div class="m-roles v-page" v-loading="state.loading">
         <!-- 内容 -->
         <div class="m-content">
             <!-- 左侧角色 -->
@@ -69,6 +69,7 @@ import { ElNotification } from "element-plus";
 //====== 数据 ======
 //设置数据
 let state = reactive({
+    loading: true,
     clientHeight: "",
     roleHeight: "",
     roles: [],
@@ -135,9 +136,12 @@ const toRoleId = (arr) => {
 
 //  获取全部角色
 const loadRoles = () => {
-    getRoles().then((res) => {
-        state.roles = res.data.data;
-    });
+    state.loading = true;
+    getRoles()
+        .then((res) => {
+            state.roles = res.data.data;
+        })
+        .finally(() => (state.loading = false));
 };
 
 const handleCheckChange = (data, checked) => {
@@ -163,8 +167,10 @@ const onDialogClose = () => {
 };
 // 添加角色
 const onAddRole = (data) => {
+    console.log(data);
     data.id
         ? editRole(data).then(() => {
+              console.log(data);
               ElNotification({
                   type: "success",
                   title: "成功",
@@ -185,7 +191,9 @@ const onAddRole = (data) => {
 // 复制并新建
 const copyAdd = () => {
     dialogObject.dialogVisible = true;
-    dialogObject.form = {};
+    dialogObject.form = {
+        prmIds: state.changeRole,
+    };
     dialogObject.title = "复制权限并新建角色";
 };
 
@@ -225,8 +233,7 @@ const showRole = ({ roleId, name }) => {
 
 // 更改对应角色权限
 const changeRole = () => {
-    setRolePermission({ id: state.roleId, prmIds: state.changeRole }).then((res) => {
-        console.log(res);
+    setRolePermission({ id: state.roleId, prmIds: state.changeRole }).then(() => {
         ElNotification({
             type: "success",
             title: "成功",

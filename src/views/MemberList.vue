@@ -13,14 +13,14 @@
             class="m-tips"
             :dialog-object="dialogObject"
             @dialogClose="onDialogClose"
-            @dialogSuccess="onDialogSuccess"
+            @dialogSuccess="onTipsSuccess"
             v-if="dialogType == 'tips'"
         >
             <div class="m-tips-content">
                 <span class="u-title">是否启用/停用成员帐号</span>
-                <span>张三</span>
-                <span>管理员</span>
-                <span>13875984562</span>
+                <span>{{ dialogObject.member.name }}</span>
+                <span>{{ dialogObject.member.role }}</span>
+                <span>{{ dialogObject.member.mobile }}</span>
             </div>
         </tipsDialog>
         <!-- 授权 弹窗 -->
@@ -28,7 +28,7 @@
             class="m-form"
             :dialog-object="dialogObject"
             @dialogClose="onDialogClose"
-            @dialogSuccess="onDialogSuccess"
+            @dialogSuccess="onFormSuccess"
             v-if="dialogType == 'role'"
         />
     </div>
@@ -37,7 +37,7 @@
 import { reactive, ref, computed, onMounted } from "vue";
 import memberTable from "@/components/table/memberTable";
 import userRoleFormDialog from "@/components/dialog/userRoleFormDialog";
-import { getMemberList } from "@/service/member";
+import { getMemberList, setUserEnabled } from "@/service/member";
 import { getRoles } from "@/service/manage";
 //====== 数据 ======
 
@@ -107,23 +107,24 @@ let dialogType = ref("form");
 let dialogObject = reactive({
     dialogVisible: false,
     member: member,
+    role: state.role,
 });
 //====== 交互 ======
 
 // 搜索查询
-function onToSearch({ input_txt, status_id, role_id }) {
+const onToSearch = ({ input_txt, status_id, role_id }) => {
     state.search.Condition = input_txt;
     state.search.Status = status_id == -1 ? null : status_id;
     state.search.RoleId = role_id == -1 ? null : role_id;
     state.pagination.page = 1;
     loadEMemberList();
-}
+};
 
 // 翻页页码并搜索新的列表
-function onToParams(e) {
+const onToParams = (e) => {
     state.pagination.page = e;
     loadEMemberList();
-}
+};
 
 // 关闭弹窗
 const onDialogClose = () => {
@@ -131,34 +132,41 @@ const onDialogClose = () => {
 };
 
 // 打开弹窗
-function onToDialog({ row, type }) {
+const onToDialog = ({ row, type }) => {
     dialogObject.dialogVisible = true;
     console.log(row);
-    // const _row = row ? row : member;
-    // if (type == "add") _row.add = true;
-    // dialogObject.member = _row;
-    dialogType.value = type == "tips" ? "tips" : "role";
-}
-
-// const onFormSuccess = (form) => {
-//     dialogObject.dialogVisible = false;
-
-//     form.add
-//         ? addEquipment(form).then(() => {
-//               ElNotification({
-//                   title: "成功",
-//                   message: "添加设备成功",
-//                   type: "success",
-//               });
-//           })
-//         : editEquipment(form).then(() => {
-//               ElNotification({
-//                   title: "成功",
-//                   message: "修改设备信息成功",
-//                   type: "success",
-//               });
-//           });
-// };
+    const _row = row ? row : member;
+    if (type == "add") _row.add = true;
+    dialogObject.member = _row;
+    dialogType.value = type == "close" ? "tips" : "role";
+};
+// 表单弹窗确定
+const onFormSuccess = (form) => {
+    dialogObject.dialogVisible = false;
+    form;
+    // form.add
+    //     ? addEquipment(form).then(() => {
+    //           ElNotification({
+    //               title: "成功",
+    //               message: "添加设备成功",
+    //               type: "success",
+    //           });
+    //       })
+    //     : editEquipment(form).then(() => {
+    //           ElNotification({
+    //               title: "成功",
+    //               message: "修改设备信息成功",
+    //               type: "success",
+    //           });
+    //       });
+};
+// 提示弹窗确定
+const onTipsSuccess = () => {
+    const enabled = dialogObject.member.disabled == "正常" ? 1 : 0;
+    setUserEnabled({ userId: dialogObject.member.userId, enabled }).then((res) => {
+        console.log(res);
+    });
+};
 
 //====== axios数据 ======
 
@@ -166,12 +174,12 @@ function onToDialog({ row, type }) {
 onMounted(() => loadData());
 
 // 获取初始数据
-function loadData() {
+const loadData = () => {
     loadEMemberList();
     loadRole();
-}
+};
 // 获取成员列表
-function loadEMemberList() {
+const loadEMemberList = () => {
     state.loading = true;
     getMemberList(params.value)
         .then((res) => {
@@ -182,9 +190,9 @@ function loadEMemberList() {
             }
         })
         .finally(() => (state.loading = false));
-}
+};
 // 加载role列表
-function loadRole() {
+const loadRole = () => {
     getRoles().then((res) => {
         state.role = res.data.data.map((item) => {
             item.label = item.name;
@@ -192,5 +200,5 @@ function loadRole() {
             return item;
         });
     });
-}
+};
 </script>

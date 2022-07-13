@@ -12,7 +12,7 @@
                     <el-input v-model="obj.dialogForm.name" />
                 </el-form-item>
                 <el-form-item label="角色描述" prop="desc">
-                    <el-input v-model="obj.dialogForm.description" type="textarea" />
+                    <el-input v-model="obj.dialogForm.describe" type="textarea" />
                 </el-form-item>
             </el-form>
             <template #footer>
@@ -33,7 +33,6 @@ const props = defineProps({
     dialogObject: Object,
 });
 const emit = defineEmits();
-console.log(props.dialogObject);
 
 // 弹窗显示
 const dialogShow = computed({
@@ -62,7 +61,7 @@ const obj = computed(() => {
 const state = reactive({
     form: {
         name: "",
-        description: "",
+        describe: "",
     },
 });
 // 验证
@@ -84,8 +83,9 @@ const success = (form) => {
         if (valid) {
             const form = {
                 id: obj.value.dialogForm.roleId,
-                description: obj.value.dialogForm.description,
+                description: obj.value.dialogForm.describe,
                 name: obj.value.dialogForm.name,
+                prmIds: obj.value.dialogForm.prmIds,
             };
             emit("dialogSuccess", form);
         } else {

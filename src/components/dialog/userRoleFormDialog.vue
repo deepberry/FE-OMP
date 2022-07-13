@@ -7,15 +7,15 @@
             :before-close="close"
             draggable
         >
-            <el-form class="m-form-content" :model="form" label-width="120px">
+            <el-form class="m-form-content" :model="obj.dialogForm" label-width="120px">
                 <el-form-item label="姓名">
-                    {{ form.name || "-" }}
+                    {{ obj.dialogForm.name || "-" }}
                 </el-form-item>
                 <el-form-item label="手机号码">
-                    {{ form.phone || "-" }}
+                    {{ obj.dialogForm.mobile || "-" }}
                 </el-form-item>
                 <el-form-item label="授权角色">
-                    <el-select v-model="form.role" placeholder="请选择角色">
+                    <el-select v-model="obj.dialogForm.role" placeholder="请选择角色">
                         <el-option v-for="(item, i) in roles" :key="i" :label="item.name" :value="item.role" />
                     </el-select>
                 </el-form-item>
@@ -30,35 +30,16 @@
     </div>
 </template>
 <script setup>
-import { defineProps, defineEmits, computed, reactive } from "vue";
-const form = reactive({
-    name: "",
-    role: "",
-    phone: "",
-});
-const roles = [
-    {
-        name: "管理员",
-        role: "admin",
-    },
-    {
-        name: "普通用户",
-        role: "user",
-    },
-    {
-        name: "技术人员",
-        role: "programmer",
-    },
-    {
-        name: "市场人员",
-        role: "marketing",
-    },
-];
+import { defineProps, defineEmits, computed } from "vue";
+//====== 数据 ======
 
+// props
 const props = defineProps({
     dialogObject: Object,
 });
+const emit = defineEmits();
 
+// 弹窗显示
 const dialogShow = computed({
     get() {
         return props.dialogObject.dialogVisible;
@@ -67,8 +48,9 @@ const dialogShow = computed({
         return val;
     },
 });
-const emit = defineEmits();
 
+// 显示数据
+const roles = computed(() => props.dialogObject.role);
 const obj = computed(() => {
     return {
         dialogTitle: props.dialogObject.title || "角色权限",
@@ -77,14 +59,19 @@ const obj = computed(() => {
         dialogSuccessBtnText: props.dialogObject.successBtnText || "成功",
         dialogIsFooter: props.dialogObject.isFooter || true,
         dialogContent: props.dialogObject.content || "是否停用",
+        dialogForm: props.dialogObject.member || {},
     };
 });
 
+//====== 互动 ======
+
+// 取消关闭
 const close = () => {
-    emit("dialogClose", false, "close");
+    emit("dialogClose");
 };
+// 成功
 const success = () => {
-    emit("dialogSuccess", false, "success");
+    emit("dialogSuccess", obj.value.dialogForm);
 };
 </script>
 <script>
