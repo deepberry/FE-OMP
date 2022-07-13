@@ -1,12 +1,18 @@
 <template>
     <el-table class="m-table" :data="table" border style="width: 100%">
-        <el-table-column prop="id" label="序号" width="180" />
+        <el-table-column prop="userId" label="userId" />
         <el-table-column prop="name" label="姓名" width="180" />
-        <el-table-column prop="address" label="手机号码" />
+        <el-table-column prop="mobile" label="手机号码" width="180" />
         <el-table-column prop="address" label="部门" />
-        <el-table-column prop="address" label="角色" />
-        <el-table-column prop="address" label="状态" />
-        <el-table-column prop="address" label="操作">
+        <el-table-column prop="role" label="角色" width="120" />
+        <el-table-column prop="disabled" label="状态" width="120">
+            <template #default="scope">
+                <span :class="scope.row.disabled === '正常' ? 'u-table-normal' : 'u-table-disabled'">
+                    {{ scope.row.disabled }}</span
+                >
+            </template>
+        </el-table-column>
+        <el-table-column label="操作">
             <template #default="scope">
                 <div class="u-table-button">
                     <el-button link type="primary" size="small" @click="handelClick(scope.row.id, 'close')"
@@ -21,14 +27,31 @@
     </el-table>
 </template>
 <script setup>
-import { defineProps, defineEmits } from "vue";
+import { defineProps, defineEmits, watch, reactive } from "vue";
+//====== 数据 ======
+// props
 const props = defineProps({
     table: Array,
 });
 const emit = defineEmits(["toDialog"]);
-props;
-function handelClick(id, type) {
-    emit("toDialog", { id, type });
+
+// 表格data数据
+let state = reactive({
+    data: [],
+});
+// 监控表格数据
+watch(
+    props,
+    (obj) => {
+        state.data = obj.table;
+        console.log(obj);
+    },
+    { deep: true }
+);
+//====== 交互 ======
+// 提交企业id和弹窗类型
+function handelClick(row, type) {
+    emit("toDialog", { row, type });
 }
 </script>
 <style lang="less" scoped>

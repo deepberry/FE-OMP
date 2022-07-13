@@ -3,252 +3,236 @@
         <!-- 内容 -->
         <div class="m-content">
             <!-- 左侧角色 -->
-            <div class="m-role" :style="`height: ${roleHeight}px`">
-                <el-button class="u-add" type="success" @click="showDialog('form')"> + 新建角色 </el-button>
+            <div class="m-role" :style="`height: ${state.roleHeight}px`">
+                <el-button class="u-add" type="success" @click="showDialog"> + 新建角色 </el-button>
                 <!-- 角色 -->
-                <div class="u-row" v-for="(item, i) in roles" :key="i">
+                <div class="u-row" v-for="(item, i) in state.roles" :key="i" @click="showRole(item)">
                     <span class="u-label">{{ item.name }}</span>
                     <div class="u-button">
-                        <Edit class="u-icon u-edit" @click="showDialog('form')" />
-                        <CloseBold class="u-icon u-del" @click="showDialog('tips')" />
+                        <Edit class="u-icon u-edit" @click.stop="onEditRole(item)" />
+                        <CloseBold class="u-icon u-del" @click.stop="onDelRole(item)" />
                     </div>
                 </div>
             </div>
             <!-- 右侧权限 -->
-            <div class="m-user-role" :style="`height: ${roleHeight}px`">
+            <div class="m-user-role" :style="`height: ${state.roleHeight}px`">
                 <h4>
-                    <span>功能权限</span>
-                    <el-button class="u-add" type="success">复制权限并新建角色</el-button>
+                    <span
+                        >功能权限 -【<b>{{ state.roleName ? state.roleName : "暂无角色" }}</b
+                        >】</span
+                    >
+                    <el-button class="u-add" type="success" @click="copyAdd">复制权限并新建角色</el-button>
                 </h4>
                 <div class="m-tree">
-                    <el-tree :data="dataSource" show-checkbox node-key="id" default-expand-all>
-                        <template #default="{ node, data }">
-                            <span class="custom-tree-node">
-                                <span>{{ node.label }}</span>
-                                <span class="u-button">
-                                    <a class="u-add" @click="append(data)"> 新增 </a>
-                                    <a class="u-del" style="margin-left: 8px" @click="remove(node, data)"> 删除 </a>
-                                </span>
-                            </span>
-                        </template>
+                    <el-tree
+                        ref="tree"
+                        :data="state.dataSource"
+                        show-checkbox
+                        :check-on-click-node="true"
+                        :expand-on-click-node="false"
+                        :default-checked-keys="state.defaultRole"
+                        :current-node-key="state.currentRole"
+                        node-key="id"
+                        default-expand-all
+                        @check-change="handleCheckChange"
+                    >
                     </el-tree>
                 </div>
-                <div class="m-button">
+                <div class="m-button" v-if="state.roleName">
                     <el-button>取消</el-button>
-                    <el-button type="primary">保存</el-button>
+                    <el-button type="primary" @click="changeRole">保存</el-button>
                 </div>
             </div>
         </div>
-        <!-- 提示弹窗 -->
-        <tipsDialog
-            class="m-tips"
-            :dialog-object="dialogObject"
-            @dialogClose="onDialogClose"
-            @dialogSuccess="onDialogSuccess"
-            v-if="dialogType == 'tips'"
-        >
-            <div class="m-tips-content">
-                <span class="u-title">角色还存在授权成员</span>
-                <span class="u-title">请转移成员后再删除角色</span>
-            </div>
-        </tipsDialog>
         <!-- 新建/编辑角色 弹窗 -->
         <roleFormDialog
             class="m-form"
             :dialog-object="dialogObject"
             @dialogClose="onDialogClose"
-            @dialogSuccess="onDialogSuccess"
-            v-if="dialogType == 'form'"
+            @dialogSuccess="onAddRole"
         />
     </div>
 </template>
 <script setup>
 import roleFormDialog from "@/components/dialog/roleFormDialog";
-import { ref, onMounted, reactive } from "vue";
-let clientHeight = ref("");
-let roleHeight = ref("");
-
-// role内容高度
-onMounted(() => {
-    clientHeight.value = `${document.documentElement.clientHeight}`;
-    roleHeight.value = clientHeight.value - 130;
-
-    window.onresize = function () {
-        clientHeight.value = `${document.documentElement.clientHeight}`;
-        roleHeight.value = clientHeight.value - 130;
-    };
+import {
+    addRole,
+    editRole,
+    delRole,
+    getRoles,
+    getRoleId,
+    getRolePermission,
+    setRolePermission,
+} from "@/service/manage";
+import { onMounted, reactive, ref } from "vue";
+import { ElNotification } from "element-plus";
+//====== 数据 ======
+//设置数据
+let state = reactive({
+    clientHeight: "",
+    roleHeight: "",
+    roles: [],
+    dataSource: [],
+    copy: false,
+    defaultRole: [],
+    changeRole: [],
+    roleName: "",
+    roleId: "",
 });
+const tree = ref("");
 
-const roles = [
-    {
-        name: "管理员",
-        role: "admin",
-    },
-    {
-        name: "普通用户",
-        role: "user",
-    },
-    {
-        name: "技术人员",
-        role: "programmer",
-    },
-    {
-        name: "市场人员",
-        role: "marketing",
-    },
-];
-//
-
-const dataSource = ref([
-    {
-        id: 1,
-        label: "客户管理",
-        children: [
-            {
-                id: 2,
-                label: "查看客户列表",
-            },
-            {
-                id: 3,
-                label: "企业开户",
-            },
-            {
-                id: 4,
-                label: "停用企业账户",
-            },
-            {
-                id: 5,
-                label: "启用账户",
-            },
-            {
-                id: 6,
-                label: "查看客户详情",
-                children: [
-                    {
-                        id: 7,
-                        label: "修改客户信息",
-                    },
-                ],
-            },
-        ],
-    },
-    {
-        id: 8,
-        label: "用户管理",
-        children: [
-            {
-                id: 9,
-                label: "查看用户列表",
-            },
-            {
-                id: 10,
-                label: "停用用户帐号",
-            },
-            {
-                id: 11,
-                label: "启用用户帐号",
-            },
-            {
-                id: 12,
-                label: "查看用户详情",
-            },
-        ],
-    },
-    {
-        id: 13,
-        label: "设备管理",
-        children: [
-            {
-                id: 14,
-                label: "查看设备列表",
-            },
-            {
-                id: 15,
-                label: "添加设备信息",
-            },
-            {
-                id: 16,
-                label: "删除设备信息",
-            },
-            {
-                id: 17,
-                label: "查看设备详情",
-                children: [
-                    {
-                        id: 18,
-                        label: "修改设备信息",
-                    },
-                ],
-            },
-        ],
-    },
-    {
-        id: 19,
-        label: "设置",
-        children: [
-            {
-                id: 20,
-                label: "当前帐号",
-            },
-            {
-                id: 21,
-                label: "成员列表",
-            },
-            {
-                id: 22,
-                label: "删除设备信息",
-            },
-            {
-                id: 23,
-                label: "角色权限",
-                children: [
-                    {
-                        id: 24,
-                        label: "修改角色权限",
-                    },
-                ],
-            },
-        ],
-    },
-]);
-
-let id = 1000;
-// 添加
-const append = (data) => {
-    const newChild = { id: id++, label: "新增", children: [] };
-    if (!data.children) {
-        data.children = [];
-    }
-    data.children.push(newChild);
-    dataSource.value = [...dataSource.value];
-};
-// 移除
-const remove = (node, data) => {
-    const parent = node.parent;
-    const children = parent.data.children || parent.data;
-    const index = children.findIndex((d) => d.id === data.id);
-    children.splice(index, 1);
-    dataSource.value = [...dataSource.value];
-};
-
-//
-
-const dialogType = ref("tips");
-function showDialog(val) {
-    dialogObject.dialogVisible = true;
-    dialogType.value = val;
-}
+// 弹窗显示
 const dialogObject = reactive({
     dialogVisible: false,
+    title: "",
+    form: {},
 });
+
+// 初始加载
+onMounted(() => {
+    // 设置页面高度
+    styleHeight();
+    // 加载全部角色
+    loadRoles();
+    // 加载全部功能权限
+    getRolePermission().then((res) => {
+        let data = res.data.data;
+        state.dataSource = toChildren(data);
+    });
+});
+
+//====== 处理数据 ======
+// 获取并设置高度
+const styleHeight = () => {
+    state.clientHeight = `${document.documentElement.clientHeight}`;
+    state.roleHeight = state.clientHeight - 130;
+
+    window.onresize = () => {
+        state.clientHeight = `${document.documentElement.clientHeight}`;
+        state.roleHeight = state.clientHeight - 130;
+    };
+};
+
+// 递归将数据转为label children
+const toChildren = (data) => {
+    data = data.map((item) => {
+        item.label = item.name;
+        if (item.childs.length) item.children = toChildren(item.childs);
+        return item;
+    });
+    return data;
+};
+
+// 递归获取id
+const toRoleId = (arr) => {
+    let _arr = [];
+    arr.forEach((item) => {
+        _arr.push(item.id);
+        if (item.childs && item.childs.length) _arr.push(...toRoleId(item.childs));
+    });
+    return _arr;
+};
+
+//  获取全部角色
+const loadRoles = () => {
+    getRoles().then((res) => {
+        state.roles = res.data.data;
+    });
+};
+
+const handleCheckChange = (data, checked) => {
+    if (state.changeRole.includes(data.id)) {
+        if (!checked) state.changeRole = state.changeRole.filter((item) => item !== data.id);
+    } else {
+        if (checked) state.changeRole.push(data.id);
+    }
+};
+
+//====== 交互 ======
+
+//
+const showDialog = () => {
+    dialogObject.dialogVisible = true;
+    dialogObject.form = {};
+    dialogObject.title = "新建角色";
+};
 
 // 关闭弹窗
 const onDialogClose = () => {
     dialogObject.dialogVisible = false;
 };
-// 确定
-const onDialogSuccess = () => {
-    dialogObject.dialogVisible = false;
+// 添加角色
+const onAddRole = (data) => {
+    data.id
+        ? editRole(data).then(() => {
+              ElNotification({
+                  type: "success",
+                  title: "成功",
+                  message: `修改角色【${data.name}】成功`,
+              });
+              loadRoles();
+          })
+        : addRole(data).then(() => {
+              ElNotification({
+                  type: "success",
+                  title: "成功",
+                  message: `添加角色【${data.name}】成功`,
+              });
+              loadRoles();
+          });
+    onDialogClose();
+};
+// 复制并新建
+const copyAdd = () => {
+    dialogObject.dialogVisible = true;
+    dialogObject.form = {};
+    dialogObject.title = "复制权限并新建角色";
+};
+
+// 编辑角色
+const onEditRole = (data) => {
+    dialogObject.dialogVisible = true;
+    dialogObject.form = data;
+    dialogObject.title = "编辑角色";
+};
+
+// 删除角色
+const onDelRole = (data) => {
+    delRole(data.roleId)
+        .then(() => {
+            ElNotification({
+                type: "success",
+                title: "成功",
+                message: `删除${data.name}成功`,
+            });
+            loadRoles();
+        })
+        .catch((err) => {
+            console.log(err);
+        });
+};
+
+// 显示对应角色的权限
+const showRole = ({ roleId, name }) => {
+    tree.value.setCheckedKeys([]);
+    state.roleName = name;
+    state.roleId = roleId;
+    getRoleId(roleId).then((res) => {
+        const data = res.data.data[0];
+        if (data) state.defaultRole = toRoleId(data.viewPermissoins);
+    });
+};
+
+// 更改对应角色权限
+const changeRole = () => {
+    setRolePermission({ id: state.roleId, prmIds: state.changeRole }).then((res) => {
+        console.log(res);
+        ElNotification({
+            type: "success",
+            title: "成功",
+            message: `修改${state.roleName}权限成功`,
+        });
+    });
 };
 </script>
 <style lang="less">

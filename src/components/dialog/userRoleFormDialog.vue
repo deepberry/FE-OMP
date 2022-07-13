@@ -68,14 +68,17 @@ const dialogShow = computed({
     },
 });
 const emit = defineEmits();
-const obj = {
-    dialogTitle: props.dialogObject.title || "角色权限",
-    dialogWidth: props.dialogObject.width || "760px",
-    dialogCloseBtnText: props.dialogObject.closeBtnText || "取消",
-    dialogSuccessBtnText: props.dialogObject.successBtnText || "成功",
-    dialogIsFooter: props.dialogObject.isFooter || true,
-    dialogContent: props.dialogObject.content || "是否停用",
-};
+
+const obj = computed(() => {
+    return {
+        dialogTitle: props.dialogObject.title || "角色权限",
+        dialogWidth: props.dialogObject.width || "760px",
+        dialogCloseBtnText: props.dialogObject.closeBtnText || "取消",
+        dialogSuccessBtnText: props.dialogObject.successBtnText || "成功",
+        dialogIsFooter: props.dialogObject.isFooter || true,
+        dialogContent: props.dialogObject.content || "是否停用",
+    };
+});
 
 const close = () => {
     emit("dialogClose", false, "close");

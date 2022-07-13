@@ -37,14 +37,16 @@ const dialogShow = computed({
 });
 
 // 弹窗默认样式
-const obj = {
-    dialogTitle: props.dialogObject.title || "Tips",
-    dialogWidth: props.dialogObject.width || "760px",
-    dialogCloseBtnText: props.dialogObject.closeBtnText || "取消",
-    dialogSuccessBtnText: props.dialogObject.successBtnText || "确定",
-    dialogIsFooter: props.dialogObject.isFooter || true,
-    dialogContent: props.dialogObject.content || "是否停用",
-};
+const obj = computed(() => {
+    return {
+        dialogTitle: props.dialogObject.title || "Tips",
+        dialogWidth: props.dialogObject.width || "760px",
+        dialogCloseBtnText: props.dialogObject.closeBtnText || "取消",
+        dialogSuccessBtnText: props.dialogObject.successBtnText || "确定",
+        dialogIsFooter: props.dialogObject.isFooter || true,
+        dialogContent: props.dialogObject.content || "是否停用",
+    };
+});
 
 //====== 交互 ======
 

@@ -17,7 +17,7 @@ function editRole(data) {
 
 // 删除角色
 function delRole(id) {
-    return $admin().put(`/api/Manage/role/${id}`);
+    return $admin().delete(`/api/Manage/role/${id}`);
 }
 
 // 获取所有角色
@@ -31,8 +31,8 @@ function getRoleId(id) {
 }
 
 // 设置角色权限
-function setRolePermission(id) {
-    return $admin().post(`/api/Manage/role/${id}/permission`);
+function setRolePermission({ id, prmIds }) {
+    return $admin().post(`/api/Manage/role/${id}/permission`, { prmIds });
 }
 
 // 获取所有权限

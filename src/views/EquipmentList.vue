@@ -43,28 +43,28 @@ const { label } = store;
 const equipment_data = {
     uid: "",
     placeholder: `请输入设备ID/硬件名称/ICCID/归属客户`,
-    bind_title: "-- 绑定状态 --",
-    bind: [
-        {
-            label: "已绑定",
-            value: 1,
-        },
-        {
-            label: "未绑定",
-            value: 0,
-        },
-    ],
-    connect_title: "-- 连接状态 --",
-    connect: [
-        {
-            label: "在线",
-            value: 1,
-        },
-        {
-            label: "离线",
-            value: 0,
-        },
-    ],
+    // bind_title: "-- 绑定状态 --",
+    // bind: [
+    //     {
+    //         label: "已绑定",
+    //         value: 1,
+    //     },
+    //     {
+    //         label: "未绑定",
+    //         value: 0,
+    //     },
+    // ],
+    // connect_title: "-- 连接状态 --",
+    // connect: [
+    //     {
+    //         label: "在线",
+    //         value: 1,
+    //     },
+    //     {
+    //         label: "离线",
+    //         value: 0,
+    //     },
+    // ],
 };
 
 // 表格 翻页 企业id 企业名称 弹窗表格
@@ -77,8 +77,7 @@ let state = reactive({
         total: 0,
     },
     search: {
-        input: null,
-        status: null,
+        Condition: null,
     },
     form: {},
 });
@@ -88,6 +87,7 @@ const params = computed(() => {
     return {
         pageIndex: state.pagination.page - 1,
         pageSize: state.pagination.per,
+        ...state.search,
     };
 });
 
@@ -103,9 +103,9 @@ let dialogObject = reactive({
 //====== 交互 ======
 
 // 搜索查询
-function onToSearch({ input_txt, status_id }) {
-    state.search.input = input_txt;
-    state.search.status = status_id == -1 ? null : status_id;
+function onToSearch({ input_txt }) {
+    state.search.Condition = input_txt;
+    // state.search.status = status_id == -1 ? null : status_id;
     state.pagination.page = 1;
     loadEquipmentList();
 }

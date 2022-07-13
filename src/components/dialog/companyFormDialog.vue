@@ -29,7 +29,7 @@
             </el-form>
             <template #footer>
                 <span v-if="obj.dialogIsFooter" class="dialog-footer">
-                    <el-button @click="resetForm(formRef)">{{ obj.dialogCloseBtnText }}</el-button>
+                    <el-button @click="resetForm">{{ obj.dialogCloseBtnText }}</el-button>
                     <el-button type="primary" @click="submitForm(formRef)">{{ obj.dialogSuccessBtnText }}</el-button>
                 </span>
             </template>
@@ -75,13 +75,15 @@ const dialogShow = computed({
 });
 
 // dialog默认显示
-const obj = {
-    dialogTitle: props.dialogObject.title || "企业信息",
-    dialogWidth: props.dialogObject.width || "780px",
-    dialogCloseBtnText: props.dialogObject.closeBtnText || "取消",
-    dialogSuccessBtnText: props.dialogObject.successBtnText || "确定",
-    dialogIsFooter: props.dialogObject.isFooter || true,
-};
+const obj = computed(() => {
+    return {
+        dialogTitle: props.dialogObject.title || "企业信息",
+        dialogWidth: props.dialogObject.width || "780px",
+        dialogCloseBtnText: props.dialogObject.closeBtnText || "取消",
+        dialogSuccessBtnText: props.dialogObject.successBtnText || "确定",
+        dialogIsFooter: props.dialogObject.isFooter || true,
+    };
+});
 
 // 监控传入值 form内容显示编辑或新建
 watch(
@@ -95,10 +97,9 @@ watch(
 //====== 交互 ======
 
 // 关闭并重置校验
-const resetForm = (form) => {
+const resetForm = () => {
     emit("dialogClose");
-    if (!form.validate) return;
-    form.resetFields();
+    formRef.value.resetFields();
 };
 // 校验并提交
 const submitForm = (form) => {

@@ -69,7 +69,9 @@ watch(
 watch(
     router,
     (val) => {
-        hasLogs.value = true;
+        // 是否显示日志tab
+        // hasLogs.value = true;
+        hasLogs.value = false;
         activeName.value = "info";
 
         const _type = val.currentRoute.params.type;

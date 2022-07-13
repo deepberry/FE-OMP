@@ -20,7 +20,7 @@
             </el-form>
             <template #footer>
                 <span v-if="obj.dialogIsFooter" class="dialog-footer">
-                    <el-button @click="resetForm(formRef)">{{ obj.dialogCloseBtnText }}</el-button>
+                    <el-button @click="resetForm">{{ obj.dialogCloseBtnText }}</el-button>
                     <el-button type="primary" @click="submitForm(formRef)">{{ obj.dialogSuccessBtnText }}</el-button>
                 </span>
             </template>
@@ -48,14 +48,16 @@ const dialogShow = computed({
 });
 
 // dialog默认显示
-const obj = {
-    dialogTitle: props.dialogObject.title || "设备信息",
-    dialogWidth: props.dialogObject.width || "760px",
-    dialogCloseBtnText: props.dialogObject.closeBtnText || "取消",
-    dialogSuccessBtnText: props.dialogObject.successBtnText || "成功",
-    dialogIsFooter: props.dialogObject.isFooter || true,
-    dialogContent: props.dialogObject.content || "是否停用",
-};
+const obj = computed(() => {
+    return {
+        dialogTitle: props.dialogObject.title || "设备信息",
+        dialogWidth: props.dialogObject.width || "760px",
+        dialogCloseBtnText: props.dialogObject.closeBtnText || "取消",
+        dialogSuccessBtnText: props.dialogObject.successBtnText || "成功",
+        dialogIsFooter: props.dialogObject.isFooter || true,
+        dialogContent: props.dialogObject.content || "是否停用",
+    };
+});
 
 // 表单
 const equipment = computed(() => props.dialogObject.equipment);
@@ -77,9 +79,9 @@ watch(equipment, (obj) => (state.form = obj), { deep: true, immediate: true });
 //====== 交互 ======
 
 // 关闭并重置校验
-const resetForm = (form) => {
+const resetForm = () => {
     emit("dialogClose");
-    form.resetFields();
+    formRef.value.resetFields();
 };
 
 // 校验并提交

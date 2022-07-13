@@ -53,7 +53,7 @@ function PopNextworkError(err) {
 function $admin(options) {
     let config = {
         headers: {
-            "Content-Type": "multipart/form-data",
+            // "Content-Type": "multipart/form-data",
             Authorization: "Bearer " + (localStorage && localStorage.getItem("token")) || "",
             Accept: "text/pain",
         },
