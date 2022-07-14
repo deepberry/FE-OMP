@@ -1,5 +1,5 @@
 <template>
-    <el-table class="m-table" :data="state.data" border style="width: 100%">
+    <el-table class="m-table" :data="state.data" border fit style="width: 100%">
         <el-table-column prop="organizationId" label="企业ID" width="120" />
         <el-table-column prop="orgzName" label="企业名称" />
         <el-table-column label="企业Logo">

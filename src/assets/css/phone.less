@@ -76,7 +76,7 @@
             }
             // 详情
             .m-details {
-                .m-customer-detail {
+                .m-detail {
                     padding: 10px;
                     .m-info {
                         padding: 20px 10px;
@@ -87,6 +87,16 @@
                             padding: 0 20px;
                             .u-label {
                                 text-align: left;
+                            }
+                            .u-info-items {
+                                .pl(30px);
+                                .u-item {
+                                    flex-direction: column;
+                                    border-bottom: 1px dashed #ddd;
+                                    &:last-child {
+                                        border-bottom: 0;
+                                    }
+                                }
                             }
                         }
                         .m-row-user {
@@ -100,6 +110,14 @@
                     }
                 }
             }
+
+            // 权限设置
+            .m-roles .m-content h4 {
+                .flex;
+                height: auto;
+                flex-wrap: wrap;
+                .pb(20px);
+            }
         }
     }
     .el-dialog {
@@ -109,6 +127,9 @@
             flex-direction: column;
             .el-form-item__label {
                 justify-content: flex-start;
+            }
+            .m-box {
+                flex-direction: column;
             }
         }
     }

@@ -1,5 +1,5 @@
 <template>
-    <el-table class="m-table" :data="state.data" border style="width: 100%">
+    <el-table class="m-table" :data="state.data" border fit style="width: 100%">
         <el-table-column prop="deviceId" label="设备ID" />
         <el-table-column prop="deviceName" label="硬件名称" />
         <el-table-column prop="orgzName" label="归属企业" />

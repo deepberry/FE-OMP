@@ -39,6 +39,7 @@ onMounted(() => {
         .finally(() => (state.loading = false));
 });
 
+// 自定
 const info = {
     deviceId: "设备ID",
     name: "硬件名称",
@@ -47,7 +48,7 @@ const info = {
     softVer: "固件版本",
     value: "已绑定",
 };
-
+// 自定
 const network = {
     iccid: "ICCID",
     createAt: "开始时间",

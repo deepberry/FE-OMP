@@ -1,12 +1,10 @@
 <template>
     <div class="m-detail m-customer-detail" v-loading="state.loading">
         <div class="m-info">
-            <el-descriptions class="m-user" title="用户基本信息" :column="2">
-                <el-descriptions-item label="用户ID">{{ state.data.userId }}</el-descriptions-item>
-                <el-descriptions-item label="手机号码">{{ state.data.phoneNum }}</el-descriptions-item>
-                <el-descriptions-item label="用户帐号状态">{{ state.data.status }}</el-descriptions-item>
-                <el-descriptions-item label="最新登录时间">{{ state.data.updateAt }}</el-descriptions-item>
-            </el-descriptions>
+            <div class="m-row" v-for="(item, key) in info" :key="key">
+                <span class="u-label">{{ item }}</span>
+                <span class="u-value">{{ state.data[key] }}</span>
+            </div>
         </div>
         <div class="m-info m-table">
             <h4>用户所在组织信息</h4>
@@ -32,6 +30,14 @@ let state = reactive({
     data: {},
     loading: false,
 });
+
+// 自定
+const info = {
+    userId: "用户ID",
+    phoneNum: "手机号码",
+    status: "用户帐号状态",
+    updateAt: "最新登录时间",
+};
 
 //======  axios ======
 // 初始加载

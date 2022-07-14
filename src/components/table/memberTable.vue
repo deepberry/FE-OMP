@@ -1,5 +1,5 @@
 <template>
-    <el-table class="m-table" :data="table" border style="width: 100%">
+    <el-table class="m-table" :data="table" border fit style="width: 100%">
         <el-table-column prop="userId" label="userId" />
         <el-table-column prop="name" label="姓名" width="180" />
         <el-table-column prop="mobile" label="手机号码" width="180" />
@@ -12,7 +12,7 @@
                 >
             </template>
         </el-table-column>
-        <el-table-column label="操作" v-if="hasOperate">
+        <el-table-column label="操作" v-if="hasOperate" width="180">
             <template #default="scope">
                 <div class="u-table-button">
                     <el-button
