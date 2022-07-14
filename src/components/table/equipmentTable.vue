@@ -6,11 +6,16 @@
         <el-table-column prop="hard_version" label="硬件版本" />
         <el-table-column prop="soft_version" label="固件版本" />
         <el-table-column prop="iccid" label="ICCID" />
-        <el-table-column prop="address" label="操作" width="180">
+        <el-table-column label="操作" width="180" v-if="hasOperate">
             <template #default="scope">
                 <div class="u-table-button">
-                    <el-button link type="primary" size="small" @click="handelClick(scope.row)">编辑</el-button>
-                    <router-link :to="{ path: `/${label}/details/${scope.row.deviceId}` }" class="u-table-more"
+                    <el-button link type="primary" size="small" @click="handelClick(scope.row)" v-if="hasEdit"
+                        >编辑</el-button
+                    >
+                    <router-link
+                        :to="{ path: `/${label}/details/${scope.row.deviceId}` }"
+                        class="u-table-more"
+                        v-if="hasInfo"
                         >查看详情
                     </router-link>
                 </div>
@@ -19,7 +24,9 @@
     </el-table>
 </template>
 <script setup>
-import { defineProps, defineEmits, watch, reactive } from "vue";
+import { defineProps, defineEmits, watch, reactive, computed } from "vue";
+import { deepBerryStore } from "@/store/index";
+import { storeToRefs } from "pinia";
 
 //====== 数据 ======
 // props
@@ -28,6 +35,19 @@ const props = defineProps({
     label: String,
 });
 const emit = defineEmits(["toDialog"]);
+
+// store
+const store = deepBerryStore();
+const { role } = storeToRefs(store);
+
+// 权限判断
+// 编辑权限
+const hasEdit = computed(() => role.value.includes(21));
+// 查看详情权限
+const hasInfo = computed(() => role.value.includes(20));
+// 操作权限
+const arr = [20, 21];
+const hasOperate = computed(() => role.value.map((item) => arr.includes(item)).filter(Boolean).length);
 
 // 表格data数据
 let state = reactive({

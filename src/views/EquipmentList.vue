@@ -9,7 +9,9 @@
         <!-- 搜索 -->
         <div class="m-search-box">
             <search-bar :data="equipment_data" @toSearch="onToSearch" />
-            <el-button class="u-add" type="primary" @click="onToDialog({ type: 'add' })">添加设备</el-button>
+            <el-button class="u-add" type="primary" @click="onToDialog({ type: 'add' })" v-if="hasAdd"
+                >添加设备</el-button
+            >
         </div>
         <!-- 表单 -->
         <equipmentTable :table="state.table" :label="label" @toDialog="onToDialog" v-loading="state.loading" />
@@ -32,12 +34,13 @@ import equipmentTable from "@/components/table/equipmentTable";
 import equipmentFormDialog from "@/components/dialog/equipmentFormDialog";
 import { getEquipmentList, addEquipment, editEquipment } from "@/service/equipment";
 import { ElNotification } from "element-plus";
+import { storeToRefs } from "pinia";
 
 //====== 数据 ======
 
 // 获取公共数据
 const store = deepBerryStore();
-const { label } = store;
+const { label, role } = storeToRefs(store);
 
 // 搜索 默认选项数据
 const equipment_data = {
@@ -99,6 +102,9 @@ let dialogObject = reactive({
     dialogVisible: false,
     equipment: equipment,
 });
+
+// 添加设备权限判断
+const hasAdd = computed(() => role.value.includes(19));
 
 //====== 交互 ======
 

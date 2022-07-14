@@ -1,5 +1,5 @@
 <template>
-    <div class="m-detail m-customer-detail">
+    <div class="m-detail m-customer-detail" v-loading="state.loading">
         <div class="m-info">
             <el-descriptions class="m-user" title="用户基本信息" :column="2">
                 <el-descriptions-item label="用户ID">{{ state.data.userId }}</el-descriptions-item>
@@ -30,13 +30,17 @@ const { id } = toRaw(route).params.value;
 // 数据
 let state = reactive({
     data: {},
+    loading: false,
 });
 
 //======  axios ======
 // 初始加载
 onMounted(() => {
-    getCustomerInfo(id).then((res) => {
-        state.data = res.data.data;
-    });
+    state.loading = true;
+    getCustomerInfo(id)
+        .then((res) => {
+            state.data = res.data.data;
+        })
+        .finally(() => (state.loading = false));
 });
 </script>

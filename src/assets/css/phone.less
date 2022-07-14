@@ -1,0 +1,115 @@
+@media screen and (max-width: 750px) {
+    #app {
+        .full;
+    }
+    .m-container {
+        overflow: auto;
+        .pl(60px);
+        .m-aside {
+            .w(60px);
+            .m-navigation-logo {
+                padding: 20px 0;
+                .u-logo {
+                    .size(30px);
+                }
+                .u-title {
+                    .none;
+                }
+            }
+            .m-navigation-ul .u-item {
+                .h(64px);
+                .lh(64px);
+                .u-txt {
+                    gap: 0px;
+                }
+                .u-label {
+                    .none;
+                }
+            }
+        }
+        .m-main {
+            padding: 52px 10px 0;
+            // 标题
+            .m-title {
+                .h(52px);
+                .flex;
+                align-items: center;
+                .u-title-txt {
+                    padding: 0 0 0 80px;
+                }
+                .u-title-icon {
+                    .none;
+                }
+            }
+            // 搜索栏
+            .m-search-box {
+                width: 100%;
+                .flex;
+                flex-direction: column;
+                flex-wrap: wrap;
+                gap: 20px;
+                .m-searchBar {
+                    flex: 1;
+                    width: 100%;
+                    flex-wrap: wrap;
+                    justify-content: space-between;
+                    .u-input {
+                        width: 100%;
+                        flex-shrink: 0;
+                    }
+                    .u-button {
+                        width: 45%;
+                    }
+                    .u-input + .u-select {
+                        width: 45%;
+                    }
+                    .u-input + .u-button {
+                        width: 20%;
+                    }
+                }
+                .u-add {
+                    justify-self: flex-end;
+                }
+            }
+            .v-equipment .m-search-box .m-searchBar .u-input {
+                width: 70%;
+            }
+            // 详情
+            .m-details {
+                .m-customer-detail {
+                    padding: 10px;
+                    .m-info {
+                        padding: 20px 10px;
+                        .m-row {
+                            gap: 20px;
+                            flex-direction: column;
+                            align-items: flex-start;
+                            padding: 0 20px;
+                            .u-label {
+                                text-align: left;
+                            }
+                        }
+                        .m-row-user {
+                            flex-direction: row;
+                            .fz(26px);
+                            padding: 10px;
+                            .u-info-avatar {
+                                .size(50px);
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+    .el-dialog {
+        max-width: 90%;
+        .m-form-content .el-form-item {
+            .flex;
+            flex-direction: column;
+            .el-form-item__label {
+                justify-content: flex-start;
+            }
+        }
+    }
+}

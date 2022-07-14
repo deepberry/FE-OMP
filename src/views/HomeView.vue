@@ -11,10 +11,14 @@
 import { watch, reactive, ref } from "vue";
 import { useRoute, useRouter } from "vue-router";
 import Logo from "@deepberry/common/img/logo.svg";
-import { getUserLogin } from "@/service/index.js";
+import { getUserInfo, getUserPermission } from "@/service/index.js";
+import { storeToRefs } from "pinia";
+import { deepBerryStore } from "@/store/index";
 //====== 数据 ======
 const route = useRoute();
 const router = useRouter();
+const store = deepBerryStore();
+let { role } = storeToRefs(store);
 
 // 跳转链接数据
 const APPID = "ww5429d07e97752284";
@@ -43,13 +47,16 @@ watch(
     code,
     (code) => {
         if (code)
-            getUserLogin({ code })
+            getUserInfo({ code })
                 .then((res) => {
-                    console.log(res);
                     state.fail = false;
                     localStorage.setItem("token", JSON.stringify(res.data.accessToken));
-                    router.push({
-                        name: "company",
+                    getUserPermission(res.data.userId).then((res) => {
+                        role = res.data.viewPermissoins;
+                        store.role = role;
+                        router.push({
+                            name: "company",
+                        });
                     });
                 })
                 .catch((err) => {

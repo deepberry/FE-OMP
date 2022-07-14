@@ -19,14 +19,24 @@
             </template>
         </el-table-column>
         <el-table-column prop="createAt" label="账户创建时间" width="240" />
-        <el-table-column label="操作" width="280">
+        <el-table-column label="操作" width="280" v-if="hasOperate">
             <template #default="scope">
                 <div class="u-table-button">
-                    <el-button link type="primary" size="small" @click="handelClick(scope.row, 'close')">{{
-                        scope.row.status == "正常" ? "停用" : "启用"
-                    }}</el-button>
-                    <el-button link type="primary" size="small" @click="handelClick(scope.row, 'edit')">编辑</el-button>
-                    <router-link :to="{ path: `/${label}/details/${scope.row.organizationId}` }" class="u-table-more"
+                    <el-button
+                        link
+                        type="primary"
+                        size="small"
+                        @click="handelClick(scope.row, 'close')"
+                        v-if="hasEnabled"
+                        >{{ scope.row.status == "正常" ? "停用" : "启用" }}</el-button
+                    >
+                    <el-button link type="primary" size="small" @click="handelClick(scope.row, 'edit')" v-if="hasEdit"
+                        >编辑</el-button
+                    >
+                    <router-link
+                        :to="{ path: `/${label}/details/${scope.row.organizationId}` }"
+                        class="u-table-more"
+                        v-if="hasInfo"
                         >查看详情
                     </router-link>
                 </div>
@@ -35,7 +45,9 @@
     </el-table>
 </template>
 <script setup>
-import { defineProps, defineEmits, reactive, watch } from "vue";
+import { defineProps, defineEmits, reactive, watch, computed } from "vue";
+import { deepBerryStore } from "@/store/index";
+import { storeToRefs } from "pinia";
 //====== 数据 ======
 // props
 const props = defineProps({
@@ -43,12 +55,29 @@ const props = defineProps({
     label: String,
 });
 const emit = defineEmits(["toDialog"]);
+
+// store
+const store = deepBerryStore();
+const { role } = storeToRefs(store);
+
+// 权限判断
+// 编辑权限
+const hasEdit = computed(() => role.value.includes(13));
+// 查看详情权限
+const hasInfo = computed(() => role.value.includes(12));
+// 启用停用权限
+const hasEnabled = computed(() => role.value.includes(10));
+// 操作权限
+const arr = [10, 12, 13];
+const hasOperate = computed(() => role.value.map((item) => arr.includes(item)).filter(Boolean).length);
+
 // 表格data数据
 let state = reactive({
     data: [],
 });
 // 默认企业logo
 const logo = "https://www.deepberry.cn/images/placeholders/logo.png";
+
 // 监控表格数据
 watch(
     props,

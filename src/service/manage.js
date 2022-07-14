@@ -45,11 +45,6 @@ function getRolePermissionId(id) {
     return $admin().get(`/api/Manage/permission/${id}`);
 }
 
-// 设置用户角色
-function setUserPermission(id) {
-    return $admin().get(`/api/Manage/uer/${id}/role`);
-}
-
 export {
     getUserInfo,
     addRole,
@@ -60,5 +55,4 @@ export {
     setRolePermission,
     getRolePermission,
     getRolePermissionId,
-    setUserPermission,
 };

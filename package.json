@@ -10,7 +10,7 @@
         "prepare": "husky install"
     },
     "dependencies": {
-        "@deepberry/common": "^0.1.5",
+        "@deepberry/common": "^0.1.6",
         "@deepberry/vue3-element-extend": "^0.1.2",
         "@element-plus/icons-vue": "^2.0.6",
         "@vueuse/head": "^0.7.6",

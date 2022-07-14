@@ -39,11 +39,15 @@
 </template>
 <script setup>
 import { defineProps, reactive, defineEmits } from "vue";
+//====== 数据 ======
+// props
 const props = defineProps({
     data: Object,
 });
 props;
 const emit = defineEmits(["toSearch"]);
+
+// 自定数据
 const state = reactive({
     input_txt: "",
     status_id: "",
@@ -52,6 +56,7 @@ const state = reactive({
     role_id: "",
 });
 
+// 提交搜索数据
 function toSearch() {
     let query = {};
     Object.keys(state).forEach((item) => {

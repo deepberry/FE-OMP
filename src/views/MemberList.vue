@@ -37,8 +37,9 @@
 import { reactive, ref, computed, onMounted } from "vue";
 import memberTable from "@/components/table/memberTable";
 import userRoleFormDialog from "@/components/dialog/userRoleFormDialog";
-import { getMemberList, setUserEnabled } from "@/service/member";
+import { getMemberList, setUserEnabled, setUserPermission } from "@/service/member";
 import { getRoles } from "@/service/manage";
+import { ElNotification } from "element-plus";
 //====== 数据 ======
 
 // 搜索 默认选项数据
@@ -107,7 +108,7 @@ let dialogType = ref("form");
 let dialogObject = reactive({
     dialogVisible: false,
     member: member,
-    role: state.role,
+    role: [],
 });
 //====== 交互 ======
 
@@ -134,16 +135,24 @@ const onDialogClose = () => {
 // 打开弹窗
 const onToDialog = ({ row, type }) => {
     dialogObject.dialogVisible = true;
-    console.log(row);
     const _row = row ? row : member;
     if (type == "add") _row.add = true;
     dialogObject.member = _row;
+    dialogObject.role = state.role;
     dialogType.value = type == "close" ? "tips" : "role";
 };
 // 表单弹窗确定
 const onFormSuccess = (form) => {
     dialogObject.dialogVisible = false;
-    form;
+    const { role, userId } = form;
+    setUserPermission({ userId, roleIds: role }).then(() => {
+        loadData();
+        ElNotification({
+            title: "成功",
+            message: "设置权限成功",
+            type: "success",
+        });
+    });
     // form.add
     //     ? addEquipment(form).then(() => {
     //           ElNotification({
@@ -163,8 +172,9 @@ const onFormSuccess = (form) => {
 // 提示弹窗确定
 const onTipsSuccess = () => {
     const enabled = dialogObject.member.disabled == "正常" ? 1 : 0;
-    setUserEnabled({ userId: dialogObject.member.userId, enabled }).then((res) => {
-        console.log(res);
+    setUserEnabled({ userId: dialogObject.member.userId, enabled }).then(() => {
+        dialogObject.dialogVisible = false;
+        loadData();
     });
 };
 

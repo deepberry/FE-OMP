@@ -1,123 +1,55 @@
 .m-roles {
     .m-content {
-        .flex;
         .pt(20px);
-        .m-role,
-        .m-user-role {
-            overflow: auto;
-            box-sizing: border-box;
-        }
-        .m-role {
+
+        h4 {
             .flex;
-            .w(280px);
-            .pr(20px);
-            .pt(80px);
-            position: relative;
-            flex-shrink: 0;
-            flex-direction: column;
-            .u-row {
-                .fz(18px);
-                .flex;
-                .h(74px);
-                .pointer;
-                flex-shrink: 0;
-                padding: 0 20px;
+            .size(100%,60px);
+            gap: 20px;
+            align-items: center;
+            border-bottom: 1px solid #ddd;
+            .el-button + .el-button {
+                .ml(0);
+            }
+        }
+        .m-tree {
+            padding: 20px;
+            .fz(16px);
+            .el-tree-node__content {
+                .h(40px);
+            }
+            .custom-tree-node {
+                .h(40px);
+                flex: 1;
+                display: flex;
                 align-items: center;
                 justify-content: space-between;
-                border-top: 1px dashed #eee;
-                .u-label {
-                    .bold;
-                    .color(#657895);
-                }
+                padding-right: 8px;
                 .u-button {
                     .none;
-                    align-items: center;
-                    .u-icon {
-                        .pointer;
-                        .size(28px);
-                        .ml(10px);
-                        &.u-edit {
-                            .color(#67c23a,#329401);
+                }
+                &:hover {
+                    .u-button {
+                        .dbi;
+                        .u-add {
+                            .color(#66b1ff,#409eff);
                         }
-                        &.u-del {
+                        .u-del {
                             .color(#f56c6c,#cf0a0a);
                         }
                     }
                 }
-
-                &:hover {
-                    background-color: #f9f9f9;
-                    .u-label {
-                        .color(#333);
-                    }
-                    .u-button {
-                        .flex;
-                    }
-                }
-            }
-            .u-add {
-                .pa;
-                .fz(16px);
-                .lt(0,20px);
-                padding: 10px 20px;
-                .u-icon {
-                    .size(18px);
-                    .mr(5px;);
-                }
             }
         }
-        .m-user-role {
-            .pb(80px);
-            flex: 1;
-            padding: 0 20px;
-            border-left: 1px solid #ddd;
-            h4 {
-                .flex;
-                .size(100%,60px);
-                justify-content: space-between;
-                align-items: center;
-                border-bottom: 1px solid #ddd;
-            }
-            .m-tree {
-                padding: 20px;
+        .m-button {
+            .flex;
+            .pt(20px);
+            padding: 40px;
+            gap: 50px;
+            .el-button {
+                .size(120px,46px);
                 .fz(16px);
-                .el-tree-node__content {
-                    .h(40px);
-                }
-                .custom-tree-node {
-                    .h(40px);
-                    flex: 1;
-                    display: flex;
-                    align-items: center;
-                    justify-content: space-between;
-                    padding-right: 8px;
-                    .u-button {
-                        .none;
-                    }
-                    &:hover {
-                        .u-button {
-                            .dbi;
-                            .u-add {
-                                .color(#66b1ff,#409eff);
-                            }
-                            .u-del {
-                                .color(#f56c6c,#cf0a0a);
-                            }
-                        }
-                    }
-                }
-            }
-            .m-button {
-                .flex;
-                .pt(20px);
-                padding: 40px;
-                gap: 50px;
-                justify-content: flex-end;
-                .el-button {
-                    .size(120px,46px);
-                    .fz(16px);
-                    letter-spacing: 4px;
-                }
+                letter-spacing: 4px;
             }
         }
     }

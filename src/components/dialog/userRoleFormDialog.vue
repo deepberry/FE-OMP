@@ -15,8 +15,8 @@
                     {{ obj.dialogForm.mobile || "-" }}
                 </el-form-item>
                 <el-form-item label="授权角色">
-                    <el-select v-model="obj.dialogForm.role" placeholder="请选择角色">
-                        <el-option v-for="(item, i) in roles" :key="i" :label="item.name" :value="item.role" />
+                    <el-select v-model="obj.dialogForm.role" multiple placeholder="请选择角色">
+                        <el-option v-for="(item, i) in roles" :key="i" :label="item.name" :value="item.name" />
                     </el-select>
                 </el-form-item>
             </el-form>
@@ -64,13 +64,18 @@ const obj = computed(() => {
 });
 
 //====== 互动 ======
-
+console.log(props.dialogObject);
 // 取消关闭
 const close = () => {
     emit("dialogClose");
 };
 // 成功
 const success = () => {
+    obj.value.dialogForm.role = roles.value
+        .map((item) => {
+            return obj.value.dialogForm.role.includes(item.name) ? item.roleId : "";
+        })
+        .filter(Boolean);
     emit("dialogSuccess", obj.value.dialogForm);
 };
 </script>

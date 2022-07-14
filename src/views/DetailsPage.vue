@@ -32,8 +32,6 @@ const routeType = ref(type);
 
 // 自定义数据
 const state = reactive({
-    loading: false,
-
     pagination: {
         page: 1,
         per: 20,

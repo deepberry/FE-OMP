@@ -9,7 +9,9 @@
         <!-- 搜索 -->
         <div class="m-search-box">
             <search-bar :data="company_data" @toSearch="onToSearch" />
-            <el-button class="u-add" type="primary" @click="onToDialog({ type: 'add' })">企业开户</el-button>
+            <el-button class="u-add" type="primary" @click="onToDialog({ type: 'add' })" v-if="hasAdd"
+                >企业开户</el-button
+            >
         </div>
         <!-- 表格 -->
         <companyTable :table="state.table" :label="label" @toDialog="onToDialog" v-loading="state.loading" />
@@ -47,12 +49,13 @@ import companyTable from "@/components/table/companyTable";
 import companyFormDialog from "@/components/dialog/companyFormDialog";
 import { getCompanyList, addCompany, editCompany, enabledCompany } from "@/service/company";
 import { ElNotification } from "element-plus";
+import { storeToRefs } from "pinia";
 
 //====== 数据 ======
 
-// 获取公共数据
+// 获取store公共数据
 const store = deepBerryStore();
-const { label } = store;
+const { label, role } = storeToRefs(store);
 
 // 搜索 默认选项数据
 const company_data = {
@@ -116,6 +119,9 @@ let dialogObject = reactive({
     dialogVisible: false,
     company: company,
 });
+
+// 企业开户权限判断
+const hasAdd = computed(() => role.value.includes(9));
 
 //====== 交互 ======
 

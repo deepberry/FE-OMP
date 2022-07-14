@@ -1,5 +1,5 @@
 <template>
-    <div class="m-detail m-equipment-detail">
+    <div class="m-detail m-equipment-detail" v-loading="state.loading">
         <div class="m-info">
             <div class="m-row" v-for="(item, key) in info" :key="key">
                 <span class="u-label">{{ item }}</span>
@@ -25,14 +25,18 @@ const { id } = toRaw(route).params.value;
 // 数据
 let state = reactive({
     data: {},
+    loading: false,
 });
 
 //======  axios ======
 // 初始加载
 onMounted(() => {
-    editEquipmentId(id).then((res) => {
-        state.data = res.data.data;
-    });
+    state.loading = true;
+    editEquipmentId(id)
+        .then((res) => {
+            state.data = res.data.data;
+        })
+        .finally(() => (state.loading = false));
 });
 
 const info = {
