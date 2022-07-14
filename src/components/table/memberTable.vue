@@ -4,7 +4,7 @@
         <el-table-column prop="name" label="姓名" width="180" />
         <el-table-column prop="mobile" label="手机号码" width="180" />
         <el-table-column prop="address" label="部门" />
-        <el-table-column prop="role" label="角色" width="120" />
+        <el-table-column prop="roleNames" label="角色" />
         <el-table-column prop="disabled" label="状态" width="120">
             <template #default="scope">
                 <span :class="scope.row.disabled === '正常' ? 'u-table-normal' : 'u-table-disabled'">

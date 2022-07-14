@@ -19,6 +19,7 @@ const route = useRoute();
 const router = useRouter();
 const store = deepBerryStore();
 let { role } = storeToRefs(store);
+console.log(role);
 
 // 跳转链接数据
 const APPID = "ww5429d07e97752284";
@@ -29,9 +30,14 @@ const code = ref("");
 const state = reactive({
     fail: false,
 });
+// TODO:测试跳转的
 
 router.push({
-    name: "company",
+    name: "details",
+    params: {
+        type: "role",
+        id: 0,
+    },
 });
 // 监控路由，获取code
 watch(
@@ -46,6 +52,7 @@ watch(
 watch(
     code,
     (code) => {
+        console.log(code);
         if (code)
             getUserInfo({ code })
                 .then((res) => {
@@ -54,9 +61,18 @@ watch(
                     getUserPermission(res.data.userId).then((res) => {
                         role = res.data.viewPermissoins;
                         store.role = role;
-                        router.push({
-                            name: "company",
-                        });
+                        console.log(role);
+                        !role.value.length
+                            ? router.push({
+                                  name: "details",
+                                  params: {
+                                      type: "role",
+                                      id: 0,
+                                  },
+                              })
+                            : router.push({
+                                  name: "company",
+                              });
                     });
                 })
                 .catch((err) => {

@@ -16,7 +16,7 @@
                 </el-form-item>
                 <el-form-item label="授权角色">
                     <el-select v-model="obj.dialogForm.role" multiple placeholder="请选择角色">
-                        <el-option v-for="(item, i) in roles" :key="i" :label="item.name" :value="item.name" />
+                        <el-option v-for="(item, i) in roles" :key="i" :label="item.name" :value="item.roleId" />
                     </el-select>
                 </el-form-item>
             </el-form>
@@ -51,6 +51,7 @@ const dialogShow = computed({
 
 // 显示数据
 const roles = computed(() => props.dialogObject.role);
+
 const obj = computed(() => {
     return {
         dialogTitle: props.dialogObject.title || "角色权限",
@@ -71,11 +72,6 @@ const close = () => {
 };
 // 成功
 const success = () => {
-    obj.value.dialogForm.role = roles.value
-        .map((item) => {
-            return obj.value.dialogForm.role.includes(item.name) ? item.roleId : "";
-        })
-        .filter(Boolean);
     emit("dialogSuccess", obj.value.dialogForm);
 };
 </script>

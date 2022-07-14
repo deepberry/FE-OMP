@@ -16,7 +16,9 @@
         <main class="m-main">
             <!-- 标题 -->
             <h2 class="m-title" v-if="label == 'details'">
-                <span class="u-title-txt"> <el-page-header title="返回" @back="goBack" /> {{ detailName }}详情</span>
+                <span class="u-title-txt">
+                    <el-page-header title="返回" @back="goBack" v-if="!hasArr" /> {{ detailName }}详情</span
+                >
             </h2>
             <h2 class="m-title" v-else>
                 <span class="u-title-txt">
@@ -47,10 +49,12 @@ const store = deepBerryStore();
 const route = useRoute();
 const router = reactive(useRouter());
 let { label, deepBerry } = storeToRefs(store);
+// 存储store
 label = toRaw(route).name;
 deepBerry = project.pages;
 store.label = label;
 store.deepBerry = deepBerry;
+// 自定数据
 const state = reactive({
     view: {
         icon: "",
@@ -69,7 +73,9 @@ watch(
         immediate: true,
     }
 );
-
+// 返回箭头
+const hasArr = computed(() => route.params.type == "role" && route.params.id == 0);
+// 标题
 const detailName = computed(() => deepBerry[route.params.type].key_name);
 // 返回列表
 function goBack() {

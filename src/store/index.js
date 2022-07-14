@@ -7,7 +7,8 @@ export const deepBerryStore = defineStore("deepBerry", {
         return {
             deepBerry: {},
             label: "",
-            role: [5, 6, 7, 31],
+            // TODO:测试数据
+            role: [7, 6, 5, 24, 25],
             roleData,
         };
     },

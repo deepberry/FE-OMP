@@ -7,11 +7,17 @@
                 <el-select v-model="roleId" placeholder="请选择角色">
                     <el-option v-for="(item, i) in state.roles" :key="i" :label="item.name" :value="item.roleId" />
                 </el-select>
-                <el-button class="u-add" type="success" @click="showDialog"> + 新建角色 </el-button>
-                <el-button class="u-add" type="success" @click="copyAdd">复制权限并新建角色</el-button>
+                <el-button class="u-add" type="success" @click="showDialog" v-if="hasAdd"> + 新建角色 </el-button>
+                <el-button class="u-add" type="success" @click="copyAdd" v-if="hasCopyAdd"
+                    >复制权限并新建角色</el-button
+                >
                 <template v-if="roleId">
-                    <el-button class="u-add" type="info" @click="onEditRole(roleId)"> 编辑角色 </el-button>
-                    <el-button class="u-add" type="danger" @click="onDelRole(roleId)"> 删除角色 </el-button>
+                    <el-button class="u-add" type="info" @click="onEditRole(roleId)" v-if="hasEdit">
+                        编辑角色
+                    </el-button>
+                    <el-button class="u-add" type="danger" @click="onDelRole(roleId)" v-if="hasDel">
+                        删除角色
+                    </el-button>
                 </template>
             </h4>
             <div class="m-tree" v-loading="state.loading">
@@ -28,8 +34,7 @@
                 >
                 </el-tree>
             </div>
-            <div class="m-button" v-if="roleId">
-                <el-button>取消</el-button>
+            <div class="m-button" v-if="hasEditManage">
                 <el-button type="primary" @click="setChangeRole">保存</el-button>
             </div>
         </div>
@@ -53,9 +58,17 @@ import {
     getRolePermission,
     setRolePermission,
 } from "@/service/manage";
-import { onMounted, reactive, ref, watch } from "vue";
+import { onMounted, reactive, ref, watch, computed } from "vue";
 import { ElNotification } from "element-plus";
+import { deepBerryStore } from "@/store/index";
+import { storeToRefs } from "pinia";
+
 //====== 数据 ======
+
+// 获取store公共数据
+const store = deepBerryStore();
+const { role } = storeToRefs(store);
+
 //设置数据
 let state = reactive({
     loading: true,
@@ -76,6 +89,18 @@ const dialogObject = reactive({
     title: "",
     form: {},
 });
+
+// 权限判断
+// 编辑角色信息权限
+const hasEdit = computed(() => role.value.includes(33));
+// 删除权限
+const hasDel = computed(() => role.value.includes(34));
+// 新建角色权限
+const hasAdd = computed(() => role.value.includes(32));
+// 复制权限并新建角色权限
+const hasCopyAdd = computed(() => role.value.includes(37));
+// 编辑角色权限权限
+const hasEditManage = computed(() => role.value.includes(36));
 
 // 初始加载
 onMounted(() => {
@@ -160,7 +185,6 @@ const onDialogClose = () => {
 };
 // 添加角色
 const onAddRole = (data) => {
-    console.log(data, "///////////");
     data.id
         ? editRole(data).then(() => {
               console.log(data);
