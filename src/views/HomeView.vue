@@ -1,3 +1,11 @@
+<!--
+ * @Description: 
+ * @Author: litthy
+ * @Date: 2022-07-08 13:59:49
+ * @LastEditTime: 2022-07-15 14:31:21
+ * @LastEditors: litthy
+ * @Reference: 
+-->
 <template>
     <div class="v-home">
         <img class="logo" :src="Logo" alt="深莓智能" />
@@ -32,13 +40,13 @@ const state = reactive({
 });
 // TODO:测试跳转的
 
-router.push({
-    name: "details",
-    params: {
-        type: "role",
-        id: 0,
-    },
-});
+// router.push({
+//     name: "details",
+//     params: {
+//         type: "role",
+//         id: 0,
+//     },
+// });
 // 监控路由，获取code
 watch(
     route,
