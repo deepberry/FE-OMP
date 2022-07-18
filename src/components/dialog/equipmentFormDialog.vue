@@ -9,13 +9,13 @@
         >
             <el-form class="m-form-content" ref="formRef" :model="state.form" :rules="rules" label-width="120px">
                 <el-form-item label="设备ID" prop="deviceId">
-                    <el-input v-model="state.form.deviceId" />
+                    <el-input v-model="state.form.DeviceId" />
                 </el-form-item>
                 <el-form-item label="硬件名称" prop="deviceName">
-                    <el-input v-model="state.form.deviceName" />
+                    <el-input v-model="state.form.Name" />
                 </el-form-item>
                 <el-form-item label="归属客户" prop="orgzId">
-                    <el-input v-model="state.form.orgzId" />
+                    <el-input v-model="state.form.Orgzid" />
                 </el-form-item>
             </el-form>
             <template #footer>
@@ -68,9 +68,9 @@ let state = reactive({
 // 表单规则
 const formRef = ref("");
 const rules = ref({
-    orgzId: [{ required: true, message: "请选择企业", trigger: "blur" }],
-    deviceName: [{ required: true, message: "请输入设备名称", trigger: "blur" }],
-    deviceId: [{ required: true, message: "请输入设备ID", trigger: "blur" }],
+    DeviceId: [{ required: true, message: "请选择企业", trigger: "blur" }],
+    Name: [{ required: true, message: "请输入设备名称", trigger: "blur" }],
+    Orgzid: [{ required: true, message: "请输入设备ID", trigger: "blur" }],
 });
 
 // 监控传入值 form内容显示编辑或新建

@@ -137,22 +137,24 @@ function onToDialog({ row, type }) {
 
 const onFormSuccess = (form) => {
     dialogObject.dialogVisible = false;
-
-    form.add
-        ? addEquipment(form).then(() => {
-              ElNotification({
-                  title: "成功",
-                  message: "添加设备成功",
-                  type: "success",
-              });
-          })
-        : editEquipment(form).then(() => {
-              ElNotification({
-                  title: "成功",
-                  message: "修改设备信息成功",
-                  type: "success",
-              });
-          });
+    if (form.add) {
+        delete form.add;
+        addEquipment(form).then(() => {
+            ElNotification({
+                title: "成功",
+                message: "添加设备成功",
+                type: "success",
+            });
+        });
+    } else {
+        editEquipment(form).then(() => {
+            ElNotification({
+                title: "成功",
+                message: "修改设备信息成功",
+                type: "success",
+            });
+        });
+    }
 };
 
 //====== axios数据 ======
