@@ -5,7 +5,7 @@
             v-model:currentPage="state.page"
             v-model:page-size="state.per"
             background
-            layout="prev, pager, next, jumper"
+            layout="total, prev, pager, next, jumper"
             :total="state.total"
             @current-change="handleCurrentChange"
         />
