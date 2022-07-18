@@ -30,23 +30,32 @@
     </div>
 </template>
 <script setup>
-import { getUserInfo } from "@/service/manage";
+import { getWorkUser, getUserPermission } from "@/service/index";
 import { onMounted, reactive } from "vue";
+import { storeToRefs } from "pinia";
+import { deepBerryStore } from "@/store/index";
 //====== 数据 ======
 // 数据
 let state = reactive({
     data: {},
     loading: false,
 });
+const store = deepBerryStore();
+let { role } = storeToRefs(store);
 
 //======  axios ======
 // 初始加载
+
 onMounted(() => {
     state.loading = true;
-    getUserInfo()
-        .then((res) => {
-            state.data = res.data.data;
-        })
-        .finally(() => (state.loading = false));
+    getWorkUser().then((res) => {
+        console.log("getWorkUser:res----", res);
+        state.data = res.data.data;
+        getUserPermission(res.data.userId).then((res) => {
+            console.log("getUserPermission----", res);
+            role = res.data.data.viewPermissions;
+            store.role = role;
+        });
+    });
 });
 </script>

@@ -1,10 +1,5 @@
 import { $admin } from "./axios.js";
 
-// 获取用户信息（本账号）
-function getUserInfo() {
-    return $admin().get(`/api/Work/userInfo`);
-}
-
 // 添加角色
 function addRole(data) {
     return $admin().post(`/api/Manage/role`, data);
@@ -45,14 +40,4 @@ function getRolePermissionId(id) {
     return $admin().get(`/api/Manage/permission/${id}`);
 }
 
-export {
-    getUserInfo,
-    addRole,
-    editRole,
-    delRole,
-    getRoles,
-    getRoleId,
-    setRolePermission,
-    getRolePermission,
-    getRolePermissionId,
-};
+export { addRole, editRole, delRole, getRoles, getRoleId, setRolePermission, getRolePermission, getRolePermissionId };
