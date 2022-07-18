@@ -48,14 +48,16 @@ let { role } = storeToRefs(store);
 
 onMounted(() => {
     state.loading = true;
-    getWorkUser().then((res) => {
-        console.log("getWorkUser:res----", res);
-        state.data = res.data.data;
-        getUserPermission(res.data.userId).then((res) => {
-            console.log("getUserPermission----", res);
-            role = res.data.data.viewPermissions;
-            store.role = role;
+    getWorkUser()
+        .then((res) => {
+            state.data = res.data.data;
+            getUserPermission(res.data.data.userId).then((res) => {
+                role = res.data.data;
+                store.role = role;
+            });
+        })
+        .finally(() => {
+            state.loading = false;
         });
-    });
 });
 </script>

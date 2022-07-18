@@ -33,7 +33,8 @@ if (code.value)
     getUserLogin(code.value)
         .then((res) => {
             console.log("getUserLogin获取的res:", res);
-            localStorage.setItem("token", JSON.stringify(res.data.data.accessToken));
+            const _code = "Bearer " + res.data.data.accessToken;
+            localStorage.setItem("token", _code);
             router.push({
                 name: "details",
                 params: {

@@ -52,9 +52,10 @@ function PopNextworkError(err) {
 
 function $admin(options) {
     let config = {
+        baseURL: "https://admin.deepberry.cn:444",
         headers: {
             // "Content-Type": "multipart/form-data",
-            Authorization: "Bearer " + (localStorage && localStorage.getItem("token")) || "",
+            Authorization: (localStorage && localStorage.getItem("token")) || "",
             Accept: "text/pain",
         },
     };

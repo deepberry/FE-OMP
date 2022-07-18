@@ -3,9 +3,11 @@ import { $admin } from "./axios.js";
 function getWorkUser() {
     return $admin().get(`/api/Work/userInfo`);
 }
-
+function getUserLogin(code) {
+    return $admin().get(`/api/Work/login${code}`);
+}
 function getUserPermission(userId) {
-    return $admin().get(`/api/Manage/uer/${userId}/role`);
+    return $admin().get(`/api/Manage/user/${userId}/permission`);
 }
 
-export { getWorkUser, getUserPermission };
+export { getWorkUser, getUserPermission, getUserLogin };
