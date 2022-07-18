@@ -11,8 +11,7 @@ app.use(head);
 import router from "./router/index";
 app.use(router);
 
-import { createPinia } from "pinia";
-const pinia = createPinia();
+import pinia from "./store/store";
 app.use(pinia);
 
 import ElementPlus from "element-plus";

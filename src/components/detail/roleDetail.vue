@@ -33,7 +33,7 @@
 import { getWorkUser, getUserPermission } from "@/service/index";
 import { onMounted, reactive } from "vue";
 import { storeToRefs } from "pinia";
-import { deepBerryStore } from "@/store/index";
+import { deepBerryStore } from "@/store";
 //====== 数据 ======
 // 数据
 let state = reactive({

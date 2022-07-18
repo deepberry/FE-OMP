@@ -43,17 +43,18 @@ import project from "../project.json";
 import { storeToRefs } from "pinia";
 import { reactive, toRaw, watch, computed } from "vue";
 import { useRoute, useRouter } from "vue-router";
-import { deepBerryStore } from "@/store/index";
+import { deepBerryStore } from "@/store";
 // 公共store
 const store = deepBerryStore();
 const route = useRoute();
 const router = reactive(useRouter());
-let { label, deepBerry } = storeToRefs(store);
+let { label, deepBerry, role } = storeToRefs(store);
 // 存储store
 label = toRaw(route).name;
 deepBerry = project.pages;
 store.label = label;
 store.deepBerry = deepBerry;
+store.deepBerry = role;
 // 自定数据
 const state = reactive({
     view: {
