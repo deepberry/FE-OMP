@@ -57,7 +57,8 @@ const dialogShow = computed({
         return val;
     },
 });
-const links = JSON.parse(sessionStorage.getItem("orgs")) || [];
+const links = JSON.parse(sessionStorage.getItem("orgs"));
+const options = JSON.parse(sessionStorage.getItem("types"));
 
 // dialog默认显示
 const obj = computed(() => {
@@ -75,21 +76,22 @@ const obj = computed(() => {
 let state = reactive({
     form: {},
     handleSelect: {},
+    add: false,
 });
 const form = {
-    DeviceId: null,
-    DeviceTypeId: null,
-    Orgzid: null,
-    Name: null,
+    DeviceId: "",
+    DeviceTypeId: "",
+    Orgzid: "",
+    Name: "",
 };
-const options = JSON.parse(sessionStorage.getItem("types"));
+
 // 表单规则
 const orgIdRule = (rule, value, callback) => {
     if (value === "") {
         callback(new Error("请输入企业名称"));
+    } else if (!links.filter((item) => item.orgzName == state.form.Orgzid).length) {
+        callback(new Error("没有这个企业"));
     } else {
-        if (!links.value.filter((item) => item.orgzName == state.form.Orgzid).length)
-            callback(new Error("没有这个企业"));
         callback();
     }
 };
@@ -105,14 +107,17 @@ watch(
     ({ dialogObject }) => {
         const { equipment } = dialogObject;
         if (!equipment) return;
-        const { deviceId, deviceName, deviceType, orgzId, orgzName, add } = equipment;
+        const { id, deviceId, deviceName, deviceType, orgzId, orgzName, add } = equipment;
         if (add) {
             state.form = { ...form };
+            state.add = true;
         } else {
+            state.form.id = id;
             state.form.DeviceId = deviceId;
             state.form.DeviceTypeId = deviceType == "未知" ? "" : deviceType;
             state.form.Orgzid = orgzName;
             state.form.Name = deviceName;
+            state.add = false;
         }
     },
     { deep: true, immediate: true }
@@ -132,12 +137,13 @@ const submitForm = (form) => {
     form.validate((valid, fields) => {
         if (valid) {
             let _form = { ...state.form };
-            _form.Orgzid = links.value
+            _form.Orgzid = links
                 .map((item) => (item.orgzName == state.form.Orgzid ? item : false))
                 .filter(Boolean)[0].orgzId;
 
             _form.DeviceTypeId =
                 options.filter((item) => item.name == state.form.DeviceTypeId)[0]?.id || state.form.DeviceTypeId;
+            _form.add = state.add;
             emit("dialogSuccess", _form);
         } else {
             console.log("error submit!", fields);
@@ -147,7 +153,7 @@ const submitForm = (form) => {
 
 // 查询企业列表
 const queryCompanyList = (queryString, cb) => {
-    const results = queryString ? links.value.filter((item) => item.orgzName.includes(queryString)) : links.value;
+    const results = queryString ? links.filter((item) => item.orgzName.includes(queryString)) : links;
     cb(results);
 };
 // 选中的企业id和名称

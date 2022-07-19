@@ -143,7 +143,6 @@ function onToDialog({ row, type }) {
 const onFormSuccess = (form) => {
     dialogObject.dialogVisible = false;
     if (form.add) {
-        delete form.add;
         addEquipment(form).then(() => {
             ElNotification({
                 title: "成功",
@@ -153,7 +152,6 @@ const onFormSuccess = (form) => {
             loadEquipmentList();
         });
     } else {
-        console.log("edit");
         editEquipment(form).then(() => {
             ElNotification({
                 title: "成功",
