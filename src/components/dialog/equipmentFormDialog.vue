@@ -57,7 +57,7 @@ const dialogShow = computed({
         return val;
     },
 });
-const links = computed(() => JSON.parse(sessionStorage.getItem("orgs")));
+const links = JSON.parse(sessionStorage.getItem("orgs")) || [];
 
 // dialog默认显示
 const obj = computed(() => {
