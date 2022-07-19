@@ -1,6 +1,11 @@
 <template>
     <div class="m-searchBar">
-        <el-input v-model.lazy="state.input_txt" class="u-input" :placeholder="data.placeholder">
+        <el-input
+            v-model.lazy="state.input_txt"
+            class="u-input"
+            :placeholder="data.placeholder"
+            @keyup.enter="toSearch"
+        >
             <template #prepend v-if="data.role">
                 <Search class="u-icon" />
             </template>
@@ -10,6 +15,13 @@
         <template v-if="data.status">
             <el-select v-model="state.status_id" class="u-select" :placeholder="data.status_title">
                 <el-option v-for="(item, i) in data.status" :key="i" :label="item.label" :value="item.value" />
+            </el-select>
+        </template>
+
+        <!-- 设备分类 -->
+        <template v-if="data.type">
+            <el-select v-model="state.type_id" class="u-select" :placeholder="data.type_title">
+                <el-option v-for="(item, i) in data.type" :key="i" :label="item.name" :value="item.id" />
             </el-select>
         </template>
 
@@ -30,11 +42,13 @@
         <!-- 角色 -->
         <template v-if="data.role">
             <el-select v-model="state.role_id" class="u-select" :placeholder="data.role_title">
+                +
                 <el-option v-for="(item, i) in data.role" :key="i" :label="item.label" :value="item.value" />
             </el-select>
         </template>
 
         <el-button type="primary" class="u-button" @click="toSearch">查询</el-button>
+        <el-button type="info" plain class="u-button" @click="toDefault">重置</el-button>
     </div>
 </template>
 <script setup>
@@ -54,7 +68,19 @@ const state = reactive({
     bind_id: "",
     connect_id: "",
     role_id: "",
+    type_id: "",
 });
+// 重置
+function toDefault() {
+    state.input_txt = "";
+    state.status_id = "";
+    state.bind_id = "";
+    state.connect_id = "";
+    state.role_id = "";
+    state.type_id = "";
+    console.log(state);
+    toSearch();
+}
 
 // 提交搜索数据
 function toSearch() {

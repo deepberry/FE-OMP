@@ -24,4 +24,8 @@ function enabledCompany(OrgzId, enabled) {
 function getCompanyInfo(OrgzId) {
     return $admin().get(`/api/Orgz/${OrgzId}`);
 }
-export { getCompanyList, addCompany, editCompany, getCompanyLogo, enabledCompany, getCompanyInfo };
+// 获取所以企业
+function getAllOrgz() {
+    return $admin().get(`/api/Orgz/total`);
+}
+export { getCompanyList, addCompany, editCompany, getCompanyLogo, enabledCompany, getCompanyInfo, getAllOrgz };

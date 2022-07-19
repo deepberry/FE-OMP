@@ -21,7 +21,7 @@
                     <router-link
                         :to="{ path: `/${label}/details/${scope.row.userId}` }"
                         class="u-table-more"
-                        v-if="hasInfo"
+                        v-if="hasInfo && scope.row.userId"
                         >查看详情
                     </router-link>
                 </div>

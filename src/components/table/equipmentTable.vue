@@ -1,12 +1,15 @@
 <template>
     <el-table class="m-table" :data="state.data" border fit style="width: 100%">
         <el-table-column prop="deviceId" label="设备ID" />
-        <el-table-column prop="deviceName" label="硬件名称" />
+        <el-table-column label="设备类型">
+            <template #default="scope">{{ scope.row.deviceType }}</template>
+        </el-table-column>
         <el-table-column prop="orgzName" label="归属企业" />
         <el-table-column prop="hard_version" label="硬件版本" />
         <el-table-column prop="soft_version" label="固件版本" />
         <el-table-column prop="iccid" label="ICCID" />
         <el-table-column prop="status" label="连接状态" />
+        <el-table-column prop="deviceName" label="备注" />
         <el-table-column label="操作" width="180" v-if="hasOperate">
             <template #default="scope">
                 <div class="u-table-button">
@@ -16,7 +19,7 @@
                     <router-link
                         :to="{ path: `/${label}/details/${scope.row.deviceId}` }"
                         class="u-table-more"
-                        v-if="hasInfo"
+                        v-if="hasInfo && scope.row.deviceId"
                         >查看详情
                     </router-link>
                 </div>

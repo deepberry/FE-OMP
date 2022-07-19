@@ -32,7 +32,8 @@ import { reactive, computed, onMounted } from "vue";
 import { deepBerryStore } from "@/store/index";
 import equipmentTable from "@/components/table/equipmentTable";
 import equipmentFormDialog from "@/components/dialog/equipmentFormDialog";
-import { getEquipmentList, addEquipment, editEquipment } from "@/service/equipment";
+import { getEquipmentList, addEquipment, editEquipment, getEquipmentType } from "@/service/equipment";
+import { getAllOrgz } from "@/service/company";
 import { ElNotification } from "element-plus";
 import { storeToRefs } from "pinia";
 
@@ -43,9 +44,11 @@ const store = deepBerryStore();
 const { label, role } = storeToRefs(store);
 
 // 搜索 默认选项数据
-const equipment_data = {
+let equipment_data = reactive({
     uid: "",
     placeholder: `请输入设备ID/硬件名称/ICCID/归属客户`,
+    type_title: "-- 设备分类 --",
+    type: JSON.parse(sessionStorage.getItem("types")) || [],
     // bind_title: "-- 绑定状态 --",
     // bind: [
     //     {
@@ -68,7 +71,7 @@ const equipment_data = {
     //         value: 0,
     //     },
     // ],
-};
+});
 
 // 表格 翻页 企业id 企业名称 弹窗表格
 let state = reactive({
@@ -81,6 +84,7 @@ let state = reactive({
     },
     search: {
         Condition: null,
+        DeviceTypeId: null,
     },
     form: {},
 });
@@ -109,8 +113,9 @@ const hasAdd = computed(() => role.value.includes(19));
 //====== 交互 ======
 
 // 搜索查询
-function onToSearch({ input_txt }) {
+function onToSearch({ input_txt, type_id }) {
     state.search.Condition = input_txt;
+    state.search.DeviceTypeId = type_id;
     // state.search.status = status_id == -1 ? null : status_id;
     state.pagination.page = 1;
     loadEquipmentList();
@@ -145,14 +150,17 @@ const onFormSuccess = (form) => {
                 message: "添加设备成功",
                 type: "success",
             });
+            loadEquipmentList();
         });
     } else {
+        console.log("edit");
         editEquipment(form).then(() => {
             ElNotification({
                 title: "成功",
                 message: "修改设备信息成功",
                 type: "success",
             });
+            loadEquipmentList();
         });
     }
 };
@@ -175,4 +183,17 @@ function loadEquipmentList() {
         })
         .finally(() => (state.loading = false));
 }
+
+if (!sessionStorage.getItem("types"))
+    getEquipmentType().then((res) => {
+        const list = res.data.data;
+        equipment_data.type = list.reverse();
+        sessionStorage.setItem("types", JSON.stringify(list));
+    });
+
+if (!sessionStorage.getItem("orgs"))
+    getAllOrgz().then((res) => {
+        const list = res.data.data;
+        sessionStorage.setItem("orgs", JSON.stringify(list));
+    });
 </script>

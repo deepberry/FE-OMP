@@ -13,8 +13,12 @@ function editEquipment(data) {
     return $admin().put(`/api/Device`, data);
 }
 // 获取设备详情
-function editEquipmentId(deviceId) {
+function getEquipmentId(deviceId) {
     return $admin().get(`/api/Device/${deviceId}`);
 }
+// 获取设备类型
+function getEquipmentType() {
+    return $admin().get(`/api/Device/type`);
+}
 
-export { getEquipmentList, addEquipment, editEquipment, editEquipmentId };
+export { getEquipmentList, addEquipment, editEquipment, getEquipmentId, getEquipmentType };

@@ -15,7 +15,7 @@
     </div>
 </template>
 <script setup>
-import { editEquipmentId } from "@/service/equipment";
+import { getEquipmentId } from "@/service/equipment";
 import { useRoute } from "vue-router";
 import { onMounted, reactive, toRaw } from "vue";
 //====== 数据 ======
@@ -32,7 +32,7 @@ let state = reactive({
 // 初始加载
 onMounted(() => {
     state.loading = true;
-    editEquipmentId(id)
+    getEquipmentId(id)
         .then((res) => {
             state.data = res.data.data;
         })

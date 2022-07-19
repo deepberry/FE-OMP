@@ -8,14 +8,25 @@
             draggable
         >
             <el-form class="m-form-content" ref="formRef" :model="state.form" :rules="rules" label-width="120px">
-                <el-form-item label="设备ID" prop="deviceId">
+                <el-form-item label="设备ID" prop="DeviceId">
                     <el-input v-model="state.form.DeviceId" />
                 </el-form-item>
-                <el-form-item label="硬件名称" prop="deviceName">
-                    <el-input v-model="state.form.Name" />
+                <el-form-item label="设备类型" prop="DeviceTypeId">
+                    <el-select v-model="state.form.DeviceTypeId" placeholder="- 请选择 -">
+                        <el-option v-for="(item, key) in options" :key="key" :label="item.name" :value="item.id" />
+                    </el-select>
                 </el-form-item>
-                <el-form-item label="归属客户" prop="orgzId">
-                    <el-input v-model="state.form.Orgzid" />
+                <el-form-item label="归属客户" prop="Orgzid">
+                    <el-autocomplete
+                        v-model="state.form.Orgzid"
+                        :fetch-suggestions="queryCompanyList"
+                        value-key="orgzName"
+                        placeholder=""
+                        @select="handleSelect"
+                    />
+                </el-form-item>
+                <el-form-item label="备注">
+                    <el-input v-model="state.form.Name" />
                 </el-form-item>
             </el-form>
             <template #footer>
@@ -46,6 +57,7 @@ const dialogShow = computed({
         return val;
     },
 });
+const links = computed(() => JSON.parse(sessionStorage.getItem("orgs")));
 
 // dialog默认显示
 const obj = computed(() => {
@@ -60,28 +72,58 @@ const obj = computed(() => {
 });
 
 // 表单
-const equipment = computed(() => props.dialogObject.equipment);
 let state = reactive({
     form: {},
+    handleSelect: {},
 });
-
+const form = {
+    DeviceId: null,
+    DeviceTypeId: null,
+    Orgzid: null,
+    Name: null,
+};
+const options = JSON.parse(sessionStorage.getItem("types"));
 // 表单规则
+const orgIdRule = (rule, value, callback) => {
+    if (value === "") {
+        callback(new Error("请输入企业名称"));
+    } else {
+        if (!links.value.filter((item) => item.orgzName == state.form.Orgzid).length)
+            callback(new Error("没有这个企业"));
+        callback();
+    }
+};
 const formRef = ref("");
 const rules = ref({
-    DeviceId: [{ required: true, message: "请选择企业", trigger: "blur" }],
-    Name: [{ required: true, message: "请输入设备名称", trigger: "blur" }],
-    Orgzid: [{ required: true, message: "请输入设备ID", trigger: "blur" }],
+    DeviceId: [{ required: true, message: "请输入设备ID", trigger: "blur" }],
+    DeviceTypeId: [{ required: true, message: "请选择设备类型", trigger: "change" }],
+    Orgzid: [{ required: true, validator: orgIdRule }],
 });
-
 // 监控传入值 form内容显示编辑或新建
-watch(equipment, (obj) => (state.form = obj), { deep: true, immediate: true });
+watch(
+    props,
+    ({ dialogObject }) => {
+        const { equipment } = dialogObject;
+        if (!equipment) return;
+        const { deviceId, deviceName, deviceType, orgzId, orgzName, add } = equipment;
+        if (add) {
+            state.form = { ...form };
+        } else {
+            state.form.DeviceId = deviceId;
+            state.form.DeviceTypeId = deviceType == "未知" ? "" : deviceType;
+            state.form.Orgzid = orgzName;
+            state.form.Name = deviceName;
+        }
+    },
+    { deep: true, immediate: true }
+);
 
 //====== 交互 ======
 
 // 关闭并重置校验
 const resetForm = () => {
-    emit("dialogClose");
     formRef.value.resetFields();
+    emit("dialogClose");
 };
 
 // 校验并提交
@@ -89,11 +131,28 @@ const submitForm = (form) => {
     if (!form) return;
     form.validate((valid, fields) => {
         if (valid) {
-            emit("dialogSuccess", state.form);
+            let _form = { ...state.form };
+            _form.Orgzid = links.value
+                .map((item) => (item.orgzName == state.form.Orgzid ? item : false))
+                .filter(Boolean)[0].orgzId;
+
+            _form.DeviceTypeId =
+                options.filter((item) => item.name == state.form.DeviceTypeId)[0]?.id || state.form.DeviceTypeId;
+            emit("dialogSuccess", _form);
         } else {
             console.log("error submit!", fields);
         }
     });
+};
+
+// 查询企业列表
+const queryCompanyList = (queryString, cb) => {
+    const results = queryString ? links.value.filter((item) => item.orgzName.includes(queryString)) : links.value;
+    cb(results);
+};
+// 选中的企业id和名称
+const handleSelect = (item) => {
+    state.handleSelect = item;
 };
 </script>
 <script>
