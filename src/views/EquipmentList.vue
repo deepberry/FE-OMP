@@ -42,7 +42,7 @@ import { storeToRefs } from "pinia";
 // 获取公共数据
 const store = deepBerryStore();
 const { label, role } = storeToRefs(store);
-const types = JSON.parse(sessionStorage.getItem("types")) || [];
+const types = JSON.parse(localStorage.getItem("types")) || [];
 
 // 搜索 默认选项数据
 let equipment_data = reactive({
@@ -188,16 +188,16 @@ function loadEquipmentList() {
         .finally(() => (state.loading = false));
 }
 
-if (!sessionStorage.getItem("types"))
+if (!localStorage.getItem("types"))
     getEquipmentType().then((res) => {
         const list = res.data.data;
         equipment_data.type = list.reverse();
-        sessionStorage.setItem("types", JSON.stringify(list));
+        localStorage.setItem("types", JSON.stringify(list));
     });
 
-if (!sessionStorage.getItem("orgs"))
+if (!localStorage.getItem("orgs"))
     getAllOrgz().then((res) => {
         const list = res.data.data;
-        sessionStorage.setItem("orgs", JSON.stringify(list));
+        localStorage.setItem("orgs", JSON.stringify(list));
     });
 </script>
