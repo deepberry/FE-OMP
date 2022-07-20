@@ -48,13 +48,13 @@ import { deepBerryStore } from "@/store";
 const store = deepBerryStore();
 const route = useRoute();
 const router = reactive(useRouter());
-let { label, deepBerry, role } = storeToRefs(store);
+let { label, data, role } = storeToRefs(store);
 // 存储store
 label = toRaw(route).name;
-deepBerry = project.pages;
+data = project.pages;
 store.label = label;
-store.deepBerry = deepBerry;
-store.deepBerry = role;
+store.data = data;
+store.role = role;
 // 自定数据
 const state = reactive({
     view: {
@@ -67,8 +67,8 @@ const state = reactive({
 watch(
     label,
     (val) => {
-        state.view.icon = deepBerry[val]?.icon || "Notebook";
-        state.view.title = deepBerry[val]?.title || "成员列表";
+        state.view.icon = data[val]?.icon || "Notebook";
+        state.view.title = data[val]?.title || "成员列表";
     },
     {
         immediate: true,
@@ -77,7 +77,7 @@ watch(
 // 返回箭头
 const hasArr = computed(() => route.params.type == "role" && route.params.id == 0);
 // 标题
-const detailName = computed(() => deepBerry[route.params.type].key_name);
+const detailName = computed(() => data[route.params.type].key_name);
 // 返回列表
 function goBack() {
     router.go(-1);

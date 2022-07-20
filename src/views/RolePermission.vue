@@ -20,22 +20,24 @@
                     </el-button>
                 </template>
             </h4>
-            <div class="m-tree" v-loading="state.loading">
-                <el-tree
-                    ref="tree"
-                    :data="state.dataSource"
-                    show-checkbox
-                    :check-on-click-node="true"
-                    :expand-on-click-node="false"
-                    :default-checked-keys="state.defaultRole"
-                    node-key="id"
-                    default-expand-all
-                    @check-change="handleCheckChange"
-                >
-                </el-tree>
-            </div>
-            <div class="m-button" v-if="hasEditManage">
-                <el-button type="primary" @click="setChangeRole">保存</el-button>
+            <div v-show="roleId">
+                <div class="m-tree" v-loading="state.loading">
+                    <el-tree
+                        ref="tree"
+                        :data="state.dataSource"
+                        show-checkbox
+                        :check-on-click-node="true"
+                        :expand-on-click-node="false"
+                        :default-checked-keys="state.defaultRole"
+                        node-key="id"
+                        default-expand-all
+                        @check-change="handleCheckChange"
+                    >
+                    </el-tree>
+                </div>
+                <div class="m-button" v-if="hasEditManage">
+                    <el-button type="primary" @click="setChangeRole">保存</el-button>
+                </div>
             </div>
         </div>
         <!-- 新建/编辑角色 弹窗 -->

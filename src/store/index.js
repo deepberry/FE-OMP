@@ -13,7 +13,7 @@ import roleData from "@/assets/data/role.json";
 export const deepBerryStore = defineStore("deepBerry", {
     state: () => {
         return {
-            deepBerry: {},
+            data: {},
             label: "",
             role: [],
             roleData,
@@ -21,7 +21,7 @@ export const deepBerryStore = defineStore("deepBerry", {
     },
     persist: {
         enabled: true,
-        strategies: [{ storage: localStorage, paths: ["role"] }],
+        strategies: [{ storage: localStorage, paths: ["role", "data"] }],
     },
     getters: {},
     actions: {},

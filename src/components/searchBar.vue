@@ -78,7 +78,6 @@ function toDefault() {
     state.connect_id = "";
     state.role_id = "";
     state.type_id = "";
-    console.log(state);
     toSearch();
 }
 

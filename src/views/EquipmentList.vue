@@ -9,7 +9,7 @@
         <!-- 搜索 -->
         <div class="m-search-box">
             <search-bar :data="equipment_data" @toSearch="onToSearch" />
-            <el-button class="u-add" type="primary" @click="onToDialog({ type: 'add' })" v-if="hasAdd"
+            <el-button class="u-add" type="primary" @click="onToDialog({ type: 'add' })" v-if="hasAdd && false"
                 >添加设备</el-button
             >
         </div>
@@ -49,17 +49,17 @@ let equipment_data = reactive({
     placeholder: `请输入设备ID/硬件名称/ICCID/归属客户`,
     type_title: "-- 设备分类 --",
     type: JSON.parse(sessionStorage.getItem("types")) || [],
-    // bind_title: "-- 绑定状态 --",
-    // bind: [
-    //     {
-    //         label: "已绑定",
-    //         value: 1,
-    //     },
-    //     {
-    //         label: "未绑定",
-    //         value: 0,
-    //     },
-    // ],
+    bind_title: "-- 绑定状态 --",
+    bind: [
+        {
+            label: "已绑定",
+            value: 1,
+        },
+        {
+            label: "未绑定",
+            value: 0,
+        },
+    ],
     // connect_title: "-- 连接状态 --",
     // connect: [
     //     {
@@ -85,6 +85,7 @@ let state = reactive({
     search: {
         Condition: null,
         DeviceTypeId: null,
+        IsBindNode: null,
     },
     form: {},
 });
@@ -113,9 +114,10 @@ const hasAdd = computed(() => role.value.includes(19));
 //====== 交互 ======
 
 // 搜索查询
-function onToSearch({ input_txt, type_id }) {
+function onToSearch({ input_txt, type_id, bind_id }) {
     state.search.Condition = input_txt;
     state.search.DeviceTypeId = type_id;
+    state.search.IsBindNode = bind_id;
     // state.search.status = status_id == -1 ? null : status_id;
     state.pagination.page = 1;
     loadEquipmentList();
