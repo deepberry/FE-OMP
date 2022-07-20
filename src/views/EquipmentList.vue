@@ -42,13 +42,14 @@ import { storeToRefs } from "pinia";
 // 获取公共数据
 const store = deepBerryStore();
 const { label, role } = storeToRefs(store);
+const types = JSON.parse(sessionStorage.getItem("types")) || [];
 
 // 搜索 默认选项数据
 let equipment_data = reactive({
     uid: "",
     placeholder: `请输入设备ID/ICCID/归属客户`,
     type_title: "-- 设备分类 --",
-    type: [{ id: -1, name: "全部" }, ...JSON.parse(sessionStorage.getItem("types"))] || [],
+    type: [{ id: -1, name: "全部" }, ...types],
     bind_title: "-- 绑定状态 --",
     bind: [
         {
