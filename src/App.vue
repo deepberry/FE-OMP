@@ -28,7 +28,11 @@
                 </span>
             </h2>
 
-            <router-view />
+            <router-view v-slot="{ Component }">
+                <keep-alive>
+                    <component :is="Component" />
+                </keep-alive>
+            </router-view>
         </main>
     </div>
     <!-- 公共底部 -->
@@ -39,9 +43,13 @@
 import CommonFooter from "@/components/common/footer.vue";
 import Navigation from "@/components/common/commonNavigation.vue";
 import AsideSetting from "@/components/asideSetting.vue";
+import company from "@/views/CompanyList.vue";
+import customer from "@/views/CustomerList.vue";
+import equipment from "@/views/EquipmentList.vue";
+
 import project from "../project.json";
 import { storeToRefs } from "pinia";
-import { reactive, toRaw, watch, computed } from "vue";
+import { reactive, toRaw, watch, computed, ref } from "vue";
 import { useRoute, useRouter } from "vue-router";
 import { deepBerryStore } from "@/store";
 // 公共store
@@ -62,11 +70,17 @@ const state = reactive({
         title: "",
     },
 });
+const Component = ref("");
 
+// 防止报错，组件
+company;
+customer;
+equipment;
 // 标题
 watch(
     label,
     (val) => {
+        Component.value = val;
         state.view.icon = data[val]?.icon || "Notebook";
         state.view.title = data[val]?.title || "成员列表";
     },
