@@ -42,7 +42,7 @@ onMounted(() => {
 // 自定
 const info = {
     deviceId: "设备ID",
-    name: "硬件名称",
+    deviceType: "设备类型",
     orgzName: "归属客户",
     hardVer: "硬件版本",
     softVer: "固件版本",

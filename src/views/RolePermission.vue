@@ -189,7 +189,6 @@ const onDialogClose = () => {
 const onAddRole = (data) => {
     data.id
         ? editRole(data).then(() => {
-              console.log(data);
               ElNotification({
                   type: "success",
                   title: "成功",

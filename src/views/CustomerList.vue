@@ -51,6 +51,10 @@ const customer_data = {
     status_title: "-- 用户帐号状态 --",
     status: [
         {
+            label: "全部",
+            value: -1,
+        },
+        {
             label: "正常",
             value: 0,
         },

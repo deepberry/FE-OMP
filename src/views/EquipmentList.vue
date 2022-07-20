@@ -46,11 +46,15 @@ const { label, role } = storeToRefs(store);
 // 搜索 默认选项数据
 let equipment_data = reactive({
     uid: "",
-    placeholder: `请输入设备ID/硬件名称/ICCID/归属客户`,
+    placeholder: `请输入设备ID/ICCID/归属客户`,
     type_title: "-- 设备分类 --",
-    type: JSON.parse(sessionStorage.getItem("types")) || [],
+    type: [{ id: -1, name: "全部" }, ...JSON.parse(sessionStorage.getItem("types"))] || [],
     bind_title: "-- 绑定状态 --",
     bind: [
+        {
+            label: "全部",
+            value: -1,
+        },
         {
             label: "已绑定",
             value: 1,
@@ -116,9 +120,8 @@ const hasAdd = computed(() => role.value.includes(19));
 // 搜索查询
 function onToSearch({ input_txt, type_id, bind_id }) {
     state.search.Condition = input_txt;
-    state.search.DeviceTypeId = type_id;
-    state.search.IsBindNode = bind_id;
-    // state.search.status = status_id == -1 ? null : status_id;
+    state.search.DeviceTypeId = type_id == -1 ? null : type_id;
+    state.search.IsBindNode = bind_id == -1 ? null : bind_id;
     state.pagination.page = 1;
     loadEquipmentList();
 }

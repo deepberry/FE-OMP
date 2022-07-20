@@ -42,13 +42,12 @@
         <!-- 角色 -->
         <template v-if="data.role">
             <el-select v-model="state.role_id" class="u-select" :placeholder="data.role_title">
-                +
                 <el-option v-for="(item, i) in data.role" :key="i" :label="item.label" :value="item.value" />
             </el-select>
         </template>
 
         <el-button type="primary" class="u-button" @click="toSearch">查询</el-button>
-        <el-button type="info" plain class="u-button" @click="toDefault">重置</el-button>
+        <!-- <el-button type="info" plain class="u-button" @click="toDefault">重置</el-button> -->
     </div>
 </template>
 <script setup>
@@ -71,15 +70,15 @@ const state = reactive({
     type_id: "",
 });
 // 重置
-function toDefault() {
-    state.input_txt = "";
-    state.status_id = "";
-    state.bind_id = "";
-    state.connect_id = "";
-    state.role_id = "";
-    state.type_id = "";
-    toSearch();
-}
+// function toDefault() {
+//     state.input_txt = "";
+//     state.status_id = "";
+//     state.bind_id = "";
+//     state.connect_id = "";
+//     state.role_id = "";
+//     state.type_id = "";
+//     toSearch();
+// }
 
 // 提交搜索数据
 function toSearch() {

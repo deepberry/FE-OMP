@@ -23,7 +23,7 @@
                 <span class="u-value">{{ state.data.updatedAt || "-" }}</span>
             </div>
             <div class="m-row">
-                <span class="u-label">状态</span>
+                <span class="u-label">账号状态</span>
                 <span class="u-value">{{ state.data.disabled == "0" ? "正常" : "停用" }}</span>
             </div>
         </div>

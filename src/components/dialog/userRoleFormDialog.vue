@@ -65,7 +65,6 @@ const obj = computed(() => {
 });
 
 //====== 互动 ======
-console.log(props.dialogObject);
 // 取消关闭
 const close = () => {
     emit("dialogClose");

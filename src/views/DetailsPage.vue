@@ -24,7 +24,6 @@ const router = reactive(useRouter());
 const { type, id } = toRaw(route).params.value;
 const { data } = store;
 const key_name = ref(data[type]?.key_name);
-console.log(type, data);
 id;
 
 // tabs切换name
@@ -77,7 +76,7 @@ watch(
         routeType.value = _type;
 
         if (_type == "company" || _type == "role") hasLogs.value = false;
-        if (_type == "role") key_name.value = "帐号";
+        if (_type == "role") key_name.value = "账号";
 
         state.component_name = ref(`${_type}Detail`);
         state.component = myComponent[state.component_name];

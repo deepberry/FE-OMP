@@ -14,7 +14,7 @@
         <el-table-column label="企业状态" width="120">
             <template #default="scope">
                 <span :class="scope.row.status === '禁用' ? 'u-table-disabled' : 'u-table-normal'">
-                    {{ scope.row.status }}</span
+                    {{ scope.row.status === "禁用" ? "已停用" : scope.row.status }}</span
                 >
             </template>
         </el-table-column>
