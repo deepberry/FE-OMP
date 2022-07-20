@@ -28,37 +28,37 @@ const routes = [
         name: "company",
         path: "/company",
         component: CompanyList,
-        meta: {},
+        meta: { keepAlive: true },
     },
     {
         name: "customer",
         path: "/customer",
         component: CustomerList,
-        meta: {},
+        meta: { keepAlive: true },
     },
     {
         name: "equipment",
         path: "/equipment",
         component: EquipmentList,
-        meta: {},
+        meta: { keepAlive: true },
     },
     {
         name: "details",
         path: "/:type/details/:id",
         component: DetailsPage,
-        meta: {},
+        meta: { keepAlive: false },
     },
     {
         name: "role",
         path: "/role/:id?",
         component: RolePermission,
-        meta: {},
+        meta: { keepAlive: false },
     },
     {
         name: "member",
         path: "/role/member",
         component: MemberList,
-        meta: {},
+        meta: { keepAlive: true },
     },
 ];
 
