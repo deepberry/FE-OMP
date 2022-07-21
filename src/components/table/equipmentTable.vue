@@ -11,7 +11,7 @@
         <el-table-column prop="status" label="连接状态" />
         <el-table-column label="绑定状态">
             <template #default="scope">
-                <span :class="scope.row.isBindNode == '未绑定' ? 'u-table-normal' : 'u-table-disabled'">{{
+                <span :class="scope.row.isBindNode == '未绑定' ? 'u-table-disabled' : 'u-table-normal'">{{
                     scope.row.isBindNode
                 }}</span></template
             >
