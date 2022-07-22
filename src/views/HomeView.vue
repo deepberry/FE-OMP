@@ -22,7 +22,6 @@ import { getUserLogin } from "@/service/index.js";
 
 //====== 数据 ======
 const router = useRouter();
-window.localStorage.clear();
 
 // 跳转链接数据
 const APPID = "ww5429d07e97752284";

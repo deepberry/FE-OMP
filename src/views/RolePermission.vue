@@ -64,6 +64,7 @@ import { onMounted, reactive, ref, watch, computed } from "vue";
 import { ElNotification } from "element-plus";
 import { deepBerryStore } from "@/store/index";
 import { storeToRefs } from "pinia";
+import { ElMessageBox } from "element-plus";
 
 //====== 数据 ======
 
@@ -224,19 +225,25 @@ const onEditRole = (id) => {
 
 // 删除角色
 const onDelRole = (id) => {
-    delRole(id)
-        .then(() => {
-            ElNotification({
-                type: "success",
-                title: "成功",
-                message: `删除角色成功`,
+    ElMessageBox.confirm("删除角色后，所有赋予该角色用户的权限将全部移除！！", "警告！！", {
+        confirmButtonText: "确定",
+        cancelButtonText: "取消",
+        type: "warning",
+    }).then(() => {
+        delRole(id)
+            .then(() => {
+                ElNotification({
+                    type: "success",
+                    title: "成功",
+                    message: `删除角色成功`,
+                });
+                loadRoles();
+                roleId.value = "";
+            })
+            .catch((err) => {
+                console.log(err);
             });
-            loadRoles();
-            roleId.value = "";
-        })
-        .catch((err) => {
-            console.log(err);
-        });
+    });
 };
 
 // 更改对应角色权限
