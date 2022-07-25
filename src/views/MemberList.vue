@@ -145,8 +145,8 @@ const onToDialog = ({ row, type }) => {
 // 表单弹窗确定
 const onFormSuccess = (form) => {
     dialogObject.dialogVisible = false;
-    const { role, userId } = form;
-    setUserPermission({ userId, roleIds: role }).then(() => {
+    const { userId, roleIds } = form;
+    setUserPermission({ userId, roleIds }).then(() => {
         loadData();
         ElNotification({
             title: "成功",
@@ -154,21 +154,6 @@ const onFormSuccess = (form) => {
             type: "success",
         });
     });
-    // form.add
-    //     ? addEquipment(form).then(() => {
-    //           ElNotification({
-    //               title: "成功",
-    //               message: "添加设备成功",
-    //               type: "success",
-    //           });
-    //       })
-    //     : editEquipment(form).then(() => {
-    //           ElNotification({
-    //               title: "成功",
-    //               message: "修改设备信息成功",
-    //               type: "success",
-    //           });
-    //       });
 };
 // 提示弹窗确定
 const onTipsSuccess = () => {

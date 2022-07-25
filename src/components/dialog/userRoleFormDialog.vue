@@ -15,7 +15,7 @@
                     {{ obj.dialogForm.mobile || "-" }}
                 </el-form-item>
                 <el-form-item label="授权角色">
-                    <el-select v-model="obj.dialogForm.role" multiple placeholder="请选择角色">
+                    <el-select v-model="obj.dialogForm.roleIds" multiple placeholder="请选择角色">
                         <el-option v-for="(item, i) in roles" :key="i" :label="item.name" :value="item.roleId" />
                     </el-select>
                 </el-form-item>
