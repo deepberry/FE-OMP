@@ -8,6 +8,9 @@ import { createHead } from "@vueuse/head";
 const head = createHead();
 app.use(head);
 
+import DeepBerryUI from "@deepberry/vue3-element-extend";
+app.use(DeepBerryUI);
+
 import router from "./router/index";
 app.use(router);
 

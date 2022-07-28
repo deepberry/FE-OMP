@@ -13,7 +13,7 @@
                 </el-form-item>
                 <el-form-item label="企业/组织Logo">
                     <div class="m-box">
-                        <UploadImage class="m-uploader" />
+                        <UploadImage class="m-uploader" v-model:url="state.form.orgzLogo" />
                         <div class="u-tips">
                             <span> 尺寸建议：宽180 x 高60</span>
                             <span> 格式建议：透明背景图片，PNG或gif,logo图形使用深色</span>

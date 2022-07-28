@@ -5,7 +5,7 @@
         <el-table-column label="企业Logo">
             <template #default="scope">
                 <div class="u-table-img">
-                    <img :src="scope.row.orgzLogo || logo" />
+                    <img :src="getImg(scope.row.orgzLogo) || logo" />
                 </div>
             </template>
         </el-table-column>
@@ -48,6 +48,7 @@
 import { defineProps, defineEmits, reactive, watch, computed } from "vue";
 import { deepBerryStore } from "@/store/index";
 import { storeToRefs } from "pinia";
+import { getCdnLink } from "@deepberry/common/js/utils";
 //====== 数据 ======
 // props
 const props = defineProps({
@@ -55,7 +56,7 @@ const props = defineProps({
     label: String,
 });
 const emit = defineEmits(["toDialog"]);
-
+const getImg = getCdnLink;
 // store
 const store = deepBerryStore();
 const { role } = storeToRefs(store);
