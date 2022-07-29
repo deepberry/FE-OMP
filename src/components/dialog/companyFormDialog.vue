@@ -13,7 +13,7 @@
                 </el-form-item>
                 <el-form-item label="企业/组织Logo">
                     <div class="m-box">
-                        <UploadImage class="m-uploader" v-model:url="state.form.orgzLogo" />
+                        <UploadImage class="m-uploader" v-model:url="state.logoUrl" />
                         <div class="u-tips">
                             <span> 尺寸建议：宽180 x 高60</span>
                             <span> 格式建议：透明背景图片，PNG或gif,logo图形使用深色</span>
@@ -51,6 +51,7 @@ const emit = defineEmits();
 const company = computed(() => props.dialogObject.company);
 let state = reactive({
     form: {},
+    logoUrl: "",
 });
 
 // 表单规则
@@ -106,6 +107,7 @@ const submitForm = (form) => {
     if (!form) return;
     form.validate((valid, fields) => {
         if (valid) {
+            if (state.logoUrl) state.form.orgzLogo = state.logoUrl;
             emit("dialogSuccess", state.form);
         } else {
             console.log("error submit!", fields);
