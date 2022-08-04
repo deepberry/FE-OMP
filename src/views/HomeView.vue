@@ -39,23 +39,25 @@ if (localStorage.getItem("token")) {
         },
     });
 } else {
-    getUserLogin(code.value)
-        .then((res) => {
-            console.log("getUserLogin获取的res:", res);
-            const _code = "Bearer " + res.data.data.accessToken;
-            localStorage.setItem("token", _code);
-            router.push({
-                name: "details",
-                params: {
-                    type: "role",
-                    id: 0,
-                    code,
-                },
+    if (code.value) {
+        getUserLogin(code.value)
+            .then((res) => {
+                console.log("getUserLogin获取的res:", res);
+                const _code = "Bearer " + res.data.data.accessToken;
+                localStorage.setItem("token", _code);
+                router.push({
+                    name: "details",
+                    params: {
+                        type: "role",
+                        id: 0,
+                        code,
+                    },
+                });
+            })
+            .catch((err) => {
+                console.log(err);
             });
-        })
-        .catch((err) => {
-            console.log(err);
-        });
+    }
 }
 </script>
 <style lang="less" scoped>
