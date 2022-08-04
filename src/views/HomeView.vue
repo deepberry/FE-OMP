@@ -29,7 +29,16 @@ const REDIRECT_URI = encodeURIComponent("https://admin.deepberry.cn/omp/");
 const path = `https://open.weixin.qq.com/connect/oauth2/authorize?appid=${APPID}&redirect_uri=${REDIRECT_URI}&response_type=code&scope=snsapi_base&state=STATE#wechat_redirect`;
 
 const code = ref(document.location.search.split("&")[0]);
-if (code.value && !localStorage.getItem("token")) {
+if (localStorage.getItem("token")) {
+    router.push({
+        name: "details",
+        params: {
+            type: "role",
+            id: 0,
+            code,
+        },
+    });
+} else {
     getUserLogin(code.value)
         .then((res) => {
             console.log("getUserLogin获取的res:", res);
@@ -47,15 +56,6 @@ if (code.value && !localStorage.getItem("token")) {
         .catch((err) => {
             console.log(err);
         });
-} else {
-    router.push({
-        name: "details",
-        params: {
-            type: "role",
-            id: 0,
-            code,
-        },
-    });
 }
 </script>
 <style lang="less" scoped>

@@ -31,13 +31,21 @@
 </template>
 <script setup>
 import { defineProps, defineEmits, computed } from "vue";
+import { useRouter } from "vue-router";
 //====== 数据 ======
-
+const router = useRouter();
 // props
 const props = defineProps({
     dialogObject: Object,
 });
 const emit = defineEmits();
+
+// 如果没有token
+if (!localStorage.getItem("token")) {
+    router.push({
+        name: "home",
+    });
+}
 
 // 弹窗显示
 const dialogShow = computed({
