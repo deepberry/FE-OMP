@@ -29,35 +29,34 @@ const REDIRECT_URI = encodeURIComponent("https://admin.deepberry.cn/omp/");
 const path = `https://open.weixin.qq.com/connect/oauth2/authorize?appid=${APPID}&redirect_uri=${REDIRECT_URI}&response_type=code&scope=snsapi_base&state=STATE#wechat_redirect`;
 
 const code = ref(document.location.search.split("&")[0]);
-if (!localStorage.getItem("token")) {
-    if (code.value) {
-        getUserLogin(code.value)
-            .then((res) => {
-                const _code = "Bearer " + res.data.data.accessToken;
-                localStorage.setItem("token", _code);
-                router.push({
-                    name: "details",
-                    params: {
-                        type: "role",
-                        id: 0,
-                        code,
-                    },
-                });
-            })
-            .catch((err) => {
-                console.log(err);
+if (code.value) {
+    getUserLogin(code.value)
+        .then((res) => {
+            const _code = "Bearer " + res.data.data.accessToken;
+            localStorage.setItem("token", _code);
+            router.push({
+                name: "details",
+                params: {
+                    type: "role",
+                    id: 0,
+                    code,
+                },
             });
-    }
-} else {
-    router.push({
-        name: "details",
-        params: {
-            type: "role",
-            id: 0,
-            code,
-        },
-    });
+        })
+        .catch((err) => {
+            console.log(err);
+        });
 }
+// if (localStorage.getItem("token"))  {
+//     router.push({
+//         name: "details",
+//         params: {
+//             type: "role",
+//             id: 0,
+//             code,
+//         },
+//     });
+// }
 </script>
 <style lang="less" scoped>
 @import "@/assets/css/views/home.less";
