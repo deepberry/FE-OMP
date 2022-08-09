@@ -195,9 +195,8 @@ if (!localStorage.getItem("types"))
         localStorage.setItem("types", JSON.stringify(list));
     });
 
-if (!localStorage.getItem("orgs"))
-    getAllOrgz().then((res) => {
-        const list = res.data.data;
-        localStorage.setItem("orgs", JSON.stringify(list));
-    });
+getAllOrgz().then((res) => {
+    const list = res.data.data;
+    localStorage.setItem("orgs", JSON.stringify(list));
+});
 </script>

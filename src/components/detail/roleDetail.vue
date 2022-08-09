@@ -63,7 +63,7 @@ onMounted(() => {
                 state.loading = false;
             });
     } else {
-        localStorage.clear();
+        localStorage.removeItem("token");
         router.push({
             name: "home",
         });
