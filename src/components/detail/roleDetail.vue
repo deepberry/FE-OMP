@@ -51,6 +51,11 @@ let { role } = storeToRefs(store);
 onMounted(() => {
     state.loading = true;
     if (localStorage.getItem("token")) {
+        let token = localStorage.getItem("token");
+        if (token.indexOf("Bearer") == -1) {
+            token = "Bearer " + token;
+            localStorage.setItem("token", token);
+        }
         getWorkUser()
             .then((res) => {
                 state.data = res.data.data;
@@ -63,7 +68,6 @@ onMounted(() => {
                 state.loading = false;
             });
     } else {
-        localStorage.removeItem("token");
         router.push({
             name: "home",
         });
