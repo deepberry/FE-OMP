@@ -34,8 +34,10 @@ import { getWorkUser, getUserPermission } from "@/service/index";
 import { onMounted, reactive } from "vue";
 import { storeToRefs } from "pinia";
 import { deepBerryStore } from "@/store";
+import { useRouter } from "vue-router";
 //====== 数据 ======
 // 数据
+const router = reactive(useRouter());
 let state = reactive({
     data: {},
     loading: false,
@@ -48,16 +50,23 @@ let { role } = storeToRefs(store);
 
 onMounted(() => {
     state.loading = true;
-    getWorkUser()
-        .then((res) => {
-            state.data = res.data.data;
-            getUserPermission(res.data.data.userId).then((res) => {
-                role = res.data.data;
-                store.role = role;
+    if (localStorage.getItem("token")) {
+        getWorkUser()
+            .then((res) => {
+                state.data = res.data.data;
+                getUserPermission(res.data.data.userId).then((res) => {
+                    role = res.data.data;
+                    store.role = role;
+                });
+            })
+            .finally(() => {
+                state.loading = false;
             });
-        })
-        .finally(() => {
-            state.loading = false;
+    } else {
+        localStorage.clear();
+        router.push({
+            name: "home",
         });
+    }
 });
 </script>
