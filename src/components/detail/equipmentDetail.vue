@@ -18,6 +18,7 @@
         <div class="m-card m-noBackground">
             <!-- 设备追踪 -->
             <div class="m-info">
+                <div class="u-title">设备跟踪记录</div>
                 <el-timeline>
                     <el-timeline-item
                         :timestamp="item.createTime"
@@ -95,9 +96,7 @@ onMounted(() => {
 
     getEquipmentTrack(id).then((res) => {
         const list = res.data.data;
-        state.trackList = list.length
-            ? list
-            : [{ createTime: new Date().toLocaleString(), information: "暂无设备追踪记录" }];
+        state.trackList = list.length ? list : [{ createTime: null, information: "暂无设备追踪记录" }];
     });
 });
 
@@ -108,7 +107,7 @@ const info = {
     orgzName: "归属客户",
     hardVer: "硬件版本",
     softVer: "固件版本",
-    value: "已绑定",
+    value: "绑定状态",
     name: "备注",
 };
 // 自定
