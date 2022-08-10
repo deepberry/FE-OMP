@@ -38,15 +38,15 @@
                 <div class="u-title">用户列表</div>
                 <el-table
                     class="m-table"
-                    :data="tableData"
+                    :data="state.data.users"
                     border
                     :cell-style="{ borderColor: '#787878', textAlign: 'center' }"
                     :header-cell-style="{ borderColor: '#787878', textAlign: 'center' }"
                 >
-                    <el-table-column prop="id" label="ID" width="80" />
-                    <el-table-column prop="name" label="姓名" />
-                    <el-table-column prop="amount1" label="手机号码" />
-                    <el-table-column prop="amount2" label="用户角色" />
+                    <el-table-column prop="userId" label="ID" width="80" />
+                    <el-table-column prop="userName" label="姓名" />
+                    <el-table-column prop="phone" label="手机号码" />
+                    <el-table-column prop="role" label="用户角色" />
                 </el-table>
             </div>
         </div>
@@ -73,7 +73,23 @@ onMounted(() => {
     state.loading = true;
     getEquipmentId(id)
         .then((res) => {
-            state.data = res.data.data;
+            const data = res.data.data;
+            let list = [[], [], []];
+            data.users.forEach((item) => {
+                switch (item.role) {
+                    case "超级管理员":
+                        list[0] = item;
+                        break;
+                    case "管理员":
+                        list[1].push(item);
+                        break;
+                    default:
+                        list[2].push(item);
+                        break;
+                }
+            });
+            data.users = [list[0], ...list[1], ...list[2]];
+            state.data = data;
         })
         .finally(() => (state.loading = false));
 
