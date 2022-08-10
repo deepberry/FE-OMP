@@ -56,16 +56,36 @@
         padding: 20px 40px;
         .r(5px);
         .mb(20px);
-        background-color: #eee;
+        background-color: #f3f3f3;
         .el-descriptions__body {
-            background-color: #eee;
+            background-color: #f3f3f3;
         }
         h4 {
             .lh(60px);
         }
-        &.m-table {
-            background-color: #fff;
-            border: 1px solid #eee;
+        .m-table {
+            border: 1px solid #787878;
         }
+        .u-title {
+            .fz(16px,50px);
+            .bold;
+        }
+    }
+    .m-card {
+        .r(5px);
+        .flex;
+        padding: 20px;
+        background-color: #f3f3f3;
+        gap: 40px;
+        &.m-noBackground {
+            padding: 0;
+            background-color: #fff;
+            .m-info {
+                .w(50%);
+            }
+        }
+    }
+    .m-card + .m-card {
+        .mt(30px);
     }
 }

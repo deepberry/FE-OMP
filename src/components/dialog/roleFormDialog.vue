@@ -50,7 +50,7 @@ const obj = computed(() => {
         dialogTitle: props.dialogObject.title || "新建角色",
         dialogWidth: props.dialogObject.width || "760px",
         dialogCloseBtnText: props.dialogObject.closeBtnText || "取消",
-        dialogSuccessBtnText: props.dialogObject.successBtnText || "成功",
+        dialogSuccessBtnText: props.dialogObject.successBtnText || "确定",
         dialogIsFooter: props.dialogObject.isFooter || true,
         dialogContent: props.dialogObject.content || "是否停用",
         dialogForm: props.dialogObject.form || state.form,

@@ -22,8 +22,7 @@ const store = deepBerryStore();
 const route = useRoute();
 const router = reactive(useRouter());
 const { type, id } = toRaw(route).params.value;
-const { data } = store;
-const key_name = ref(data[type]?.key_name);
+const key_name = ref(store.data[type]?.key_name);
 id;
 
 // tabs切换name

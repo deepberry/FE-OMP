@@ -11,7 +11,7 @@
             <search-bar :data="customer_data" @toSearch="onToSearch" />
         </div>
         <!-- 表单 -->
-        <customerTable :table="state.table" :label="label" @toDialog="onToDialog" v-loading="state.loading" />
+        <customerTable :table="state.table" :label="store.label" @toDialog="onToDialog" v-loading="state.loading" />
         <!-- 分页 -->
         <commonPagination :pagination="state.pagination" @toParams="onToParams" />
         <!-- 提示弹窗 -->
@@ -36,13 +36,11 @@ import { deepBerryStore } from "@/store/index";
 import customerTable from "@/components/table/customerTable";
 import { getCustomerList, enabledCustomer } from "@/service/customer";
 import { ElNotification } from "element-plus";
-import { storeToRefs } from "pinia";
 
 //====== 数据 ======
 
 // 获取公共数据
 const store = deepBerryStore();
-const { label } = storeToRefs(store);
 
 // 搜索 默认选项数据
 const customer_data = {

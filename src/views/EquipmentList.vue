@@ -14,11 +14,19 @@
             >
         </div>
         <!-- 表单 -->
-        <equipmentTable :table="state.table" :label="label" @toDialog="onToDialog" v-loading="state.loading" />
+        <equipmentTable :table="state.table" :label="store.label" @toDialog="onToDialog" v-loading="state.loading" />
         <!-- 分页 -->
         <commonPagination :pagination="state.pagination" @toParams="onToParams" />
         <!-- 创建/编辑 弹窗 -->
+        <equipmentTrackDialog
+            v-if="state.track"
+            class="m-form"
+            :dialog-object="dialogObject"
+            @dialogClose="onDialogClose"
+            @dialogSuccess="onTrackSuccess"
+        />
         <equipmentFormDialog
+            v-else
             class="m-form"
             :dialog-object="dialogObject"
             @dialogClose="onDialogClose"
@@ -32,16 +40,21 @@ import { reactive, computed, onMounted } from "vue";
 import { deepBerryStore } from "@/store/index";
 import equipmentTable from "@/components/table/equipmentTable";
 import equipmentFormDialog from "@/components/dialog/equipmentFormDialog";
-import { getEquipmentList, addEquipment, editEquipment, getEquipmentType } from "@/service/equipment";
+import equipmentTrackDialog from "@/components/dialog/equipmentTrackDialog";
+import {
+    getEquipmentList,
+    addEquipment,
+    editEquipment,
+    getEquipmentType,
+    addEquipmentTrack,
+} from "@/service/equipment";
 import { getAllOrgz } from "@/service/company";
 import { ElNotification } from "element-plus";
-import { storeToRefs } from "pinia";
 
 //====== 数据 ======
 
 // 获取公共数据
 const store = deepBerryStore();
-const { label, role } = storeToRefs(store);
 const types = JSON.parse(localStorage.getItem("types")) || [];
 
 // 搜索 默认选项数据
@@ -93,6 +106,7 @@ let state = reactive({
         IsBindNode: null,
     },
     form: {},
+    track: false,
 });
 
 // axios查询数据
@@ -114,7 +128,7 @@ let dialogObject = reactive({
 });
 
 // 添加设备权限判断
-const hasAdd = computed(() => role.value.includes(19));
+const hasAdd = computed(() => store.role.includes(19));
 
 //====== 交互 ======
 
@@ -141,11 +155,30 @@ const onDialogClose = () => {
 // 打开弹窗
 function onToDialog({ row, type }) {
     dialogObject.dialogVisible = true;
-    const _row = row ? row : equipment;
-    if (type == "add") _row.add = true;
-    dialogObject.equipment = _row;
+    if (type == "track") {
+        state.track = true;
+        dialogObject.equipment = row;
+    } else {
+        state.track = false;
+        const _row = row ? row : equipment;
+        if (type == "add") _row.add = true;
+        dialogObject.equipment = _row;
+    }
 }
 
+// 设备跟踪提交
+const onTrackSuccess = (data) => {
+    addEquipmentTrack(data).then(() => {
+        dialogObject.dialogVisible = false;
+        ElNotification({
+            title: "成功",
+            message: "添加设备追踪记录成功",
+            type: "success",
+        });
+    });
+};
+
+// 设备修改提交
 const onFormSuccess = (form) => {
     dialogObject.dialogVisible = false;
     if (form.add) {

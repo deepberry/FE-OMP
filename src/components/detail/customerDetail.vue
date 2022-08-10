@@ -6,9 +6,16 @@
                 <span class="u-value">{{ state.data[key] }}</span>
             </div>
         </div>
-        <div class="m-info m-table">
-            <h4>用户所在组织信息</h4>
-            <el-table :data="state.data.items" border style="width: 100%">
+        <div class="m-info">
+            <div class="u-title">用户所在组织信息</div>
+            <el-table
+                class="m-table"
+                :data="state.data.items"
+                border
+                style="width: 100%"
+                :cell-style="{ borderColor: '#787878', textAlign: 'center' }"
+                :header-cell-style="{ borderColor: '#787878', textAlign: 'center' }"
+            >
                 <el-table-column prop="orgzId" label="所在企业ID" width="180" />
                 <el-table-column prop="orgzName" label="所在企业名称" />
                 <el-table-column prop="userName" label="姓名" />

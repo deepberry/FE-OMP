@@ -14,7 +14,7 @@
             >
         </div>
         <!-- 表格 -->
-        <companyTable :table="state.table" :label="label" @toDialog="onToDialog" v-loading="state.loading" />
+        <companyTable :table="state.table" :label="store.label" @toDialog="onToDialog" v-loading="state.loading" />
         <!-- 分页 -->
         <commonPagination :pagination="state.pagination" @toParams="onToParams" />
         <!-- 提示弹窗 -->
@@ -49,13 +49,11 @@ import companyTable from "@/components/table/companyTable";
 import companyFormDialog from "@/components/dialog/companyFormDialog";
 import { getCompanyList, addCompany, editCompany, enabledCompany } from "@/service/company";
 import { ElNotification } from "element-plus";
-import { storeToRefs } from "pinia";
 
 //====== 数据 ======
 
 // 获取store公共数据
 const store = deepBerryStore();
-const { label, role } = storeToRefs(store);
 
 // 搜索 默认选项数据
 const company_data = {
@@ -121,7 +119,7 @@ let dialogObject = reactive({
 });
 
 // 企业开户权限判断
-const hasAdd = computed(() => role.value.includes(9));
+const hasAdd = computed(() => store.role.includes(9));
 
 //====== 交互 ======
 

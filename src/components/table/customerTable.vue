@@ -32,7 +32,6 @@
 <script setup>
 import { defineProps, defineEmits, watch, reactive, computed } from "vue";
 import { deepBerryStore } from "@/store/index";
-import { storeToRefs } from "pinia";
 
 //====== 数据 ======
 // props
@@ -44,7 +43,6 @@ const emit = defineEmits(["toDialog"]);
 
 // store
 const store = deepBerryStore();
-const { role } = storeToRefs(store);
 
 // 表格data数据
 let state = reactive({
@@ -53,12 +51,12 @@ let state = reactive({
 
 // 权限判断
 // 查看详情权限
-const hasInfo = computed(() => role.value.includes(17));
+const hasInfo = computed(() => store.role.includes(17));
 // 启用停用权限
-const hasEnabled = computed(() => role.value.includes(15));
+const hasEnabled = computed(() => store.role.includes(15));
 // 操作权限
 const arr = [17, 15];
-const hasOperate = computed(() => role.value.map((item) => arr.includes(item)).filter(Boolean).length);
+const hasOperate = computed(() => store.role.map((item) => arr.includes(item)).filter(Boolean).length);
 
 // 监控表格数据
 watch(

@@ -63,14 +63,12 @@ import {
 import { onMounted, reactive, ref, watch, computed } from "vue";
 import { ElNotification } from "element-plus";
 import { deepBerryStore } from "@/store/index";
-import { storeToRefs } from "pinia";
 import { ElMessageBox } from "element-plus";
 
 //====== 数据 ======
 
 // 获取store公共数据
 const store = deepBerryStore();
-const { role } = storeToRefs(store);
 
 //设置数据
 let state = reactive({
@@ -95,15 +93,15 @@ const dialogObject = reactive({
 
 // 权限判断
 // 编辑角色信息权限
-const hasEdit = computed(() => role.value.includes(33));
+const hasEdit = computed(() => store.role.includes(33));
 // 删除权限
-const hasDel = computed(() => role.value.includes(34));
+const hasDel = computed(() => store.role.includes(34));
 // 新建角色权限
-const hasAdd = computed(() => role.value.includes(32));
+const hasAdd = computed(() => store.role.includes(32));
 // 复制权限并新建角色权限
-const hasCopyAdd = computed(() => role.value.includes(37));
+const hasCopyAdd = computed(() => store.role.includes(37));
 // 编辑角色权限权限
-const hasEditManage = computed(() => role.value.includes(36));
+const hasEditManage = computed(() => store.role.includes(36));
 
 // 初始加载
 onMounted(() => {

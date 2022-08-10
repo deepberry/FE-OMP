@@ -20,5 +20,21 @@ function getEquipmentId(deviceId) {
 function getEquipmentType() {
     return $admin().get(`/api/Device/type`);
 }
+// 获取设备追踪
+function getEquipmentTrack(id) {
+    return $admin().get(`/api/Device/tracking?deviceId=${id}`);
+}
+// 添加设备追踪
+function addEquipmentTrack(data) {
+    return $admin().post(`/api/Device/tracking`, data);
+}
 
-export { getEquipmentList, addEquipment, editEquipment, getEquipmentId, getEquipmentType };
+export {
+    getEquipmentList,
+    addEquipment,
+    editEquipment,
+    getEquipmentId,
+    getEquipmentType,
+    getEquipmentTrack,
+    addEquipmentTrack,
+};

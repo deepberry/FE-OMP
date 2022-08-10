@@ -24,11 +24,9 @@
 import Logo from "@deepberry/common/img/logo.svg";
 import { computed } from "vue";
 import { deepBerryStore } from "@/store/index";
-import { storeToRefs } from "pinia";
 //====== 数据 ======
 // store
 const store = deepBerryStore();
-const { role, roleData } = storeToRefs(store);
 
 // 初始数据
 const companyData = {
@@ -50,8 +48,8 @@ const equipmentData = {
 // 权限过滤
 const list = computed(() => {
     let arr = [];
-    const { company, customer, equipment } = roleData.value;
-    role.value.forEach((id) => {
+    const { company, customer, equipment } = store.roleData;
+    store.role.forEach((id) => {
         if (company[id]) arr[0] = companyData;
         if (customer[id]) arr[1] = customerData;
         if (equipment[id]) arr[2] = equipmentData;

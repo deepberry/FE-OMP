@@ -17,7 +17,8 @@
             >
         </el-table-column>
         <el-table-column prop="deviceName" label="备注" />
-        <el-table-column label="操作" width="180" v-if="hasOperate">
+        <el-table-column prop="tracking" label="最新跟踪" />
+        <el-table-column label="操作" width="240" v-if="hasOperate">
             <template #default="scope">
                 <div class="u-table-button">
                     <el-button link type="primary" size="small" @click="handelClick(scope.row)" v-if="hasEdit"
@@ -29,6 +30,9 @@
                         v-if="hasInfo && scope.row.deviceId"
                         >查看详情
                     </router-link>
+                    <el-button link type="primary" size="small" @click="handelClick(scope.row, 'track')" v-if="hasEdit"
+                        >设备跟踪</el-button
+                    >
                 </div>
             </template>
         </el-table-column>
@@ -37,7 +41,6 @@
 <script setup>
 import { defineProps, defineEmits, watch, reactive, computed } from "vue";
 import { deepBerryStore } from "@/store/index";
-import { storeToRefs } from "pinia";
 
 //====== 数据 ======
 // props
@@ -49,16 +52,15 @@ const emit = defineEmits(["toDialog"]);
 
 // store
 const store = deepBerryStore();
-const { role } = storeToRefs(store);
 
 // 权限判断
 // 编辑权限
-const hasEdit = computed(() => role.value.includes(21));
+const hasEdit = computed(() => store.role.includes(21));
 // 查看详情权限
-const hasInfo = computed(() => role.value.includes(20));
+const hasInfo = computed(() => store.role.includes(20));
 // 操作权限
 const arr = [20, 21];
-const hasOperate = computed(() => role.value.map((item) => arr.includes(item)).filter(Boolean).length);
+const hasOperate = computed(() => store.role.map((item) => arr.includes(item)).filter(Boolean).length);
 
 // 表格data数据
 let state = reactive({
