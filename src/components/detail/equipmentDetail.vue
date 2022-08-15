@@ -28,7 +28,9 @@
                         :key="key"
                     >
                         <el-card>
-                            <p>{{ item.createTime }}</p>
+                            <p class="u-time">
+                                <span>{{ item.createTime }}</span> <b>{{ item.creator }}</b>
+                            </p>
                             <p class="u-title">{{ item.information }}</p>
                         </el-card>
                     </el-timeline-item>
