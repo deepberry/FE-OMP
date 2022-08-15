@@ -53,6 +53,7 @@ if (localStorage.getItem("token")) {
                         code,
                     },
                 });
+                console.log("登录后获取token:", _code);
             })
             .catch((err) => {
                 console.log(err);

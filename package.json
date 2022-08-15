@@ -19,6 +19,7 @@
         "element-plus": "^2.2.5",
         "pinia": "^2.0.14",
         "pinia-plugin-persist": "^1.0.0",
+        "vconsole": "^3.14.6",
         "vue": "^3.2.13",
         "vue-axios": "^3.4.1",
         "vue-router": "^4.0.16",

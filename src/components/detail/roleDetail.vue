@@ -59,9 +59,11 @@ onMounted(() => {
         getWorkUser()
             .then((res) => {
                 state.data = res.data.data;
+                console.log("获取个人信息：", state.data);
                 getUserPermission(res.data.data.userId).then((res) => {
                     role = res.data.data;
                     store.role = role;
+                    console.log("获取权限：", role);
                 });
             })
             .finally(() => {
