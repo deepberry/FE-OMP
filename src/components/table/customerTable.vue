@@ -1,5 +1,5 @@
 <template>
-    <el-table class="m-table" :data="state.data" border fit style="width: 100%">
+    <el-table class="m-table" :data="state.data" border row-key="userId" fit style="width: 100%">
         <el-table-column prop="userId" label="用户ID" width="120" />
         <el-table-column prop="userName" label="用户名" width="180" />
         <el-table-column prop="phoneNum" label="手机号码" width="180" />

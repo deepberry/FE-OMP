@@ -1,5 +1,5 @@
 <template>
-    <el-table class="m-table" :data="state.data" border fit style="width: 100%">
+    <el-table class="m-table" :data="state.data" border row-key="deviceId" fit style="width: 100%">
         <el-table-column prop="deviceId" label="设备ID" />
         <el-table-column label="设备类型">
             <template #default="scope">{{ scope.row.deviceType }}</template>

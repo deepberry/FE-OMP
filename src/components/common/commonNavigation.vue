@@ -14,6 +14,7 @@
             <li class="u-item" v-for="item in list" :key="item.value">
                 <router-link class="u-txt" :to="{ name: item.value }">
                     <!-- <component class="u-icon" :is="item.icon" /> -->
+                    <b>▷</b>
                     <span class="u-label">{{ item.name }}</span>
                 </router-link>
             </li>

@@ -12,6 +12,7 @@
                 class="m-table"
                 :data="state.data.items"
                 border
+                row-key="orgzId"
                 style="width: 100%"
                 :cell-style="{ borderColor: '#787878', textAlign: 'center' }"
                 :header-cell-style="{ borderColor: '#787878', textAlign: 'center' }"

@@ -41,6 +41,8 @@
                     class="m-table"
                     :data="state.data.users"
                     border
+                    row-key="userId"
+                    style="width: 100%; max-width: 1000px"
                     :cell-style="{ borderColor: '#787878', textAlign: 'center' }"
                     :header-cell-style="{ borderColor: '#787878', textAlign: 'center' }"
                 >
