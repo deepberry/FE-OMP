@@ -1,4 +1,4 @@
-@media screen and (max-width: 750px) {
+@media screen and (max-width: 900px) {
     #app {
         .full;
     }
@@ -86,6 +86,7 @@
             .m-details {
                 .m-detail {
                     padding: 10px;
+                    box-sizing: border-box;
                     .m-info {
                         padding: 20px 10px;
                         .m-row {
@@ -113,6 +114,21 @@
                             padding: 10px;
                             .u-info-avatar {
                                 .size(50px);
+                            }
+                        }
+                    }
+                    .m-card {
+                        flex-direction: column;
+                        gap: 0;
+                        overflow-x: auto;
+                        .m-row {
+                            padding: 0;
+                        }
+                        &.m-noBackground {
+                            gap: 20px;
+                            .m-info {
+                                flex: 1;
+                                width: 100%;
                             }
                         }
                     }

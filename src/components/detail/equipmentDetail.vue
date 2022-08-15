@@ -79,7 +79,7 @@ onMounted(() => {
             data.users.forEach((item) => {
                 switch (item.role) {
                     case "超级管理员":
-                        list[0] = item;
+                        list[0].push(item);
                         break;
                     case "管理员":
                         list[1].push(item);
@@ -89,7 +89,7 @@ onMounted(() => {
                         break;
                 }
             });
-            data.users = [list[0], ...list[1], ...list[2]];
+            data.users = [...list[0], ...list[1], ...list[2]];
             state.data = data;
         })
         .finally(() => (state.loading = false));
