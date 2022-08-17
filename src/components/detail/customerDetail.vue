@@ -42,6 +42,7 @@ let state = reactive({
 // 自定
 const info = {
     userId: "用户ID",
+    accountName: "用户帐号",
     phoneNum: "手机号码",
     status: "用户帐号状态",
     updateAt: "最新登录时间",

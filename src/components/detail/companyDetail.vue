@@ -44,6 +44,7 @@ const toName = {
     organizationId: "企业ID",
     orgzLogo: "企业LOGO",
     orgzName: "企业名称",
+    accountName: "企业主账号",
     phoneNum: "企业负责人手机",
     status: "企业状态",
     userName: "企业负责人",

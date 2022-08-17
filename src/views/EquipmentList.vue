@@ -60,7 +60,7 @@ const types = JSON.parse(localStorage.getItem("types")) || [];
 // 搜索 默认选项数据
 let equipment_data = reactive({
     uid: "",
-    placeholder: `请输入设备ID/ICCID/归属客户/备注`,
+    placeholder: `请输入设备ID/ICCID/归属客户/备注/追踪记录`,
     type_title: "-- 设备分类 --",
     type: [{ id: -1, name: "全部" }, ...types],
     bind_title: "-- 绑定状态 --",

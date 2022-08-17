@@ -8,8 +8,17 @@
             draggable
         >
             <el-form class="m-form-content" ref="formRef" :model="state.form" :rules="rules" label-width="120px">
+                <el-form-item label="企业主账号" prop="accountName">
+                    <el-input
+                        v-model="state.form.accountName"
+                        placeholder="2-16位的字母和数字的组合"
+                        v-if="company.add"
+                    />
+                    <span v-else>{{ state.form.accountName || "-" }}</span>
+                </el-form-item>
                 <el-form-item label="企业名称" prop="orgzName">
-                    <el-input v-model="state.form.orgzName" />
+                    <el-input v-if="company.add" v-model="state.form.orgzName" />
+                    <span v-else>{{ state.form.orgzName }}</span>
                 </el-form-item>
                 <el-form-item label="企业/组织Logo">
                     <div class="m-box">
@@ -20,8 +29,8 @@
                         </div>
                     </div>
                 </el-form-item>
-                <el-form-item label="联系人" prop="userName">
-                    <el-input v-model="state.form.userName" />
+                <el-form-item label="联系人" prop="contact">
+                    <el-input v-model="state.form.contact" />
                 </el-form-item>
                 <el-form-item label="手机号码" prop="phoneNum">
                     <el-input v-model="state.form.phoneNum" />
@@ -38,7 +47,8 @@
 </template>
 <script setup>
 import { defineProps, defineEmits, computed, reactive, ref, watch } from "vue";
-
+import { ElMessage } from "element-plus";
+import _ from "lodash";
 //====== 数据 ======
 
 // props
@@ -57,12 +67,8 @@ let state = reactive({
 // 表单规则
 const formRef = ref("");
 const rules = ref({
-    phoneNum: [
-        { required: true, message: "请输入联系人手机号码", trigger: "blur" },
-        { pattern: /^1[3456789]\d{9}$/, message: "手机号码格式不正确", trigger: "blur" },
-    ],
     orgzName: [{ required: true, message: "请输入企业名称", trigger: "blur" }],
-    userName: [{ required: true, message: "请输入企业联系人", trigger: "blur" }],
+    contact: [{ required: true, message: "请输入企业联系人", trigger: "blur" }],
 });
 
 // 弹窗显示
@@ -90,7 +96,7 @@ const obj = computed(() => {
 watch(
     company,
     (obj) => {
-        state.form = obj.add ? {} : obj;
+        state.form = obj.add ? {} : _.cloneDeep(obj);
     },
     { deep: true, immediate: true }
 );
@@ -108,7 +114,12 @@ const submitForm = (form) => {
     form.validate((valid, fields) => {
         if (valid) {
             if (state.logoUrl) state.form.orgzLogo = state.logoUrl;
-            emit("dialogSuccess", state.form);
+            if (!state.form.phoneNum && !state.form.accountName) {
+                ElMessage.error("主账号或手机必填一项");
+            } else {
+                // if (!company.value.add) delete state.form.orgzName;
+                emit("dialogSuccess", state.form);
+            }
         } else {
             console.log("error submit!", fields);
         }

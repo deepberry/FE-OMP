@@ -49,7 +49,7 @@ import companyTable from "@/components/table/companyTable";
 import companyFormDialog from "@/components/dialog/companyFormDialog";
 import { getCompanyList, addCompany, editCompany, enabledCompany } from "@/service/company";
 import { ElNotification } from "element-plus";
-
+import _ from "lodash";
 //====== 数据 ======
 
 // 获取store公共数据
@@ -109,6 +109,8 @@ const company = {
     phoneNum: "",
     userId: "",
     userName: "",
+    accountName: "",
+    contact: "",
 };
 
 // 弹窗
@@ -140,7 +142,7 @@ function onToParams(e) {
 // 打开弹窗
 function onToDialog({ row, type }) {
     dialogObject.dialogVisible = true;
-    const _row = row ? row : company;
+    const _row = row ? _.cloneDeep(row) : company;
     if (type == "add") _row.add = true;
     dialogObject.company = _row;
     dialogType.value = type == "close" ? "tips" : "form";

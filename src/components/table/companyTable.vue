@@ -9,7 +9,8 @@
                 </div>
             </template>
         </el-table-column>
-        <el-table-column prop="userName" label="联系人" width="200" />
+        <el-table-column prop="accountName" label="企业主账号" width="200" />
+        <el-table-column prop="contact" label="联系人" width="200" />
         <el-table-column prop="phoneNum" label="手机号码" width="200" />
         <el-table-column label="企业状态" width="120">
             <template #default="scope">

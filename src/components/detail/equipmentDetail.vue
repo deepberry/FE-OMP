@@ -49,6 +49,7 @@
                     :header-cell-style="{ borderColor: '#787878', textAlign: 'center' }"
                 >
                     <el-table-column prop="userId" label="ID" width="80" />
+                    <el-table-column prop="accountName" label="主账号" />
                     <el-table-column prop="userName" label="姓名" />
                     <el-table-column prop="phone" label="手机号码" />
                     <el-table-column prop="role" label="用户角色" />
