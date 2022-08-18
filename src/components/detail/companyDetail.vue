@@ -12,6 +12,7 @@
                         <div class="u-item" v-for="(user, i) in item" :key="i">
                             <span>状态：{{ user.enabled }}</span>
                             <span>成员：{{ user.userName || "-" }}</span>
+                            <span>成员帐号：{{ user.accountName || "-" }}</span>
                             <span>电话：{{ user.phoneNum || "-" }}</span>
                         </div>
                     </div>
