@@ -1,8 +1,12 @@
 <template>
     <el-table class="m-table" :data="state.data" border row-key="userId" fit style="width: 100%">
         <el-table-column prop="userId" label="用户ID" width="120" />
-        <el-table-column prop="userName" label="用户名" width="180" />
-        <el-table-column prop="phoneNum" label="手机号码" width="180" />
+        <el-table-column label="账户名" width="180">
+            <template #default="scope"> {{ scope.row.accountName || "-" }}</template>
+        </el-table-column>
+        <el-table-column label="手机号码" width="180">
+            <template #default="scope"> {{ scope.row.phoneNum || "-" }}</template></el-table-column
+        >
         <el-table-column prop="orgzName" label="所在企业" />
         <el-table-column prop="status" label="帐号状态" width="120">
             <template #default="scope">

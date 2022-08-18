@@ -47,7 +47,7 @@ const toName = {
     accountName: "企业主账号",
     phoneNum: "企业负责人手机",
     status: "企业状态",
-    userName: "企业负责人",
+    contact: "企业负责人",
     items: "企业成员",
 };
 

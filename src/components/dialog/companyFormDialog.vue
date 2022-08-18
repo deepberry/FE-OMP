@@ -8,17 +8,8 @@
             draggable
         >
             <el-form class="m-form-content" ref="formRef" :model="state.form" :rules="rules" label-width="120px">
-                <el-form-item label="企业主账号" prop="accountName">
-                    <el-input
-                        v-model="state.form.accountName"
-                        placeholder="2-16位的字母和数字的组合"
-                        v-if="company.add"
-                    />
-                    <span v-else>{{ state.form.accountName || "-" }}</span>
-                </el-form-item>
                 <el-form-item label="企业名称" prop="orgzName">
-                    <el-input v-if="company.add" v-model="state.form.orgzName" />
-                    <span v-else>{{ state.form.orgzName }}</span>
+                    <el-input v-model="state.form.orgzName" />
                 </el-form-item>
                 <el-form-item label="企业/组织Logo">
                     <div class="m-box">
@@ -35,6 +26,9 @@
                 <el-form-item label="手机号码" prop="phoneNum">
                     <el-input v-model="state.form.phoneNum" />
                 </el-form-item>
+                <el-form-item label="企业主账号" prop="accountName">
+                    <el-input v-model="state.form.accountName" placeholder="2-16位的字母和数字的组合" />
+                </el-form-item>
             </el-form>
             <template #footer>
                 <span v-if="obj.dialogIsFooter" class="dialog-footer">
@@ -47,7 +41,6 @@
 </template>
 <script setup>
 import { defineProps, defineEmits, computed, reactive, ref, watch } from "vue";
-import { ElMessage } from "element-plus";
 import _ from "lodash";
 //====== 数据 ======
 
@@ -63,12 +56,52 @@ let state = reactive({
     form: {},
     logoUrl: "",
 });
+// 自定义手机号码验证
+const checkNum = (rule, value, callback) => {
+    if (value) {
+        const num = /^[1][3,4,5,7,8][0-9]{9}$/;
+        if (!num.test(value)) {
+            callback(new Error("请输入正确的手机号"));
+        } else {
+            callback();
+        }
+    } else {
+        if (!state.form.phoneNum && !state.form.accountName) {
+            callback(new Error("主账号或手机必填一项"));
+        } else {
+            callback();
+        }
+    }
+};
+// 自定义企业主账号校验
+const checkName = (rule, value, callback) => {
+    if (value) {
+        if (value.length < 2) {
+            callback(new Error("请输入至少2-16位数的账号"));
+        } else {
+            const regString = /[a-zA-Z]+/;
+            if (regString.test(value)) {
+                callback();
+            } else {
+                callback(new Error("主账号必须包含字母"));
+            }
+        }
+    } else {
+        if (!state.form.phoneNum && !state.form.accountName) {
+            callback(new Error("主账号或手机必填一项"));
+        } else {
+            callback();
+        }
+    }
+};
 
 // 表单规则
 const formRef = ref("");
 const rules = ref({
     orgzName: [{ required: true, message: "请输入企业名称", trigger: "blur" }],
     contact: [{ required: true, message: "请输入企业联系人", trigger: "blur" }],
+    accountName: [{ validator: checkName, trigger: "blur" }],
+    phoneNum: [{ validator: checkNum, trigger: "blur" }],
 });
 
 // 弹窗显示
@@ -107,6 +140,7 @@ watch(
 const resetForm = () => {
     emit("dialogClose");
     formRef.value.resetFields();
+    state.form = {};
 };
 // 校验并提交
 const submitForm = (form) => {
@@ -114,12 +148,7 @@ const submitForm = (form) => {
     form.validate((valid, fields) => {
         if (valid) {
             if (state.logoUrl) state.form.orgzLogo = state.logoUrl;
-            if (!state.form.phoneNum && !state.form.accountName) {
-                ElMessage.error("主账号或手机必填一项");
-            } else {
-                // if (!company.value.add) delete state.form.orgzName;
-                emit("dialogSuccess", state.form);
-            }
+            emit("dialogSuccess", state.form);
         } else {
             console.log("error submit!", fields);
         }
