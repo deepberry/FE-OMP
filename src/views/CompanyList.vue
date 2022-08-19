@@ -179,6 +179,7 @@ const onFormSuccess = (form) => {
                   message: "添加企业成功",
                   type: "success",
               });
+              loadCompanyList();
           })
         : editCompany(form).then(() => {
               ElNotification({
@@ -186,6 +187,7 @@ const onFormSuccess = (form) => {
                   message: "修改企业信息成功",
                   type: "success",
               });
+              loadCompanyList();
           });
 };
 
