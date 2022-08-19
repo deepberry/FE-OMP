@@ -27,7 +27,7 @@
                     <el-input v-model="state.form.phoneNum" />
                 </el-form-item>
                 <el-form-item label="企业主账号" prop="accountName">
-                    <el-input v-model="state.form.accountName" placeholder="2-16位的字母和数字的组合" />
+                    <el-input v-model="state.form.accountName" placeholder="2-16位的字母和数字的组合,且必须包含字母" />
                 </el-form-item>
             </el-form>
             <template #footer>
