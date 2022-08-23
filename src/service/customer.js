@@ -13,4 +13,9 @@ function enabledCustomer(UserId, enabled) {
 function getCustomerInfo(UserId) {
     return $admin().get(`/api/User/${UserId}`);
 }
-export { getCustomerList, enabledCustomer, getCustomerInfo };
+
+// 重置密码
+function resetPassword(id) {
+    return $admin().put(`/api/User/${id}/reset`);
+}
+export { getCustomerList, enabledCustomer, getCustomerInfo, resetPassword };
