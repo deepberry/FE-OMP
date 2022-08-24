@@ -24,8 +24,21 @@ function enabledCompany(OrgzId, enabled) {
 function getCompanyInfo(OrgzId) {
     return $admin().get(`/api/Orgz/${OrgzId}`);
 }
-// 获取所以企业
+// 获取所有企业
 function getAllOrgz() {
     return $admin().get(`/api/Orgz/total`);
 }
-export { getCompanyList, addCompany, editCompany, getCompanyLogo, enabledCompany, getCompanyInfo, getAllOrgz };
+// 企业一次登录
+function loginOrgzOnce(id) {
+    return $admin().get(`/api/Work/user/onelogin/${id}`);
+}
+export {
+    getCompanyList,
+    addCompany,
+    editCompany,
+    getCompanyLogo,
+    enabledCompany,
+    getCompanyInfo,
+    getAllOrgz,
+    loginOrgzOnce,
+};

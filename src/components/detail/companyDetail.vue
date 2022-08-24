@@ -1,6 +1,7 @@
 <template>
     <div class="m-detail m-company-detail" v-loading="state.loading">
         <div class="m-info">
+            <span class="u-login" @click="onceLogin">一次性登录</span>
             <div class="m-row" v-for="(item, k) in state.info" :key="k">
                 <template v-if="k == 'orgzLogo'">
                     <span class="u-label">{{ toName[k] }}</span>
@@ -26,7 +27,7 @@
     </div>
 </template>
 <script setup>
-import { getCompanyInfo } from "@/service/company";
+import { getCompanyInfo, loginOrgzOnce } from "@/service/company";
 import { useRoute } from "vue-router";
 import { onMounted, reactive } from "vue";
 //====== 数据 ======
@@ -65,4 +66,12 @@ onMounted(() => {
         })
         .finally(() => (state.loading = false));
 });
+// 一次性登录
+function onceLogin() {
+    loginOrgzOnce(id).then((res) => {
+        const token = res.data.data.accessToken;
+        const path = window.open("_blank");
+        path.location = `https://io.deepberry.cn/insights?token=${token}`;
+    });
+}
 </script>
