@@ -71,7 +71,7 @@ function onceLogin() {
     loginOrgzOnce(id).then((res) => {
         const token = res.data.data.accessToken;
         const path = window.open("_blank");
-        path.location = `https://io.deepberry.cn/insights?token=${token}`;
+        path.location = `https://io.deepberry.cn/login?token=${token}`;
     });
 }
 </script>
