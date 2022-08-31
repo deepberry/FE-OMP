@@ -5,10 +5,7 @@
  * @Description: 企业微信运营平台
 -->
 <template>
-    <!-- 首页 -->
-    <router-view v-if="route.name == 'home'" />
-    <!-- 其它页面 -->
-    <div class="m-container" v-else>
+    <div class="m-container">
         <aside class="m-aside">
             <Navigation />
             <AsideSetting />

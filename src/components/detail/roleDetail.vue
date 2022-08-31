@@ -30,11 +30,12 @@
     </div>
 </template>
 <script setup>
-import { getWorkUser, getUserPermission } from "@/service/index";
-import { onMounted, reactive } from "vue";
+import { getWorkUser, getUserPermission, getUserLogin } from "@/service/index";
+import { onMounted, reactive, ref } from "vue";
 import { storeToRefs } from "pinia";
 import { deepBerryStore } from "@/store";
 import { useRouter } from "vue-router";
+
 //====== 数据 ======
 // 数据
 const router = reactive(useRouter());
@@ -44,6 +45,31 @@ let state = reactive({
 });
 const store = deepBerryStore();
 let { role } = storeToRefs(store);
+
+// 获取code数据
+// const APPID = "ww5429d07e97752284";
+// const REDIRECT_URI = encodeURIComponent("https://admin.deepberry.cn/omp/");
+// const path = `https://open.weixin.qq.com/connect/oauth2/authorize?appid=${APPID}&redirect_uri=${REDIRECT_URI}&response_type=code&scope=snsapi_base&state=STATE#wechat_redirect`;
+const code = ref(document.location.search.split("&")[0]);
+
+if (!localStorage.getItem("token"))
+    getUserLogin(code.value)
+        .then((res) => {
+            const _code = "Bearer " + res.data.data.accessToken;
+            localStorage.setItem("token", _code);
+            router.push({
+                name: "details",
+                params: {
+                    type: "role",
+                    id: 0,
+                    code,
+                },
+            });
+            console.log("登录后获取token:", _code);
+        })
+        .catch((err) => {
+            console.log(err);
+        });
 
 //======  axios ======
 // 初始加载
@@ -65,6 +91,10 @@ onMounted(() => {
                     store.role = role;
                     console.log("获取权限：", role);
                 });
+            })
+            .catch(() => {
+                localStorage.removeItem("token");
+                location.reload();
             })
             .finally(() => {
                 state.loading = false;
