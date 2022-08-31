@@ -47,9 +47,6 @@ const store = deepBerryStore();
 let { role } = storeToRefs(store);
 
 // 获取code数据
-// const APPID = "ww5429d07e97752284";
-// const REDIRECT_URI = encodeURIComponent("https://admin.deepberry.cn/omp/");
-// const path = `https://open.weixin.qq.com/connect/oauth2/authorize?appid=${APPID}&redirect_uri=${REDIRECT_URI}&response_type=code&scope=snsapi_base&state=STATE#wechat_redirect`;
 const code = ref(document.location.search.split("&")[0]);
 
 if (!localStorage.getItem("token"))
