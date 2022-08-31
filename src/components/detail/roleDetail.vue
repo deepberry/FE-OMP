@@ -34,11 +34,9 @@ import { getWorkUser, getUserPermission, getUserLogin } from "@/service/index";
 import { onMounted, reactive, ref } from "vue";
 import { storeToRefs } from "pinia";
 import { deepBerryStore } from "@/store";
-import { useRouter } from "vue-router";
 
 //====== 数据 ======
 // 数据
-const router = reactive(useRouter());
 let state = reactive({
     data: {},
     loading: false,
@@ -48,16 +46,6 @@ let { role } = storeToRefs(store);
 
 // 获取code数据
 const code = ref(document.location.search.split("&")[0]);
-
-if (!localStorage.getItem("token"))
-    getUserLogin(code.value)
-        .then((res) => {
-            const _code = "Bearer " + res.data.data.accessToken;
-            localStorage.setItem("token", _code);
-        })
-        .catch((err) => {
-            console.log(err);
-        });
 
 //======  axios ======
 // 初始加载
@@ -88,9 +76,14 @@ onMounted(() => {
                 state.loading = false;
             });
     } else {
-        router.push({
-            name: "home",
-        });
+        getUserLogin(code.value)
+            .then((res) => {
+                const _code = "Bearer " + res.data.data.accessToken;
+                localStorage.setItem("token", _code);
+            })
+            .catch((err) => {
+                console.log(err);
+            });
     }
 });
 </script>
