@@ -54,15 +54,6 @@ if (!localStorage.getItem("token"))
         .then((res) => {
             const _code = "Bearer " + res.data.data.accessToken;
             localStorage.setItem("token", _code);
-            router.push({
-                name: "details",
-                params: {
-                    type: "role",
-                    id: 0,
-                    code,
-                },
-            });
-            console.log("登录后获取token:", _code);
         })
         .catch((err) => {
             console.log(err);
