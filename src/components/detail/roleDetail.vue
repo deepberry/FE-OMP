@@ -80,9 +80,13 @@ onMounted(() => {
             .then((res) => {
                 const _code = "Bearer " + res.data.data.accessToken;
                 localStorage.setItem("token", _code);
+                location.reload();
             })
             .catch((err) => {
                 console.log(err);
+            })
+            .finally(() => {
+                state.loading = false;
             });
     }
 });

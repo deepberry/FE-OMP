@@ -1,66 +1,13 @@
-<!--
- * @Description: 
- * @Author: litthy
- * @Date: 2022-07-08 13:59:49
- * @LastEditTime: 2022-07-15 14:31:21
- * @LastEditors: litthy
- * @Reference: 
--->
 <template>
-    <div class="v-home">
-        <!-- <img class="logo" :src="Logo" alt="深莓智能" />
-        <span class="title">深莓智能运营管理平台</span>
-        <a :href="path" class="button">点击进入</a> -->
-    </div>
+    <div class="v-home"></div>
 </template>
 
 <script setup>
-// import { ref } from "vue";
-// import { useRouter } from "vue-router";
-// import Logo from "@deepberry/common/img/logo.svg";
-// import { getUserLogin } from "@/service/index.js";
-
-//====== 数据 ======
-// const router = useRouter();
-
-// 跳转链接数据
 const APPID = "ww5429d07e97752284";
 const REDIRECT_URI = encodeURIComponent("https://admin.deepberry.cn/omp/#/role/details/0");
 const path = `https://open.weixin.qq.com/connect/oauth2/authorize?appid=${APPID}&redirect_uri=${REDIRECT_URI}&response_type=code&scope=snsapi_base&state=STATE#wechat_redirect`;
 
 window.location.href = path;
-// const code = ref(document.location.search.split("&")[0]);
-
-// if (localStorage.getItem("token")) {
-//     router.push({
-//         name: "details",
-//         params: {
-//             type: "role",
-//             id: 0,
-//             code,
-//         },
-//     });
-// } else {
-//     if (code.value) {
-//         getUserLogin(code.value)
-//             .then((res) => {
-//                 const _code = "Bearer " + res.data.data.accessToken;
-//                 localStorage.setItem("token", _code);
-//                 router.push({
-//                     name: "details",
-//                     params: {
-//                         type: "role",
-//                         id: 0,
-//                         code,
-//                     },
-//                 });
-//                 console.log("登录后获取token:", _code);
-//             })
-//             .catch((err) => {
-//                 console.log(err);
-//             });
-//     }
-// }
 </script>
 <style lang="less" scoped>
 @import "@/assets/css/views/home.less";
