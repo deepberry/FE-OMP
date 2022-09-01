@@ -22,7 +22,8 @@ const MemberList = () => import("../views/MemberList.vue");
 
 // 3.Routes
 const routes = [
-    { name: "home", path: "/", component: Home },
+    // { name: "home", path: "/", component: Home },
+    { name: "home", path: "/", component: Home, redirect: { name: "details", params: { type: "role", id: 0 } } },
     {
         name: "company",
         path: "/company",

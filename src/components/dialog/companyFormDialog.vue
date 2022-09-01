@@ -24,7 +24,7 @@
                     <el-input v-model="state.form.contact" />
                 </el-form-item>
                 <el-form-item label="手机号码" prop="phoneNum">
-                    <el-input v-model="state.form.phoneNum" />
+                    <el-input v-model="state.form.phoneNum" placeholder="手机号码和用户账号可以二选一填写" />
                 </el-form-item>
                 <el-form-item label="企业主账号" prop="accountName">
                     <el-input v-model="state.form.accountName" placeholder="2-16位的字符串（必须含字母）" />
