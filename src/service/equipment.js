@@ -28,7 +28,10 @@ function getEquipmentTrack(id) {
 function addEquipmentTrack(data) {
     return $admin().post(`/api/Device/tracking`, data);
 }
-
+// 获取设备日志
+function getEquipmentLogs(params) {
+    return $admin().get(`/api/Device/operationLogPage`, { params });
+}
 export {
     getEquipmentList,
     addEquipment,
@@ -37,4 +40,5 @@ export {
     getEquipmentType,
     getEquipmentTrack,
     addEquipmentTrack,
+    getEquipmentLogs,
 };

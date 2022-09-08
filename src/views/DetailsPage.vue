@@ -5,7 +5,7 @@
             <el-tab-pane :label="`${key_name}信息`" name="info"></el-tab-pane>
             <el-tab-pane :label="`${key_name}操作日志`" name="logs" v-if="hasLogs"></el-tab-pane>
         </el-tabs>
-        <component :is="state.component" :data="state.data"></component>
+        <component :is="state.component" :type="type" :data="state.data"></component>
         <commonPagination v-if="hasLogs" :pagination="state.pagination" />
     </div>
 </template>
@@ -18,12 +18,14 @@ import customerDetail from "@/components/detail/customerDetail.vue";
 import equipmentDetail from "@/components/detail/equipmentDetail.vue";
 import roleDetail from "@/components/detail/roleDetail.vue";
 import commonLogs from "@/components/detail/commonLogs.vue";
+
+import { getEquipmentLogs } from "@/service/equipment";
+
 const store = deepBerryStore();
 const route = useRoute();
 const router = reactive(useRouter());
 const { type, id } = toRaw(route).params.value;
 const key_name = ref(store.data[type]?.key_name);
-id;
 
 // tabs切换name
 const activeName = ref("info");
@@ -40,6 +42,12 @@ const state = reactive({
     data: [],
     component_name: "commonLogs",
     component: null,
+
+    params: {
+        PageNumber: 1,
+        PageSize: 10,
+        deviceId: id,
+    },
 });
 
 // 动态组件
@@ -53,6 +61,15 @@ const myComponent = reactive({
 
 // 是否有记录日志
 const hasLogs = ref(true);
+
+// 获取设备日志
+const equipmentLogs = () => {
+    hasLogs.value = true;
+    getEquipmentLogs(state.params).then((res) => {
+        state.data = res.data.data.datas;
+        console.log(state.data);
+    });
+};
 
 // 监控tab切换组件
 watch(
@@ -76,6 +93,7 @@ watch(
 
         if (_type == "company" || _type == "role") hasLogs.value = false;
         if (_type == "role") key_name.value = "账号";
+        if (_type == "equipment") equipmentLogs();
 
         state.component_name = ref(`${_type}Detail`);
         state.component = myComponent[state.component_name];
