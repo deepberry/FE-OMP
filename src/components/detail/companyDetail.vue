@@ -70,8 +70,7 @@ onMounted(() => {
 function onceLogin() {
     loginOrgzOnce(id).then((res) => {
         const token = res.data.data.accessToken;
-        const path = window.open("_blank");
-        path.location = `https://io.deepberry.cn/login?token=${token}`;
+        window.open(`https://io.deepberry.cn/login?token=${token}`, "_blank");
     });
 }
 </script>
