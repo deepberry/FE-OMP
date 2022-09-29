@@ -8,7 +8,14 @@
         <el-table-column prop="hard_version" label="硬件版本" />
         <el-table-column prop="soft_version" label="固件版本" />
         <el-table-column prop="iccid" label="ICCID" />
-        <el-table-column prop="status" label="连接状态" />
+        <el-table-column label="连接状态">
+            <template #default="scope">
+                <div class="m-icon">
+                    <img class="u-icon" v-if="scope.row.connectionStatus" src="../../assets/img/line.svg" />
+                    <span v-else class="u-icon u-red"></span>
+                </div>
+            </template>
+        </el-table-column>
         <el-table-column label="绑定状态">
             <template #default="scope">
                 <span :class="scope.row.isBindNode == '未绑定' ? 'u-table-disabled' : 'u-table-normal'">{{
