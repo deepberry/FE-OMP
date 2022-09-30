@@ -4,7 +4,7 @@
             <el-table-column prop="createdAt" label="创建时间" width="180" />
             <el-table-column label="操作者" width="180">
                 <template #default="scope">
-                    {{ scope.row.userName || "-" }}
+                    {{ scope.row.userName ? scope.row.userName + "（id：" + scope.row.userId + "）" : "-" }}
                 </template>
             </el-table-column>
             <el-table-column prop="operationTypeName" label="行为" />
