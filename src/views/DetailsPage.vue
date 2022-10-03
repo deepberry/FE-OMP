@@ -4,6 +4,7 @@
         <el-tabs v-model="activeName" class="m-tabs">
             <el-tab-pane :label="`${key_name}信息`" name="info"></el-tab-pane>
             <el-tab-pane :label="`${key_name}操作日志`" name="logs" v-if="hasLogs"></el-tab-pane>
+            <el-tab-pane label="节点属性" name="node" v-if="hasNode"></el-tab-pane>
         </el-tabs>
         <component :is="state.component" :type="type" :data="state.data"></component>
         <commonPagination v-if="hasLogs" :pagination="state.pagination" />
@@ -17,6 +18,7 @@ import companyDetail from "@/components/detail/companyDetail.vue";
 import customerDetail from "@/components/detail/customerDetail.vue";
 import equipmentDetail from "@/components/detail/equipmentDetail.vue";
 import roleDetail from "@/components/detail/roleDetail.vue";
+import nodeDetail from "@/components/detail/nodeDetail.vue";
 import commonLogs from "@/components/detail/commonLogs.vue";
 
 import { getEquipmentLogs } from "@/service/equipment";
@@ -57,17 +59,20 @@ const myComponent = reactive({
     equipmentDetail: markRaw(equipmentDetail),
     roleDetail: markRaw(roleDetail),
     commonLogs: markRaw(commonLogs),
+    nodeDetail: markRaw(nodeDetail),
 });
 
 // 是否有记录日志
 const hasLogs = ref(true);
+
+// 是否有节点属性
+const hasNode = ref(false);
 
 // 获取设备日志
 const equipmentLogs = () => {
     hasLogs.value = true;
     getEquipmentLogs(state.params).then((res) => {
         state.data = res.data.data.datas;
-        console.log(state.data);
     });
 };
 
@@ -75,7 +80,12 @@ const equipmentLogs = () => {
 watch(
     activeName,
     (val) => {
-        state.component_name = val == "logs" ? ref("commonLogs") : ref(`${routeType.value}Detail`);
+        if (val == "node") {
+            state.component_name = ref(`nodeDetail`);
+        } else {
+            state.component_name = val == "logs" ? ref("commonLogs") : ref(`${routeType.value}Detail`);
+        }
+
         state.component = myComponent[state.component_name];
     },
     { deep: true, immediate: true }
@@ -92,6 +102,7 @@ watch(
         routeType.value = _type;
 
         if (_type == "company" || _type == "role") hasLogs.value = false;
+        if (_type == "company") hasNode.value = true;
         if (_type == "role") key_name.value = "账号";
         if (_type == "equipment") equipmentLogs();
 

@@ -38,4 +38,22 @@ function $admin(options) {
     return ins;
 }
 
-export { $admin };
+function $io(options) {
+    let config = {
+        // baseURL: "https://io.deepberry.cn",
+        headers: {
+            Authorization: (localStorage && localStorage.getItem("token")) || "",
+            Accept: "text/pain",
+        },
+    };
+    config.data = qs.stringify(config.data);
+    // 创建实例
+    const ins = axios.create(config);
+
+    // 指定拦截器
+    installCmsInterceptors(ins, options);
+
+    return ins;
+}
+
+export { $admin, $io };
