@@ -40,7 +40,7 @@ function $admin(options) {
 
 function $io(options) {
     let config = {
-        // baseURL: "https://io.deepberry.cn",
+        baseURL: "https://io.deepberry.cn",
         headers: {
             Authorization: (localStorage && localStorage.getItem("token")) || "",
             Accept: "text/pain",
