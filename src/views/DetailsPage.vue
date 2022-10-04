@@ -71,6 +71,7 @@ const hasNode = ref(false);
 // 获取设备日志
 const equipmentLogs = () => {
     hasLogs.value = true;
+    hasNode.value = true;
     getEquipmentLogs(state.params).then((res) => {
         state.data = res.data.data.datas;
     });
@@ -102,7 +103,6 @@ watch(
         routeType.value = _type;
 
         if (_type == "company" || _type == "role") hasLogs.value = false;
-        if (_type == "company") hasNode.value = true;
         if (_type == "role") key_name.value = "账号";
         if (_type == "equipment") equipmentLogs();
 

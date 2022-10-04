@@ -1,4 +1,4 @@
-import { $admin, $io } from "./axios.js";
+import { $admin } from "./axios.js";
 
 // 获取企业列表
 function getCompanyList(params) {
@@ -29,11 +29,6 @@ function getAllOrgz() {
     return $admin().get(`/api/Orgz/total`);
 }
 
-// 获取所有企业
-function getNodes(id) {
-    return $io().get(`/api/dashboard/${id}/nodes`);
-}
-
 // 企业一次登录
 function loginOrgzOnce(id) {
     return $admin().get(`/api/Work/user/onelogin/${id}`);
@@ -47,5 +42,4 @@ export {
     getCompanyInfo,
     getAllOrgz,
     loginOrgzOnce,
-    getNodes,
 };
