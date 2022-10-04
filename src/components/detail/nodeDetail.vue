@@ -57,8 +57,9 @@ const typesWhichHaveIcon = ref(["INPUT", "CAMERA"]);
 // 获取节点属性
 const loadNodes = () => {
     getNodes(id).then((res) => {
-        list.value = res.data.data.nodeProperies || [];
-        console.log(list.value, res);
+        let list = res.data.data.nodeProperies || [];
+        if (!list[0]) list = [];
+        list.value = list;
     });
 };
 
