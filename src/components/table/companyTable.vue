@@ -23,17 +23,10 @@
         <el-table-column label="操作" width="280" v-if="hasOperate">
             <template #default="scope">
                 <div class="u-table-button">
-                    <el-button
-                        link
-                        type="primary"
-                        size="small"
-                        @click="handelClick(scope.row, 'close')"
-                        v-if="hasEnabled"
-                        >{{ scope.row.status == "正常" ? "停用" : "启用" }}</el-button
-                    >
-                    <el-button link type="primary" size="small" @click="handelClick(scope.row, 'edit')" v-if="hasEdit"
-                        >编辑</el-button
-                    >
+                    <span @click="handelClick(scope.row, 'close')" v-if="hasEnabled">{{
+                        scope.row.status == "正常" ? "停用" : "启用"
+                    }}</span>
+                    <span @click="handelClick(scope.row, 'edit')" v-if="hasEdit">编辑</span>
                     <router-link
                         :to="{ path: `/${label}/details/${scope.row.organizationId}` }"
                         class="u-table-more"
