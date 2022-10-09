@@ -13,7 +13,13 @@
                 </el-form-item>
                 <el-form-item label="企业/组织Logo">
                     <div class="m-box">
-                        <UploadImage class="m-uploader" v-model:url="state.logoUrl" />
+                        <UploadImage
+                            class="m-uploader"
+                            :url="state.logoUrl"
+                            width="180px"
+                            height="120px"
+                            @update="upload"
+                        />
                         <div class="u-tips">
                             <span> 尺寸建议：宽180 x 高60</span>
                             <span> 格式建议：透明背景图片，PNG或gif,logo图形使用深色</span>
@@ -42,6 +48,9 @@
 <script setup>
 import { defineProps, defineEmits, computed, reactive, ref, watch } from "vue";
 import _ from "lodash";
+import { uploadLogo } from "@/service/cms";
+import { getCdnLink } from "@deepberry/common/js/utils";
+import { ElNotification } from "element-plus";
 //====== 数据 ======
 
 // props
@@ -153,6 +162,22 @@ const submitForm = (form) => {
             console.log("error submit!", fields);
         }
     });
+};
+
+const upload = (file) => {
+    if (file) {
+        let formdata = new FormData();
+        formdata.append("file", file);
+        formdata.append("path", "logos");
+        uploadLogo(formdata).then((res) => {
+            state.logoUrl = getCdnLink(res.data.data.name);
+            ElNotification({
+                title: "成功",
+                message: `上传成功`,
+                type: "success",
+            });
+        });
+    }
 };
 </script>
 <script>
