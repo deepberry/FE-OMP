@@ -19,16 +19,16 @@
         <el-table-column prop="address" label="操作" width="240" v-if="hasOperate">
             <template #default="scope">
                 <div class="u-table-button">
-                    <el-button link type="primary" size="small" @click="handelClick(scope.row)" v-if="hasEnabled">{{
+                    <span @click="handelClick(scope.row)" v-if="hasEnabled">{{
                         scope.row.status == "正常" ? "停用" : "启用"
-                    }}</el-button>
+                    }}</span>
                     <el-popconfirm
                         v-if="hasEnabled"
                         title="是否重置密码？"
                         @confirm="handleResetPassword(scope.row.userId)"
                     >
                         <template #reference>
-                            <el-button link type="primary" size="small">重置密码</el-button>
+                            <span>重置密码</span>
                         </template>
                     </el-popconfirm>
 

@@ -28,6 +28,7 @@ function getCompanyInfo(OrgzId) {
 function getAllOrgz() {
     return $admin().get(`/api/Orgz/total`);
 }
+
 // 企业一次登录
 function loginOrgzOnce(id) {
     return $admin().get(`/api/Work/user/onelogin/${id}`);

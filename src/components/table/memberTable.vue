@@ -15,17 +15,8 @@
         <el-table-column label="操作" v-if="hasOperate" width="180">
             <template #default="scope">
                 <div class="u-table-button">
-                    <el-button
-                        link
-                        type="primary"
-                        size="small"
-                        @click="handelClick(scope.row, 'close')"
-                        v-if="hasEnabled"
-                        >停用</el-button
-                    >
-                    <el-button link type="primary" size="small" @click="handelClick(scope.row, 'role')" v-if="hasEdit"
-                        >授权角色权限
-                    </el-button>
+                    <span @click="handelClick(scope.row, 'close')" v-if="hasEnabled">停用</span>
+                    <span @click="handelClick(scope.row, 'role')" v-if="hasEdit">授权角色权限 </span>
                 </div>
             </template>
         </el-table-column>

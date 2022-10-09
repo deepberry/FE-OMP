@@ -1,0 +1,67 @@
+@element-primary: #409eff;
+
+.m-node-detail {
+    .m-node-props {
+        .flex;
+        .mb(20px);
+        flex-wrap: wrap;
+
+        .u-title {
+            .size(100%,40px);
+            .fz(16px);
+            .bold;
+        }
+        .m-node-prop {
+            .w(200px);
+            position: relative;
+            border: 1px solid #eee;
+            padding: 30px 20px;
+            box-sizing: border-box;
+            margin: 0 -1px -1px 0;
+            .u-prop-header {
+                .flex;
+                justify-content: center;
+                align-items: center;
+                gap: 5px;
+            }
+            .u-prop-icon {
+                img {
+                    .size(24px);
+                    .db;
+                }
+                .mr(3px);
+            }
+            .u-prop-edit {
+                .none;
+                .pa;
+                .fz(22px);
+                .rb(3px,0);
+                &:hover {
+                    color: @element-primary;
+                }
+            }
+            .u-prop-name {
+                .fz(14px);
+                font-weight: 500;
+            }
+            .u-prop-switch {
+                .x;
+            }
+            .u-prop-value {
+                .x;
+                .fz(16px,32px);
+                b {
+                    .bold;
+                }
+            }
+            &.is-camera {
+                .pointer;
+            }
+            &:hover {
+                .u-prop-edit {
+                    .db;
+                }
+            }
+        }
+    }
+}

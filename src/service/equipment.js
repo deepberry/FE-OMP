@@ -32,6 +32,11 @@ function addEquipmentTrack(data) {
 function getEquipmentLogs(params) {
     return $admin().get(`/api/Device/operationLogPage`, { params });
 }
+
+// 获取所有节点
+function getNodes(id) {
+    return $admin().get(`/api/Device/${id}`);
+}
 export {
     getEquipmentList,
     addEquipment,
@@ -41,4 +46,5 @@ export {
     getEquipmentTrack,
     addEquipmentTrack,
     getEquipmentLogs,
+    getNodes,
 };

@@ -28,18 +28,14 @@
         <el-table-column label="操作" width="240" v-if="hasOperate">
             <template #default="scope">
                 <div class="u-table-button">
-                    <el-button link type="primary" size="small" @click="handelClick(scope.row)" v-if="hasEdit"
-                        >编辑</el-button
-                    >
+                    <span @click="handelClick(scope.row)" v-if="hasEdit">编辑</span>
                     <router-link
                         :to="{ path: `/${label}/details/${scope.row.deviceId}` }"
                         class="u-table-more"
                         v-if="hasInfo && scope.row.deviceId"
                         >查看详情
                     </router-link>
-                    <el-button link type="primary" size="small" @click="handelClick(scope.row, 'track')" v-if="hasEdit"
-                        >设备跟踪</el-button
-                    >
+                    <span @click="handelClick(scope.row, 'track')" v-if="hasEdit">设备跟踪</span>
                 </div>
             </template>
         </el-table-column>
