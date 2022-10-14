@@ -1,8 +1,8 @@
 <template>
     <div class="m-detail m-company-detail" v-loading="state.loading">
         <div class="m-info">
-            <span class="u-login" @click="onceLogin('new')">一次性登录(新版)</span>
             <span class="u-login" @click="onceLogin('old')">一次性登录(旧版)</span>
+            <span class="u-login" @click="onceLogin('new')">一次性登录(新版)</span>
             <div class="m-row" v-for="(item, k) in state.info" :key="k">
                 <template v-if="k == 'orgzLogo'">
                     <span class="u-label">{{ toName[k] }}</span>
@@ -69,10 +69,13 @@ onMounted(() => {
 });
 // 一次性登录
 function onceLogin(key) {
-    const link = key == "new" ? "https://titan.deepberry.cn" : "https://io.deepberry.cn";
     loginOrgzOnce(id).then((res) => {
         const token = res.data.data.accessToken;
-        window.open(`${link}/login?token=${token}`, "_blank");
+        const link =
+            key == "new"
+                ? `https://titan.deepberry.cn/insights/nodes?token=${token}`
+                : `https://io.deepberry.cn/login?token=${token}`;
+        window.open(`${link}`, "_blank");
     });
 }
 </script>
