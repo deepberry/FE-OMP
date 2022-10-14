@@ -23,7 +23,6 @@ const MemberList = () => import("../views/MemberList.vue");
 // 3.Routes
 const routes = [
     { name: "home", path: "/", component: Home },
-    // { name: "home", path: "/", component: Home, redirect: { name: "details", params: { type: "role", id: 0 } } },
     {
         name: "company",
         path: "/company",
@@ -61,13 +60,25 @@ const routes = [
         meta: { keepAlive: true },
     },
 ];
-
-// 4.Build An Instance
 const router = createRouter({
     history: createWebHashHistory(), //hash
     // history: createWebHistory(), //history api
     // base: "/omp",
     routes,
+});
+
+// 路由守卫
+router.beforeEach((to, from, next) => {
+    if (process.env.NODE_ENV == "development" && to.name === "home") {
+        router.push({
+            name: "details",
+            params: {
+                type: "role",
+                id: 0,
+            },
+        });
+    }
+    next();
 });
 
 export default router;
