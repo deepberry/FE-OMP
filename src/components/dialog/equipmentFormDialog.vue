@@ -9,10 +9,10 @@
         >
             <el-form class="m-form-content" ref="formRef" :model="state.form" :rules="rules" label-width="120px">
                 <el-form-item label="设备ID" prop="DeviceId">
-                    <el-input v-model="state.form.DeviceId" :disabled="!state.add" />
+                    <el-input v-model="state.form.DeviceId" />
                 </el-form-item>
                 <el-form-item label="设备类型" prop="DeviceTypeId">
-                    <el-select v-model="state.form.DeviceTypeId" placeholder="- 请选择 -" :disabled="!state.add">
+                    <el-select v-model="state.form.DeviceTypeId" placeholder="- 请选择 -">
                         <el-option v-for="(item, key) in options" :key="key" :label="item.name" :value="item.id" />
                     </el-select>
                 </el-form-item>
@@ -23,7 +23,6 @@
                         value-key="orgzName"
                         placeholder=""
                         @select="handleSelect"
-                        :disabled="!state.add"
                     />
                 </el-form-item>
                 <el-form-item label="备注">

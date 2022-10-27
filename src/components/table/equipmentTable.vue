@@ -28,7 +28,7 @@
         <el-table-column label="操作" width="240" v-if="hasOperate">
             <template #default="scope">
                 <div class="u-table-button">
-                    <span @click="handelClick(scope.row)" v-if="hasEdit">编辑</span>
+                    <!-- <span @click="handelClick(scope.row)" v-if="hasEdit">编辑</span> -->
                     <router-link
                         :to="{ path: `/${label}/details/${scope.row.deviceId}` }"
                         class="u-table-more"
