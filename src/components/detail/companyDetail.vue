@@ -73,8 +73,8 @@ function onceLogin(key) {
         const token = res.data.data.accessToken;
         const link =
             key == "new"
-                ? `https://titan.deepberry.cn/insights/nodes?token=${token}`
-                : `https://io.deepberry.cn/login?token=${token}`;
+                ? `https://titan.deepberry.cn/insights/nodes?__token=${token}`
+                : `https://io.deepberry.cn/login?__token=${token}`;
         window.open(`${link}`, "_blank");
     });
 }
