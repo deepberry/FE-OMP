@@ -74,7 +74,7 @@ function onceLogin(key) {
         const link =
             key == "new"
                 ? `https://titan.deepberry.cn/insights/nodes?__token=${token}`
-                : `https://io.deepberry.cn/login?__token=${token}`;
+                : `https://io.deepberry.cn/?__token=${token}`;
         window.open(`${link}`, "_blank");
     });
 }
