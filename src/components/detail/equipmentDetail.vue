@@ -119,6 +119,7 @@ const info = {
     deviceType: "设备类型",
     orgzName: "归属客户",
     dashboardName: "所在园区",
+    nodeName: "所在节点",
     hardVer: "硬件版本",
     softVer: "固件版本",
     value: "绑定状态",
