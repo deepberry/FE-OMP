@@ -68,7 +68,7 @@ let state = reactive({
 // 自定义手机号码验证
 const checkNum = (rule, value, callback) => {
     if (value) {
-        const num = /^[1][3,4,5,7,8][0-9]{9}$/;
+        const num = /^[1][3,4,5,7,8,9][0-9]{9}$/;
         if (!num.test(value)) {
             callback(new Error("请输入正确的手机号"));
         } else {
