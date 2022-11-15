@@ -28,7 +28,7 @@
         <el-table-column label="操作" width="240" v-if="hasOperate">
             <template #default="scope">
                 <div class="u-table-button">
-                    <!-- <span @click="handelClick(scope.row)" v-if="hasEdit">编辑</span> -->
+                    <span @click="handelClick(scope.row)" v-if="inDevelopment">编辑</span>
                     <router-link
                         :to="{ path: `/${label}/details/${scope.row.deviceId}` }"
                         class="u-table-more"
@@ -59,6 +59,7 @@ const store = deepBerryStore();
 // 权限判断
 // 编辑权限
 const hasEdit = computed(() => store.role.includes(21));
+const inDevelopment = computed(() => process.env.NODE_ENV == "development");
 // 查看详情权限
 const hasInfo = computed(() => store.role.includes(20));
 // 操作权限
