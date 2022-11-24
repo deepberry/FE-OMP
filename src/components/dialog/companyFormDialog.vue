@@ -15,7 +15,7 @@
                     <div class="m-box">
                         <UploadImage
                             class="m-uploader"
-                            :url="state.logoUrl"
+                            :url="state.form.orgzLogo"
                             width="180px"
                             height="120px"
                             @update="upload"
@@ -63,7 +63,6 @@ const emit = defineEmits();
 const company = computed(() => props.dialogObject.company);
 let state = reactive({
     form: {},
-    logoUrl: "",
 });
 // 自定义手机号码验证
 const checkNum = (rule, value, callback) => {
@@ -156,7 +155,6 @@ const submitForm = (form) => {
     if (!form) return;
     form.validate((valid, fields) => {
         if (valid) {
-            if (state.logoUrl) state.form.orgzLogo = state.logoUrl;
             emit("dialogSuccess", state.form);
         } else {
             console.log("error submit!", fields);
@@ -170,7 +168,7 @@ const upload = (file) => {
         formdata.append("file", file);
         formdata.append("path", "logos");
         uploadLogo(formdata).then((res) => {
-            state.logoUrl = getCdnLink(res.data.data.name);
+            state.form.orgzLogo = getCdnLink(res.data.data.name);
             ElNotification({
                 title: "成功",
                 message: `上传成功`,

@@ -50,6 +50,7 @@ import companyFormDialog from "@/components/dialog/companyFormDialog";
 import { getCompanyList, addCompany, editCompany, enabledCompany } from "@/service/company";
 import { ElNotification } from "element-plus";
 import _ from "lodash";
+import { getCdnLink } from "@deepberry/common/js/utils";
 //====== 数据 ======
 
 // 获取store公共数据
@@ -203,10 +204,19 @@ function loadCompanyList() {
         .then((res) => {
             if (res.status == "200") {
                 const data = res.data.data;
-                state.table = data.datas;
+                state.table = data.datas.map((item) => {
+                    item.orgzLogo = getImg(item.orgzLogo);
+                    return item;
+                });
                 state.pagination.total = data.totalCount;
             }
         })
         .finally(() => (state.loading = false));
+}
+
+function getImg(link) {
+    if (!link) return;
+    if (link.indexOf("http") !== -1) return link;
+    return getCdnLink(link);
 }
 </script>

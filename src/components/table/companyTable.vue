@@ -5,7 +5,7 @@
         <el-table-column label="企业Logo">
             <template #default="scope">
                 <div class="u-table-img">
-                    <img :src="getImg(scope.row.orgzLogo)" />
+                    <img :src="scope.row.orgzLogo || logo" />
                 </div>
             </template>
         </el-table-column>
@@ -41,7 +41,7 @@
 <script setup>
 import { defineProps, defineEmits, reactive, watch, computed } from "vue";
 import { deepBerryStore } from "@/store/index";
-import { getCdnLink } from "@deepberry/common/js/utils";
+
 //====== 数据 ======
 // props
 const props = defineProps({
@@ -52,6 +52,7 @@ const emit = defineEmits(["toDialog"]);
 
 // store
 const store = deepBerryStore();
+const logo = require("../../assets/img/no-logo.png");
 
 // 权限判断
 // 编辑权限
@@ -82,12 +83,6 @@ watch(
 // 提交企业id和弹窗类型
 function handelClick(row, type) {
     emit("toDialog", { row, type });
-}
-
-function getImg(link) {
-    if (!link) return require("../../assets/img/no-logo.png");
-    if (link.indexOf("http") !== -1) return link;
-    return getCdnLink(link);
 }
 </script>
 <style lang="less" scoped>
