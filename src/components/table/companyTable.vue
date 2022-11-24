@@ -5,7 +5,7 @@
         <el-table-column label="企业Logo">
             <template #default="scope">
                 <div class="u-table-img">
-                    <img :src="getImg(scope.row.orgzLogo) || logo" />
+                    <img :src="getImg(scope.row.orgzLogo)" />
                 </div>
             </template>
         </el-table-column>
@@ -49,7 +49,7 @@ const props = defineProps({
     label: String,
 });
 const emit = defineEmits(["toDialog"]);
-const getImg = getCdnLink;
+
 // store
 const store = deepBerryStore();
 
@@ -68,8 +68,6 @@ const hasOperate = computed(() => store.role.map((item) => arr.includes(item)).f
 let state = reactive({
     data: [],
 });
-// 默认企业logo
-const logo = "https://www.deepberry.cn/images/placeholders/logo.png";
 
 // 监控表格数据
 watch(
@@ -84,6 +82,12 @@ watch(
 // 提交企业id和弹窗类型
 function handelClick(row, type) {
     emit("toDialog", { row, type });
+}
+
+function getImg(link) {
+    if (!link) return require("../../assets/img/no-logo.png");
+    if (link.indexOf("http") !== -1) return link;
+    return getCdnLink(link);
 }
 </script>
 <style lang="less" scoped>
