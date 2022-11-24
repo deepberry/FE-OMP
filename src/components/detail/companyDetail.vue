@@ -6,7 +6,7 @@
             <div class="m-row" v-for="(item, k) in state.info" :key="k">
                 <template v-if="k == 'orgzLogo'">
                     <span class="u-label">{{ toName[k] }}</span>
-                    <img :src="item" />
+                    <img :src="getImg(item)" class="u-logo" />
                 </template>
                 <template v-else-if="k == 'items'">
                     <span class="u-label">{{ toName[k] }}</span>
@@ -31,6 +31,7 @@
 import { getCompanyInfo, loginOrgzOnce } from "@/service/company";
 import { useRoute } from "vue-router";
 import { onMounted, reactive } from "vue";
+import { getCdnLink } from "@deepberry/common/js/utils";
 //====== 数据 ======
 
 // 路由传值
@@ -77,5 +78,11 @@ function onceLogin(key) {
                 : `https://io.deepberry.cn/?__token=${token}`;
         window.open(`${link}`, "_blank");
     });
+}
+
+function getImg(link) {
+    if (!link) return require("../../assets/img/no-logo.png");
+    if (link.indexOf("http") !== -1) return link;
+    return getCdnLink(link);
 }
 </script>
