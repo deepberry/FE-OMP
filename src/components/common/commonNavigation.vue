@@ -18,6 +18,12 @@
                     <span class="u-label">{{ item.name }}</span>
                 </router-link>
             </li>
+            <li class="u-item">
+                <a class="u-txt" :href="`/erp?__token=${token}`" target="_blank">
+                    <b class="u-icon">▷</b>
+                    <span class="u-label">ERP管理</span>
+                </a>
+            </li>
         </ul>
     </div>
 </template>
@@ -47,6 +53,8 @@ const equipmentData = {
     value: "equipment",
     icon: "SetUp",
 };
+
+const token = localStorage.getItem("token").split("Bearer ")[1];
 
 // 权限过滤
 const list = computed(() => {
