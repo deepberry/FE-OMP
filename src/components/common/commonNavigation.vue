@@ -54,7 +54,7 @@ const equipmentData = {
     icon: "SetUp",
 };
 
-const token = localStorage.getItem("token").split("Bearer ")[1];
+const token = localStorage.getItem("token");
 
 // 权限过滤
 const list = computed(() => {

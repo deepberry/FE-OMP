@@ -52,12 +52,13 @@ const code = ref(document.location.search.split("&")[0]);
 
 onMounted(() => {
     state.loading = true;
-    if (localStorage.getItem("token")) {
-        let token = localStorage.getItem("token");
-        if (token.indexOf("Bearer") == -1) {
-            token = "Bearer " + token;
+    let token = localStorage.getItem("token");
+    if (token) {
+        if (token.indexOf("Bearer") !== -1) {
+            token = token.split("Bearer ")[1];
             localStorage.setItem("token", token);
         }
+
         getWorkUser()
             .then((res) => {
                 state.data = res.data.data;
@@ -78,7 +79,7 @@ onMounted(() => {
     } else {
         getUserLogin(code.value)
             .then((res) => {
-                const _code = "Bearer " + res.data.data.accessToken;
+                const _code = res.data.data.accessToken;
                 localStorage.setItem("token", _code);
                 location.reload();
             })

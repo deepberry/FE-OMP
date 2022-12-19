@@ -24,7 +24,7 @@ function $admin(options) {
         baseURL: "https://admin.deepberry.cn:444",
         headers: {
             // "Content-Type": "multipart/form-data",
-            Authorization: (localStorage && localStorage.getItem("token")) || "",
+            Authorization: (localStorage && "Bearer " + localStorage.getItem("token")) || "",
             Accept: "text/pain",
         },
     };
@@ -42,7 +42,7 @@ function $io(options) {
     let config = {
         baseURL: "https://io.deepberry.cn",
         headers: {
-            Authorization: (localStorage && localStorage.getItem("token")) || "",
+            Authorization: (localStorage && "Bearer " + localStorage.getItem("token")) || "",
             Accept: "text/pain",
         },
     };

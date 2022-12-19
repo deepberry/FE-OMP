@@ -2,7 +2,7 @@ import { $cms } from "@deepberry/common/js/https";
 
 const $ = $cms({
     headers: {
-        Authorization: localStorage.getItem("token"),
+        Authorization: "Bearer " + localStorage.getItem("token"),
     },
 });
 
